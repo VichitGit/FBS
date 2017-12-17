@@ -16,4 +16,7 @@
     <string name="submit">Submit</string>
     <string name="verification_code">Verification Code</string>
     <string name="text_sent_code">We sent 4 code to your phone number. Please enter your code from your message into box below</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -8,4 +8,6 @@
     <color name="colorHint">#b4b4b4</color>
     <color name="colorBlack">#000</color>
     <color name="colorWhite">#FFF</color>
+    <color name="colorBackgroundLayout">#E9ECEF</color>
+    <color name="colorHintIcon">#525252</color>
 </resources>
