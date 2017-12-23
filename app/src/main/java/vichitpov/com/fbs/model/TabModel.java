@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
  */
 
 public class TabModel {
+
     private String title;
     private Fragment fragment;
 
