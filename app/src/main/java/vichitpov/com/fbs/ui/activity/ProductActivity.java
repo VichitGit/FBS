@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter.TabProductAdapter;
+import vichitpov.com.fbs.adapter.TabAdapter;
 import vichitpov.com.fbs.model.TabModel;
 import vichitpov.com.fbs.ui.fragments.BuyProductFragment;
 import vichitpov.com.fbs.ui.fragments.SellProductFragment;
@@ -31,7 +31,7 @@ public class ProductActivity extends AppCompatActivity {
         SellProductFragment sellProductFragment = new SellProductFragment();
         BuyProductFragment buyProductFragment = new BuyProductFragment();
 
-        TabProductAdapter adapter = new TabProductAdapter(getSupportFragmentManager(), this);
+        TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), this);
         adapter.addTab(new TabModel("Sell Product", sellProductFragment));
         adapter.addTab(new TabModel("Buy Product", buyProductFragment));
         viewPager.setAdapter(adapter);

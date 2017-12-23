@@ -10,4 +10,5 @@
     <color name="colorWhite">#FFF</color>
     <color name="colorBackgroundLayout">#E9ECEF</color>
     <color name="colorHintIcon">#525252</color>
+    <color name="colorRed">#ff5252</color>
 </resources>

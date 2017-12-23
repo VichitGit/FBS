@@ -21,4 +21,9 @@
         <item name="android:iconTint" tools:targetApi="o">@color/colorWhite</item>
     </style>
 
+    <!--<style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">-->
+        <!--<item name="android:textSize">14sp</item>-->
+        <!--<item name="android:textStyle">normal</item>-->
+    <!--</style>style-->
+
 </resources>

@@ -14,11 +14,11 @@ import vichitpov.com.fbs.model.TabModel;
  * Created by Goldenware on 12/16/2017.
  */
 
-public class TabProductAdapter extends FragmentPagerAdapter {
+public class TabAdapter extends FragmentPagerAdapter {
     List<TabModel> tabList;
     Context context;
 
-    public TabProductAdapter(FragmentManager fm, Context context) {
+    public TabAdapter(FragmentManager fm, Context context) {
         super(fm);
         tabList = new ArrayList<>();
         this.context = context;
