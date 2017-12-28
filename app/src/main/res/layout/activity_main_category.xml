@@ -35,14 +35,6 @@
                 android:src="@drawable/ic_test"
                 app:layout_collapseMode="pin" />
 
-            <!--<SearchView-->
-                <!--android:id="@+id/search_view_category"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@color/colorWhite"-->
-                <!--android:clickable="false"-->
-                <!--android:focusable="auto" />-->
-
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -79,6 +71,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -89,37 +82,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="@dimen/dp_10"-->
-            <!--android:weightSum="3">-->
-
-            <!--<View-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@color/colorHint" />-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="Categories"-->
-            <!--android:textColor="@color/colorBlack" />-->
-
-            <!--<View-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@color/colorHint" />-->
-
-            <!--</LinearLayout>-->
-
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_main_category"

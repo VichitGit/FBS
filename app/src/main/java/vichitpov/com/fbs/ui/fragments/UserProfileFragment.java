@@ -12,18 +12,19 @@ import vichitpov.com.fbs.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SellerRecentItemFragment extends Fragment {
+public class UserProfileFragment extends Fragment {
 
 
-    public SellerRecentItemFragment() {
+    public UserProfileFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seller_recent_item, container, false);
+        return inflater.inflate(R.layout.fragment_user_profile, container, false);
     }
 
 }

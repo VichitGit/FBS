@@ -18,7 +18,7 @@ import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.TabAdapter;
 import vichitpov.com.fbs.model.TabModel;
 import vichitpov.com.fbs.ui.fragments.BuyerRecentItemFragment;
-import vichitpov.com.fbs.ui.fragments.SellerRecentItemFragment;
+import vichitpov.com.fbs.ui.fragments.UserProfileBoughtFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private DrawerLayout drawer;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setUpTabLayout() {
-        SellerRecentItemFragment sellerRecentItemFragment = new SellerRecentItemFragment();
+        UserProfileBoughtFragment.SellerRecentItemFragment sellerRecentItemFragment = new UserProfileBoughtFragment.SellerRecentItemFragment();
         BuyerRecentItemFragment buyerRecentItemFragment = new BuyerRecentItemFragment();
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), this);
         adapter.addTab(new TabModel("New Seller", sellerRecentItemFragment));
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_account:
                 break;
             case R.id.nav_favorite:
+                startActivity(new Intent(this, UserProfileActivity.class));
                 break;
             case R.id.nav_change_language:
                 break;

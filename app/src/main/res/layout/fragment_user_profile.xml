@@ -1,0 +1,194 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="vichitpov.com.fbs.ui.fragments.UserProfileFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="Personal Detail"
+        android:textColor="@color/colorBlack" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/dp_8">
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorHint" />
+
+        <ImageView
+            android:id="@+id/icon_name"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@drawable/ic_account"
+            android:tint="@color/colorHint" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_toEndOf="@+id/icon_name"
+            android:background="@color/colorHint" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/icon_name"
+            android:background="@color/colorHint" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_toEndOf="@+id/view2"
+            android:gravity="center_vertical"
+            android:text="Name: Vichit" />
+
+        <ImageView
+            android:id="@+id/icon_contact"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/view2"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@drawable/ic_contact"
+            android:tint="@color/colorHint" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/view2"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_toRightOf="@+id/icon_contact"
+            android:background="@color/colorHint" />
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/icon_contact"
+            android:background="@color/colorHint" />
+
+        <TextView
+            android:id="@+id/text_contact"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/view3"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_toEndOf="@+id/view4"
+            android:gravity="center_vertical"
+            android:text="Contact: 093 795 224" />
+
+        <!---->
+        <ImageView
+            android:id="@+id/icon_email"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/view4"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@drawable/ic_email"
+            android:tint="@color/colorHint" />
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/view4"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_toEndOf="@+id/icon_email"
+            android:background="@color/colorHint" />
+
+        <View
+            android:id="@+id/view7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/icon_email"
+            android:background="@color/colorHint" />
+
+        <TextView
+            android:id="@+id/text_email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/view4"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_toEndOf="@+id/view4"
+            android:gravity="center_vertical"
+            android:text="Email: v.vichtpov@gmail.com" />
+
+        <!---->
+
+        <ImageView
+            android:id="@+id/icon_address"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/view6"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@drawable/ic_location"
+            android:tint="@color/colorHint" />
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/view6"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_toEndOf="@+id/icon_address"
+            android:background="@color/colorHint" />
+
+        <View
+            android:id="@+id/view9"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/icon_email"
+            android:background="@color/colorHint" />
+
+        <TextView
+            android:id="@+id/text_address"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/view6"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_toEndOf="@+id/view4"
+            android:gravity="center_vertical"
+            android:text="Address: Phnom Penh" />
+
+        <!---->
+
+        <View
+            android:id="@+id/view10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/icon_address"
+            android:background="@color/colorHint" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/colorPrimary"
+            android:text="Update Profile"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
