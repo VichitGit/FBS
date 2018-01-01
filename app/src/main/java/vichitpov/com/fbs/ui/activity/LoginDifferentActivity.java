@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import vichitpov.com.fbs.R;
 
-public class LoginDiffrentActivity extends AppCompatActivity {
+public class LoginDifferentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

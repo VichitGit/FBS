@@ -14,27 +14,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter.UserSoldAdapter;
+import vichitpov.com.fbs.adapter.RecentPostAdapter;
 import vichitpov.com.fbs.model.UserModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserProfileSoldFragment extends Fragment {
+public class SellerRecentItemFragment extends Fragment {
+
     private RecyclerView recyclerView;
 
 
-    public UserProfileSoldFragment() {
+    public SellerRecentItemFragment() {
         // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_profile_sold, container, false);
-
-        recyclerView = view.findViewById(R.id.recycler_user_sold);
+        View view = inflater.inflate(R.layout.fragment_seller_recent_item, container, false);
+        recyclerView = view.findViewById(R.id.recycler_seller_recent);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
         return view;
     }
 
@@ -64,10 +65,14 @@ public class UserProfileSoldFragment extends Fragment {
         postList.add(new UserModel("I want the sell sumsung s7 plush with power blank.", "Phnom Penh", 300, "Phone"));
         postList.add(new UserModel("I want the sell sumsung s7 plush with power blank.", "Phnom Penh", 300, "Phone"));
 
-        UserSoldAdapter adapter = new UserSoldAdapter(getActivity(), postList);
+        RecentPostAdapter adapter = new RecentPostAdapter(getActivity(),postList);
         recyclerView.setAdapter(adapter);
 
 
 
+
+
     }
+
+
 }

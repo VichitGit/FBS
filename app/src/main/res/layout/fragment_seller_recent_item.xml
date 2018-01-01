@@ -2,13 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="vichitpov.com.fbs.ui.fragments.UserProfileBoughtFragment$SellerRecentItemFragment">
+    tools:context="vichitpov.com.fbs.ui.fragments.SellerRecentItemFragment">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_seller_recent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Coming Soon"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/sp_20" />
+        android:layout_height="wrap_content"/>
 </FrameLayout>

@@ -1,17 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:theme="@style/AppTheme.NoActionBar"
+    android:layout_height="wrap_content"
     tools:context="vichitpov.com.fbs.ui.fragments.UserProfileSoldFragment">
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_user_sold"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
 
 </FrameLayout>
