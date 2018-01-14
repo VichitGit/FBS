@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/image_profile"
                     android:layout_centerInParent="true"
-
                     android:layout_marginTop="@dimen/dp_8"
                     android:text="VICHIT POV"
                     android:textColor="@color/colorWhite"
@@ -66,18 +65,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dp_8"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="Sold: 12"
+                        android:text="បានលក់: 12"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/sp_12" />
 
-                    <TextView
-                        android:id="@+id/text_bought"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:text="Bought: 12"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
 
             </RelativeLayout>

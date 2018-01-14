@@ -47,11 +47,12 @@
 
     <EditText
         android:id="@+id/edit_code"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/background_rectangle"
+        android:background="@drawable/background_edit_text"
         android:hint="@string/code"
         android:textAlignment="center"
         android:textSize="@dimen/sp_12" />

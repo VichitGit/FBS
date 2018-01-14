@@ -27,11 +27,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_5"
             android:layout_weight="2"
-            android:background="@drawable/background_edit_text_middle"
+            android:background="@drawable/background_edit_text"
             android:drawablePadding="15dp"
+
             android:drawableTint="@color/colorHint"
             android:gravity="center_vertical"
             android:hint="@string/first_name"
+            android:padding="@dimen/dp_10"
             android:paddingLeft="@dimen/dp_10"
             android:textSize="@dimen/sp_12" />
 
@@ -40,7 +42,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:background="@drawable/background_edit_text_middle"
+            android:padding="@dimen/dp_10"
+            android:background="@drawable/background_edit_text"
             android:drawablePadding="15dp"
             android:drawableTint="@color/colorHint"
             android:gravity="center_vertical"
@@ -65,10 +68,11 @@
             android:layout_gravity="center"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:background="@drawable/backgroud_edit_text_small"
+            android:background="@drawable/background_edit_text"
             android:drawableEnd="@drawable/ic_drop_down"
             android:drawableTint="@color/colorHint"
             android:hint="@string/gender"
+            android:padding="2dp"
             android:paddingStart="@dimen/dp_10"
             android:textSize="12sp" />
 
@@ -83,6 +87,7 @@
             android:gravity="center_vertical"
             android:hint="@string/phone_number"
             android:inputType="phone"
+            android:padding="@dimen/dp_10"
             android:paddingStart="@dimen/dp_10"
             android:textSize="12sp" />
 
@@ -100,6 +105,7 @@
         android:drawableTint="@color/colorHint"
         android:gravity="center_vertical"
         android:hint="@string/email"
+        android:padding="@dimen/dp_10"
         android:paddingStart="@dimen/dp_10"
         android:textSize="12sp" />
 
@@ -112,10 +118,9 @@
         android:layout_marginTop="@dimen/dp_5"
         android:background="@drawable/background_edit_text"
         android:drawableEnd="@drawable/ic_drop_down"
-        android:drawablePadding="@dimen/dp_15"
-        android:drawableTint="@color/colorHint"
         android:gravity="center_vertical"
         android:hint="@string/location"
+        android:padding="2dp"
         android:paddingStart="@dimen/dp_10"
         android:textSize="@dimen/sp_12" />
 
@@ -129,6 +134,7 @@
         android:background="@drawable/background_edit_text"
         android:hint="@string/more_location"
         android:inputType="textPersonName"
+        android:padding="@dimen/dp_10"
         android:paddingStart="@dimen/dp_10"
         android:textSize="@dimen/sp_12" />
 

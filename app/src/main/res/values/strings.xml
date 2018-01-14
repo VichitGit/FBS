@@ -18,5 +18,37 @@
     <string name="text_sent_code">We sent 4 code to your phone number. Please enter your code from your message into box below</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--<string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <!--<string name="nav_home">Home</string>-->
+    <!--<string name="nav_categories">Categories</string>-->
+    <!--<string name="nav_account">Account</string>-->
+    <!--<string name="nav_favorite">Favorite</string>-->
+    <!--<string name="nav_change_language">Change Language</string>-->
+    <!--<string name="nav_about_us">About Us</string>-->
+    <!--<string name="nav_settings">Settings</string>-->
+
+    <string name="nav_home">ទំព័រដើម</string>
+    <string name="nav_categories">ប្រភេទ</string>
+    <string name="nav_account">គណនី</string>
+    <string name="nav_favorite">រក្សាទុក</string>
+    <string name="nav_change_language">ប្តូរភាសា</string>
+    <string name="nav_about_us">អំពីពួកយើង</string>
+    <string name="nav_settings">ផ្សេងៗ</string>
+
+    <!--text-->
+    <!--<string name="text_login">Login</string>-->
+    <!--<string name="text_register">Register</string>-->
+
+    <string name="text_login">ចូលទៅគណនី</string>
+    <string name="text_register">បង្កើតគណនី</string>
+
+
+    <!--tab-->
+    <string name="tab_profile">គណនី</string>
+    <string name="tab_sold">បានលក់</string>
+    <string name="tab_new_seller">អ្នកលក់ទំនិញថ្មីៗ</string>
+    <string name="tab_new_buyer">អ្នកទិញទំនិញថ្មីៗ</string>
+    <string name="tab_sell_product">ផុសលក់</string>
+    <string name="tab_buy_product">ផុសទិញ</string>
+
 </resources>

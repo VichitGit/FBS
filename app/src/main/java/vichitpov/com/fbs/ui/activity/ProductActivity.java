@@ -32,8 +32,8 @@ public class ProductActivity extends AppCompatActivity {
         BuyProductFragment buyProductFragment = new BuyProductFragment();
 
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), this);
-        adapter.addTab(new TabModel("Sell Product", sellProductFragment));
-        adapter.addTab(new TabModel("Buy Product", buyProductFragment));
+        adapter.addTab(new TabModel(getString(R.string.tab_sell_product), sellProductFragment));
+        adapter.addTab(new TabModel(getString(R.string.tab_buy_product), buyProductFragment));
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);//set it for handle loading data again and again
         tabLayout.setupWithViewPager(viewPager);
