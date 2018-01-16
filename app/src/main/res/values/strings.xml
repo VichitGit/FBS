@@ -45,10 +45,11 @@
 
     <!--tab-->
     <string name="tab_profile">គណនី</string>
-    <string name="tab_sold">បានលក់</string>
+    <string name="tab_sold">បានផុសលក់</string>
     <string name="tab_new_seller">អ្នកលក់ទំនិញថ្មីៗ</string>
     <string name="tab_new_buyer">អ្នកទិញទំនិញថ្មីៗ</string>
     <string name="tab_sell_product">ផុសលក់</string>
     <string name="tab_buy_product">ផុសទិញ</string>
+    <string name="tab_bought">បានផុសទិញ</string>
 
 </resources>

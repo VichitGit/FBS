@@ -2,7 +2,6 @@ package vichitpov.com.fbs.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -13,10 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.TabAdapter;
 import vichitpov.com.fbs.model.TabModel;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View navHeaderView = navigationView.getHeaderView(0);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        final FabSpeedDial fab = findViewById(R.id.fab_speed_dial);
         Toolbar toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         viewPager = findViewById(R.id.view_pager_recent);
@@ -53,10 +52,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setUpTabLayout();
 
         navigationView.setNavigationItemSelectedListener(this);
-        fab.setOnClickListener(this);
         textLogin.setOnClickListener(this);
         textRegister.setOnClickListener(this);
+        fab.setMenuListener(new SimpleMenuListenerAdapter() {
+            @Override
+            public boolean onMenuItemSelected(MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.action_post_buy) {
+
+                    startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
+
+                } else {
+
+                    startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
+                }
+
+                return false;
+            }
+        });
     }
+
 
     private void setUpTabLayout() {
         SellerRecentItemFragment sellerRecentItemFragment = new SellerRecentItemFragment();
@@ -72,9 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.fab:
-                startActivity(new Intent(getApplicationContext(), ProductActivity.class));
-                break;
             case R.id.text_login:
                 startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
                 break;
@@ -105,6 +116,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_account:
                 startActivity(new Intent(this, UserProfileActivity.class));
+                break;
+            case R.id.nav_save_category:
+                startActivity(new Intent(this, BookmarkCategoriesActivity.class));
                 break;
             case R.id.nav_favorite:
                 break;

@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_5"
@@ -22,7 +22,8 @@
             <ImageView
                 android:id="@+id/image_thumbnail"
                 android:layout_width="120dp"
-                android:layout_height="95dp"
+                android:layout_height="115dp"
+
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_test" />
@@ -30,6 +31,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:layout_marginStart="@dimen/dp_10"
                 android:orientation="vertical">
 
@@ -43,48 +45,47 @@
                     android:maxLines="2"
                     android:text="I want the caller photo to be displayed full screen. "
                     android:textColor="@color/colorHintIcon"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.1dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:background="@color/colorHint" />
 
                 <TextView
                     android:id="@+id/text_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="Address: Phnom Penh"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="normal|bold" />
 
                 <TextView
                     android:id="@+id/text_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="Price: 200$ - 350$"
                     android:textColor="@color/colorRed"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="normal|bold" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.1dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="5dp"
                     android:background="@color/colorHint" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_height="match_parent"
                     android:weightSum="2">
 
                     <TextView
@@ -94,13 +95,25 @@
                         android:layout_weight="2"
                         android:gravity="center_vertical"
                         android:text="Category: Phone"
-                        android:textSize="8sp"
+                        android:textSize="10sp"
                         android:textStyle="normal|bold" />
+
+
+                    <ImageView
+                        android:id="@+id/image_contact_notification"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_notification" />
 
                     <ImageView
                         android:id="@+id/image_un_selected_favorite"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_gravity="center"
+
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_un_selected_favorite" />
 

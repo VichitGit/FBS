@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_post_sell"
+        android:icon="@drawable/ic_settings"
+        android:title="ផុសលក់" />
+    <item
+        android:id="@+id/action_post_buy"
+        android:icon="@drawable/ic_location"
+        android:title="ផុសទិញ" />
+</menu>

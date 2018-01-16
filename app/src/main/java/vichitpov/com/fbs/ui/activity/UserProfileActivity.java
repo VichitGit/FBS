@@ -45,7 +45,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), this);
         adapter.addTab(new TabModel(getString(R.string.tab_profile), profileFragment));
-//        adapter.addTab(new TabModel("Bought", profileBoughtFragment));
+        adapter.addTab(new TabModel(getString(R.string.tab_bought), profileBoughtFragment));
         adapter.addTab(new TabModel(getString(R.string.tab_sold), profileSoldFragment));
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);

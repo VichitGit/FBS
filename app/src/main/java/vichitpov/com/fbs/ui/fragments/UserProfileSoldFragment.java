@@ -25,7 +25,7 @@ public class UserProfileSoldFragment extends Fragment {
 
 
     public UserProfileSoldFragment() {
-        // Required empty public constructor
+
     }
 
 

@@ -20,6 +20,11 @@
             android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_favorite"
             android:title="@string/nav_favorite" />
+        <item
+            android:id="@+id/nav_save_category"
+            android:icon="@drawable/ic_save_category"
+            android:title="កំណត់ប្រភេទ"
+            />
     </group>
 
     <group
