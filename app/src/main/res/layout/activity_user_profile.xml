@@ -7,7 +7,7 @@
     tools:context=".ui.activity.UserProfileActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
+        android:id="@+id/appbar_profile"
         android:layout_width="match_parent"
         android:layout_height="265dp"
         android:background="@color/colorPrimaryDark"
@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
@@ -25,7 +26,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="50dp"
+                android:padding="20dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/image_profile"

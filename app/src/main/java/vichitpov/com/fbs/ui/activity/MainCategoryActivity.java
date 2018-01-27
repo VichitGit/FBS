@@ -41,6 +41,21 @@ public class MainCategoryActivity extends AppCompatActivity implements View.OnCl
         categoriesList.add(new CategoriesModel("Sport", "123"));
         categoriesList.add(new CategoriesModel("Shirt", "123"));
         categoriesList.add(new CategoriesModel("Shirt", "123"));
+        categoriesList.add(new CategoriesModel("Sport", "123"));
+        categoriesList.add(new CategoriesModel("Shirt", "123"));
+        categoriesList.add(new CategoriesModel("Shirt", "123"));
+
+        categoriesList.add(new CategoriesModel("Sport", "123"));
+        categoriesList.add(new CategoriesModel("Shirt", "123"));
+        categoriesList.add(new CategoriesModel("Shirt", "123"));
+
+        categoriesList.add(new CategoriesModel("Sport", "123"));
+        categoriesList.add(new CategoriesModel("Shirt", "123"));
+        categoriesList.add(new CategoriesModel("Shirt", "123"));
+        categoriesList.add(new CategoriesModel("Sport", "123"));
+        categoriesList.add(new CategoriesModel("Shirt", "123"));
+        categoriesList.add(new CategoriesModel("Shirt", "123"));
+
 
 
         CategoryAdapter adapter = new CategoryAdapter(categoriesList, getApplicationContext());

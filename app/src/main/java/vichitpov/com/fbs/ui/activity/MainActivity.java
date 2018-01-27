@@ -2,17 +2,26 @@ package vichitpov.com.fbs.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
@@ -26,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private TextView textLogin, textRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +43,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View navHeaderView = navigationView.getHeaderView(0);
-        final FabSpeedDial fab = findViewById(R.id.fab_speed_dial);
+        FabSpeedDial fab = findViewById(R.id.fab_speed_dial);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
         drawer = findViewById(R.id.drawer_layout);
         viewPager = findViewById(R.id.view_pager_recent);
         tabLayout = findViewById(R.id.tab_layout_recent);
-        textLogin = navHeaderView.findViewById(R.id.text_login);
-        textRegister = navHeaderView.findViewById(R.id.text_register);
+
+        TextView textLogin = navHeaderView.findViewById(R.id.text_login);
+        TextView textRegister = navHeaderView.findViewById(R.id.text_register);
 
 
         setSupportActionBar(toolbar);
@@ -71,6 +81,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.text_login:
+                startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+                break;
+            case R.id.text_register:
+                startActivity(new Intent(getApplicationContext(), RegisterUserActivity.class));
+                break;
+        }
+    }
+
 
     private void setUpTabLayout() {
         SellerRecentItemFragment sellerRecentItemFragment = new SellerRecentItemFragment();
@@ -84,29 +106,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.text_login:
-                startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
-                break;
-            case R.id.text_register:
-                startActivity(new Intent(getApplicationContext(), RegisterUserActivity.class));
-                break;
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        return true;
+
     }
 
     @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_search) {
+            startActivity(new Intent(getApplicationContext(), SearchProductActivity.class));
         }
+        return super.onOptionsItemSelected(item);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_home:
@@ -119,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_save_category:
                 startActivity(new Intent(this, BookmarkCategoriesActivity.class));
+                break;
+            case R.id.nav_logout:
+                logoutUser();
                 break;
             case R.id.nav_favorite:
                 break;
@@ -134,9 +154,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    private void logoutUser() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
+        dialogBuilder.setView(dialogView);
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        TextView textTitle = dialogView.findViewById(R.id.text_title);
+        TextView textMessage = dialogView.findViewById(R.id.text_message);
+        TextView textLogout = dialogView.findViewById(R.id.text_logout);
+        TextView textCancel = dialogView.findViewById(R.id.text_cancel);
+
+        textCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+
+        textLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                Toast.makeText(MainActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
 }
-
 
 
 

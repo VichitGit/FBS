@@ -5,13 +5,29 @@
     android:orientation="vertical"
     tools:context="vichitpov.com.fbs.ui.fragments.UserProfileFragment">
 
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_5"
-        android:layout_marginTop="@dimen/dp_5"
-        android:text="Personal Detail"
-        android:textColor="@color/colorBlack" />
+        android:layout_marginTop="@dimen/dp_5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal Detail"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
+            android:id="@+id/text_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Edit Profile"
+            android:textColor="@color/colorBlack" />
+
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -56,6 +72,7 @@
             android:layout_marginStart="@dimen/dp_8"
             android:layout_toEndOf="@+id/view2"
             android:background="@null"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:text="ឈ្មោះ: VICHIT POV"
             android:textSize="13sp" />
@@ -94,6 +111,7 @@
             android:layout_marginStart="@dimen/dp_8"
             android:layout_toEndOf="@+id/view4"
             android:background="@null"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:text="ទំនាក់ទំនង: 093 795 224"
             android:textSize="13sp" />
@@ -106,6 +124,7 @@
             android:layout_below="@+id/view4"
             android:layout_marginBottom="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_5"
+            android:enabled="false"
             android:src="@drawable/ic_email"
             android:tint="@color/colorHint" />
 
@@ -132,6 +151,7 @@
             android:layout_below="@id/view4"
             android:layout_marginStart="@dimen/dp_8"
             android:layout_toEndOf="@+id/view4"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:text="អ៊ីម៉ែល: v.vichtpov@gmail.com"
             android:textSize="13sp" />
@@ -164,7 +184,8 @@
             android:layout_below="@id/icon_email"
             android:background="@color/colorHint" />
 
-        <EditText
+
+        <TextView
             android:id="@+id/text_address"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -172,6 +193,7 @@
             android:layout_marginStart="@dimen/dp_8"
             android:layout_toEndOf="@+id/view4"
             android:background="@null"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:text="អាសយដ្ឋាន: Phnom Penh"
             android:textSize="13sp" />
@@ -187,15 +209,16 @@
             android:background="@color/colorHint" />
 
         <Button
+            android:id="@+id/button_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/view10"
             android:layout_marginTop="@dimen/dp_10"
             android:background="@color/colorPrimary"
             android:text="កែប្រែ"
-            android:textSize="@dimen/sp_15"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_15" />
 
 
     </RelativeLayout>

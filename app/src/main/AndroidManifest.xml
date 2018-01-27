@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vichitpov.com.fbs">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_fbs_launcher"
@@ -27,7 +30,15 @@
         <activity android:name=".ui.activity.MainCategoryActivity" />
         <activity android:name=".ui.activity.UserProfileActivity" />
         <activity android:name=".ui.activity.PostToBuyActivity" />
-        <activity android:name=".ui.activity.BookmarkCategoriesActivity"></activity>
+        <activity android:name=".ui.activity.BookmarkCategoriesActivity" />
+        <activity android:name=".ui.activity.DetailProductSellerActivity"></activity>
+
+        <!-- Google Map Meta -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_map_api_key" />
+        <!-- Close Google Map -->
+        <activity android:name=".ui.activity.SearchProductActivity"></activity>
     </application>
 
 </manifest>

@@ -7,10 +7,40 @@
     android:orientation="vertical"
     tools:context="vichitpov.com.fbs.ui.activity.RegisterUserActivity">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:background="@drawable/background_header_register" />
+        android:background="@color/colorHint"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="FAST BUY AND SELL"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_20" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="FREE SELL AND BUY IN CAMBODIA"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Register"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/sp_20" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +59,6 @@
             android:layout_weight="2"
             android:background="@drawable/background_edit_text"
             android:drawablePadding="15dp"
-
             android:drawableTint="@color/colorHint"
             android:gravity="center_vertical"
             android:hint="@string/first_name"
@@ -42,12 +71,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:padding="@dimen/dp_10"
             android:background="@drawable/background_edit_text"
             android:drawablePadding="15dp"
             android:drawableTint="@color/colorHint"
             android:gravity="center_vertical"
             android:hint="@string/last_name"
+            android:padding="@dimen/dp_10"
             android:paddingStart="10dp"
             android:textSize="12sp" />
     </LinearLayout>
@@ -109,8 +138,8 @@
         android:paddingStart="@dimen/dp_10"
         android:textSize="12sp" />
 
-    <AutoCompleteTextView
-        android:id="@+id/edit_location"
+    <TextView
+        android:id="@+id/text_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"

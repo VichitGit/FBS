@@ -20,22 +20,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:contentInsetEnd="@dimen/dp_10"
-                app:contentInsetLeft="@dimen/dp_5"
-                app:contentInsetStart="@dimen/dp_10"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <ImageView
                     android:id="@+id/image_back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_10"
                     android:src="@drawable/ic_back" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Bookmark "
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/sp_20" />

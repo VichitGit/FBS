@@ -23,8 +23,11 @@
         <item
             android:id="@+id/nav_save_category"
             android:icon="@drawable/ic_save_category"
-            android:title="កំណត់ប្រភេទ"
-            />
+            android:title="@string/nav_bookmark_categories" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/nav_logout" />
     </group>
 
     <group

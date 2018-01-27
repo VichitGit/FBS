@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorWhite"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,20 +41,44 @@
             android:textColor="@color/colorRed"
             android:textSize="@dimen/sp_12" />
 
+        <!--notification-->
+
         <ImageView
+            android:id="@+id/image_un_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_toStartOf="@+id/image_arrow"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/ic_notification"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/image_selected_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_toStartOf="@+id/image_arrow"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/ic_notification"
+            android:tint="@color/colorRed" />
+
+        <!--close notification-->
+        <ImageView
+            android:id="@+id/image_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_8"
             android:src="@drawable/ic_arrow" />
 
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginRight="@dimen/dp_8"
             android:layout_alignBottom="@+id/image_icon_category"
+            android:layout_marginEnd="@dimen/dp_8"
             android:layout_toEndOf="@+id/image_icon_category"
             android:background="@color/colorHint" />
 

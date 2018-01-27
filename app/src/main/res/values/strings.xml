@@ -1,31 +1,23 @@
 <resources>
     <string name="app_name">FBS</string>
+    <string name="google_map_api_key">AIzaSyAYOxGbk2y5b6TblCSHbbgs3zcS5meuTrE</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">ការកំណត់</string>
     <string name="more_location">More Location</string>
-    <string name="location">Location</string>
-    <string name="email">Email</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="gender">Gender</string>
-    <string name="last_name">Last Name</string>
-    <string name="first_name">First Name</string>
-    <string name="code">Code</string>
+    <string name="location">ទីតាំង</string>
+    <string name="email">អ៊ីម៉ែល</string>
+    <string name="phone_number">លេខទូរស័ព្ទ</string>
+    <string name="gender">ភេទ</string>
+    <string name="last_name">នាមត្រកូល</string>
+    <string name="first_name">ឈ្មោះ</string>
+    <string name="code">លេខសម្ងាត់</string>
     <string name="submit">Submit</string>
     <string name="verification_code">Verification Code</string>
     <string name="text_sent_code">We sent 4 code to your phone number. Please enter your code from your message into box below</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <!--<string name="hello_blank_fragment">Hello blank fragment</string>-->
-    <!--<string name="nav_home">Home</string>-->
-    <!--<string name="nav_categories">Categories</string>-->
-    <!--<string name="nav_account">Account</string>-->
-    <!--<string name="nav_favorite">Favorite</string>-->
-    <!--<string name="nav_change_language">Change Language</string>-->
-    <!--<string name="nav_about_us">About Us</string>-->
-    <!--<string name="nav_settings">Settings</string>-->
 
     <string name="nav_home">ទំព័រដើម</string>
     <string name="nav_categories">ប្រភេទ</string>
@@ -35,9 +27,6 @@
     <string name="nav_about_us">អំពីពួកយើង</string>
     <string name="nav_settings">ផ្សេងៗ</string>
 
-    <!--text-->
-    <!--<string name="text_login">Login</string>-->
-    <!--<string name="text_register">Register</string>-->
 
     <string name="text_login">ចូលទៅគណនី</string>
     <string name="text_register">បង្កើតគណនី</string>
@@ -51,5 +40,12 @@
     <string name="tab_sell_product">ផុសលក់</string>
     <string name="tab_buy_product">ផុសទិញ</string>
     <string name="tab_bought">បានផុសទិញ</string>
+
+
+    <!--text-->
+    <string name="text_product">ផលិតផល</string>
+    <string name="text_price">តម្លៃ:</string>
+    <string name="nav_bookmark_categories">កំណត់ប្រភេទ</string>
+    <string name="nav_logout">ចាកចេញ</string>
 
 </resources>
