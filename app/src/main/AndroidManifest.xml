@@ -16,13 +16,11 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".ui.activity.StartLoginActivity" />
         <activity android:name=".ui.activity.LoginDifferentActivity" />
@@ -34,17 +32,16 @@
         <activity android:name=".ui.activity.PostToBuyActivity" />
         <activity android:name=".ui.activity.BookmarkCategoriesActivity" />
         <activity android:name=".ui.activity.DetailProductSellerActivity" />
+        <activity android:name=".ui.activity.SearchProductActivity" />
+        <activity android:name=".ui.activity.EditUserProfileActivity" />
+        <activity android:name=".ui.activity.SettingsActivity"/>
 
         <!-- Google Map Meta -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api_key" />
         <!-- Close Google Map -->
-        <activity android:name=".ui.activity.SearchProductActivity" />
-        <activity android:name=".ui.activity.EditUserProfileActivity" />
-        <activity android:name=".ui.activity.TestPPPPPPPPPPPPPPPPPPActivity">
 
-        </activity>
     </application>
 
 </manifest>

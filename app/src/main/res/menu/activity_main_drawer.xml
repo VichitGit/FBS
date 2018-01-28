@@ -20,14 +20,7 @@
             android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_favorite"
             android:title="@string/nav_favorite" />
-        <item
-            android:id="@+id/nav_save_category"
-            android:icon="@drawable/ic_save_category"
-            android:title="@string/nav_bookmark_categories" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_logout"
-            android:title="@string/nav_logout" />
+
     </group>
 
     <group
@@ -45,6 +38,11 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/nav_settings" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/nav_logout" />
 
     </group>
 
