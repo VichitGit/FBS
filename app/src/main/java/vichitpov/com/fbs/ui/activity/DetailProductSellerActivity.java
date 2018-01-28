@@ -2,6 +2,7 @@ package vichitpov.com.fbs.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -9,12 +10,15 @@ import technolifestyle.com.imageslider.FlipperLayout;
 import technolifestyle.com.imageslider.FlipperView;
 import vichitpov.com.fbs.R;
 
-public class DetailProductSellerActivity extends AppCompatActivity {
+public class DetailProductSellerActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product_seller);
+
+        ImageView imageBack = findViewById(R.id.image_back);
+        imageBack.setOnClickListener(this);
 
         FlipperLayout flipperLayout = findViewById(R.id.flipper_layout_image);
         int num_of_pages = 3;
@@ -44,4 +48,8 @@ public class DetailProductSellerActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        finish();
+    }
 }

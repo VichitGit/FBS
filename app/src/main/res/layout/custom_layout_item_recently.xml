@@ -107,22 +107,6 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_notification" />
 
-                    <ImageView
-                        android:id="@+id/image_un_selected_favorite"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_un_selected_favorite" />
-
-                    <ImageView
-                        android:id="@+id/image_selected_favorite"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_selected_favorite"
-                        android:visibility="gone" />
                 </LinearLayout>
 
             </LinearLayout>

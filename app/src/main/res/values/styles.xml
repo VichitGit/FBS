@@ -7,7 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorBackgroundLayout</item>
-        <!--<item name="android:textCursorDrawable">@color/colorBlack</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,18 +15,10 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-
+        <item name="android:textCursorDrawable">@drawable/color_cursor_white</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <!--<item name="android:textColor">@color/colorWhite</item>-->
-        <item name="android:textCursorDrawable">@color/colorBlack</item>
-        <!--<item name="android:iconTint" tools:targetApi="o">@color/colorWhite</item>-->
-    </style>
 
-    <!--<style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">-->
-    <!--<item name="android:textSize">14sp</item>-->
-    <!--<item name="android:textStyle">normal</item>-->
-    <!--</style>style-->
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

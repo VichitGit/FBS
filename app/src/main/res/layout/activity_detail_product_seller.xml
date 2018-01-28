@@ -1,77 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
+    android:orientation="vertical"
     tools:context="vichitpov.com.fbs.ui.activity.DetailProductSellerActivity">
 
-    <ScrollView
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:contentInsetEnd="@dimen/dp_10"
+            app:contentInsetLeft="@dimen/dp_5"
+            app:contentInsetStart="@dimen/dp_10"
+            app:layout_scrollFlags="enterAlways|scroll|snap"
+            app:popupTheme="@style/AppTheme.NoActionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <ImageView
+                    android:id="@+id/image_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_product"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sp_20" />
+
+
+                <ImageView
+                    android:id="@+id/image_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_10"
+                    android:src="@drawable/ic_favorite" />
+
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay"
-                app:elevation="0dp">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    app:contentInsetEnd="@dimen/dp_10"
-                    app:contentInsetLeft="@dimen/dp_5"
-                    app:contentInsetStart="@dimen/dp_10"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <ImageView
-                            android:id="@+id/image_back"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_back" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="15dp"
-                            android:layout_weight="3"
-                            android:gravity="center_vertical"
-                            android:text="@string/text_product"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/sp_20" />
-
-
-                        <ImageView
-                            android:id="@+id/image_favorite"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:padding="@dimen/dp_10"
-                            android:src="@drawable/ic_favorite" />
-
-
-                    </LinearLayout>
-
-
-                </android.support.v7.widget.Toolbar>
-
-            </android.support.design.widget.AppBarLayout>
 
             <technolifestyle.com.imageslider.FlipperLayout
                 android:id="@+id/flipper_layout_image"
@@ -214,13 +216,14 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="40sp" />
 
-
             </LinearLayout>
+
 
         </LinearLayout>
 
-    </ScrollView>
-</FrameLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
 
 
 

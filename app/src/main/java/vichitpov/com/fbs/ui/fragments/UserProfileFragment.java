@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -56,7 +55,6 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
-
             startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
@@ -68,12 +66,12 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getActivity(), data);
-                String address = String.format(place.getAddress().toString());
+                String address = place.getAddress().toString();
 
                 Log.e("pppp Address: ", address);
                 Log.e("pppp ID:", place.getId());
-                Log.e("pppp Latitude:", place.getLatLng().latitude+"");
-                Log.e("pppp Longitude:", place.getLatLng().longitude+"");
+                Log.e("pppp Latitude:", place.getLatLng().latitude + "");
+                Log.e("pppp Longitude:", place.getLatLng().longitude + "");
                 Log.e("pppp PhoneNumber:", place.getPhoneNumber().toString());
                 Log.e("pppp PlaceTypes:", place.getPlaceTypes().toString());
 

@@ -45,6 +45,7 @@
     <!--text-->
     <string name="text_product">ផលិតផល</string>
     <string name="text_price">តម្លៃ:</string>
+    <string name="text_edit">កែរូប</string>
     <string name="nav_bookmark_categories">កំណត់ប្រភេទ</string>
     <string name="nav_logout">ចាកចេញ</string>
 
