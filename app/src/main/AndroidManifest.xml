@@ -22,9 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.StartLoginActivity" />
-        <activity android:name=".ui.activity.LoginDifferentActivity" />
-        <activity android:name=".ui.activity.VerificationCodeActivity" />
+        <activity android:name=".ui.activity.login.StartLoginActivity" />
         <activity android:name=".ui.activity.PostToSellActivity" />
         <activity android:name=".ui.activity.MainCategoryActivity" />
         <activity android:name=".ui.activity.profile.UserProfileActivity" />
@@ -44,7 +42,8 @@
         <activity android:name=".ui.activity.profile.ProductSoldActivity" />
         <activity android:name=".ui.activity.profile.ProductBoughtActivity" />
         <activity android:name=".ui.activity.profile.RePostToSellActivity" />
-        <activity android:name=".ui.activity.profile.RePostToBuyActivity"></activity>
+        <activity android:name=".ui.activity.profile.RePostToBuyActivity" />
+        <activity android:name=".ui.activity.login.RegisterUserActivity"></activity>
     </application>
 
 </manifest>

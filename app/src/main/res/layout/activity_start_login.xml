@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="vichitpov.com.fbs.ui.activity.StartLoginActivity">
+    tools:context="vichitpov.com.fbs.ui.activity.login.StartLoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,88 +47,65 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_5"
-        android:layout_marginRight="@dimen/dp_5"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:layout_alignParentBottom="true">
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:background="@color/colorHint" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerHorizontal="true"
-                android:src="@color/colorPrimary"
-                app:civ_border_color="@color/colorBlack"
-                app:civ_border_width="0.5dp" />
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/textLoginPhone"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Login"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_10" />
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:text="Login Phone "
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/sp_20" />
 
-        </RelativeLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorHint" />
+
+
+            <TextView
+                android:id="@+id/textLoginEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:text="Login Email"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/sp_20" />
+        </LinearLayout>
+
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/linear"
             android:background="@color/colorHint" />
 
-    </LinearLayout>
 
+    </RelativeLayout>
 
-    <EditText
-        android:id="@+id/editPhoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/background_edit_text"
-        android:hint="@string/text_phone_number"
-        android:padding="@dimen/dp_15"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/sp_15"
-        tools:ignore="TextFields" />
-
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="35dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/background_login_type"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/text_login_different"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/text_login_email"
-            android:textColor="@color/colorPrimaryDark" />
-
-
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
