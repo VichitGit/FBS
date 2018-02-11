@@ -4,7 +4,6 @@ package vichitpov.com.fbs.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter.RecentPostAdapter;
+import vichitpov.com.fbs.adapter.RecentSellerPostAdapter;
 import vichitpov.com.fbs.model.UserModel;
 
 /**
@@ -67,7 +66,7 @@ public class SellerRecentItemFragment extends Fragment {
         postList.add(new UserModel("I want the sell sumsung s7 plush with power blank.", "Phnom Penh", 300, "Phone"));
         postList.add(new UserModel("I want the sell sumsung s7 plush with power blank.", "Phnom Penh", 300, "Phone"));
 
-        RecentPostAdapter adapter = new RecentPostAdapter(getActivity(), postList);
+        RecentSellerPostAdapter adapter = new RecentSellerPostAdapter(getActivity(), postList);
         recyclerView.setAdapter(adapter);
 
 

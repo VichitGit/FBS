@@ -18,19 +18,19 @@ import vichitpov.com.fbs.ui.activity.DetailProductSellerActivity;
  * Created by VichitPov on 1/1/2018.
  */
 
-public class RecentPostAdapter extends RecyclerView.Adapter<RecentPostAdapter.RecentPostViewHolder> {
+public class RecentBuyerPostAdapter extends RecyclerView.Adapter<RecentBuyerPostAdapter.RecentPostViewHolder> {
 
     private Context context;
     private List<UserModel> postList;
 
-    public RecentPostAdapter(Context context, List<UserModel> postList) {
+    public RecentBuyerPostAdapter(Context context, List<UserModel> postList) {
         this.context = context;
         this.postList = postList;
     }
 
     @Override
     public RecentPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_item_recently, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_product_buyer_recently, parent, false);
         return new RecentPostViewHolder(view);
     }
 

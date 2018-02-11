@@ -1,6 +1,7 @@
 package vichitpov.com.fbs.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,24 +12,25 @@ import java.util.List;
 
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.model.UserModel;
+import vichitpov.com.fbs.ui.activity.DetailProductSellerActivity;
 
 /**
  * Created by VichitPov on 1/1/2018.
  */
 
-public class UserBoughtAdapter extends RecyclerView.Adapter<UserBoughtAdapter.RecentPostViewHolder> {
+public class RecentSellerPostAdapter extends RecyclerView.Adapter<RecentSellerPostAdapter.RecentPostViewHolder> {
 
     private Context context;
     private List<UserModel> postList;
 
-    public UserBoughtAdapter(Context context, List<UserModel> postList) {
+    public RecentSellerPostAdapter(Context context, List<UserModel> postList) {
         this.context = context;
         this.postList = postList;
     }
 
     @Override
     public RecentPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_user_post_buy, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_product_seller_recently_, parent, false);
         return new RecentPostViewHolder(view);
     }
 
@@ -38,7 +40,7 @@ public class UserBoughtAdapter extends RecyclerView.Adapter<UserBoughtAdapter.Re
         holder.title.setText(userModel.getTitle());
         holder.address.setText("Address: " + userModel.getAddress());
         holder.price.setText("Price: " + userModel.getPrice() + "$");
-        holder.textStatus.setText(userModel.getStatus());
+        holder.category.setText("Category: " + userModel.getCategory());
 
     }
 
@@ -49,18 +51,25 @@ public class UserBoughtAdapter extends RecyclerView.Adapter<UserBoughtAdapter.Re
         return 0;
     }
 
-    class RecentPostViewHolder extends RecyclerView.ViewHolder {
-        private TextView title, address, category, price, textStatus;
+    class RecentPostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView title, address, category, price;
 
         RecentPostViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.text_title);
             address = itemView.findViewById(R.id.text_address);
+            category = itemView.findViewById(R.id.text_category);
             price = itemView.findViewById(R.id.text_price);
-            textStatus = itemView.findViewById(R.id.text_status);
+
+            itemView.setOnClickListener(this);
 
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            context.startActivity(new Intent(context, DetailProductSellerActivity.class));
         }
     }
 

@@ -8,8 +8,10 @@ public class UserModel {
 
     private String title;
     private String address;
-    private int price;
     private String category;
+    private String status;
+    private int price;
+
 
     public UserModel(String title, String address, int price) {
         this.title = title;
@@ -23,6 +25,23 @@ public class UserModel {
         this.address = address;
         this.price = price;
         this.category = category;
+    }
+
+    public UserModel(String title, String address, int price, String category, String status) {
+        this.title = title;
+        this.address = address;
+        this.price = price;
+        this.category = category;
+        this.status = status;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getTitle() {

@@ -1,10 +1,7 @@
-package vichitpov.com.fbs.ui.activity;
+package vichitpov.com.fbs.ui.activity.profile;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,21 +14,22 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import vichitpov.com.fbs.R;
 
-public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditUserProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView textAddress;
     private int PLACE_PICKER_REQUEST = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_user);
+        setContentView(R.layout.activity_edit_user_profile);
 
-        textAddress = findViewById(R.id.text_location);
+        textAddress = findViewById(R.id.text_address);
+
         textAddress.setOnClickListener(this);
 
 
     }
+
 
     @Override
     public void onClick(View view) {
@@ -40,6 +38,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
             startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
+            //Log.e("pppp", e.getMessage());
         }
     }
 
@@ -47,8 +46,8 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(this, data);
-                String address = String.format(place.getAddress().toString());
+                Place place = PlacePicker.getPlace(getApplicationContext(), data);
+                String address = place.getAddress().toString();
 
                 Log.e("pppp Address: ", address);
                 Log.e("pppp ID:", place.getId());
@@ -61,5 +60,4 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
             }
         }
     }
-
 }

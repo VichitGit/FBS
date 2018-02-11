@@ -1,8 +1,11 @@
 package vichitpov.com.fbs.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -19,11 +22,18 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
+import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
+import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
+
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.TabAdapter;
 import vichitpov.com.fbs.model.TabModel;
+import vichitpov.com.fbs.ui.activity.profile.RePostToBuyActivity;
+import vichitpov.com.fbs.ui.activity.profile.RePostToSellActivity;
+import vichitpov.com.fbs.ui.activity.profile.UserProfileActivity;
 import vichitpov.com.fbs.ui.fragments.BuyerRecentItemFragment;
 import vichitpov.com.fbs.ui.fragments.SellerRecentItemFragment;
 
@@ -39,7 +49,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View navHeaderView = navigationView.getHeaderView(0);
-        FabSpeedDial fab = findViewById(R.id.fab_speed_dial);
+        //FabSpeedDial fab = findViewById(R.id.fab_speed_dial);
+        FloatingActionButton fab = findViewById(R.id.fab);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
@@ -60,21 +72,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         textLogin.setOnClickListener(this);
         textRegister.setOnClickListener(this);
-        fab.setMenuListener(new SimpleMenuListenerAdapter() {
+//        fab.setMenuListener(new SimpleMenuListenerAdapter() {
+//            @Override
+//            public boolean onMenuItemSelected(MenuItem menuItem) {
+//                if (menuItem.getItemId() == R.id.action_post_buy) {
+//
+//                    startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
+//
+//                } else {
+//
+//                    startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
+//                }
+//
+//
+//                return false;
+//            }
+//        });
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemSelected(MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.action_post_buy) {
-
-                    startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
-
-                } else {
-
-                    startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
-                }
-
-                return false;
+            public void onClick(View view) {
+                dialogBottom();
             }
         });
+
+
     }
 
     @Override
@@ -185,6 +206,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void dialogBottom() {
+        @SuppressLint("ResourceAsColor") BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
+                .setMode(BottomSheetBuilder.MODE_LIST)
+                .setIconTintColorResource(R.color.colorPrimary)
+                .setItemTextColor(R.color.colorPrimary)
+                .setMenu(R.menu.menu_dialog_post)
+                .setItemClickListener(new BottomSheetItemClickListener() {
+                    @Override
+                    public void onBottomSheetItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.dialog_bottom_post_to_buy) {
+                            startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
+                        } else if (item.getItemId() == R.id.dialog_bottom_post_to_sell) {
+                            startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
+                        }
+
+                    }
+                })
+                .createDialog();
+
+        dialog.show();
     }
 
 

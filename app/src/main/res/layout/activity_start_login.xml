@@ -20,7 +20,7 @@
             android:layout_height="120dp"
             android:layout_centerHorizontal="true"
             android:src="@color/colorPrimary"
-            app:civ_border_color="#000"
+            app:civ_border_color="@color/colorBlack"
             app:civ_border_width="0.5dp" />
 
         <TextView
@@ -28,37 +28,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/image_profile"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:gravity="center"
-            android:text="FAST BUY AND SELL"
+            android:text="Norton E-Commerce"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:id="@+id/text_sub_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_title"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:gravity="center"
-            android:text="FREE SELL AND BUY IN CAMBODIA"
+            android:text="NORTON E-COMMERCE IN CAMBODIA"
             android:textColor="@color/colorHint"
-            android:textSize="10sp" />
+            android:textSize="@dimen/sp_10" />
 
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_5"
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
         android:weightSum="4">
 
         <View
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_weight="2"
@@ -74,7 +74,7 @@
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:src="@color/colorPrimary"
-                app:civ_border_color="#000"
+                app:civ_border_color="@color/colorBlack"
                 app:civ_border_width="0.5dp" />
 
             <TextView
@@ -82,14 +82,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="Login"
-                android:textColor="#FFF"
-                android:textSize="10sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_10" />
 
         </RelativeLayout>
 
         <View
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_weight="2"
@@ -98,54 +98,37 @@
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/button_facebook_login"
+    <EditText
+        android:id="@+id/editPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/background_button_login_facebook"
-        android:text="Login with facebook"
-        android:textAllCaps="false"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/background_edit_text"
+        android:hint="@string/text_phone_number"
+        android:padding="@dimen/dp_15"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/sp_20" />
+        android:textSize="@dimen/sp_15"
+        tools:ignore="TextFields" />
 
     <LinearLayout
         android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/background_login_type"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/text_login_different"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:gravity="center"
-            android:text="Login Different"
-            android:textColor="@color/colorPrimaryDark" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/colorHint" />
-
-        <TextView
-            android:id="@+id/text_register"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Register"
+            android:text="@string/text_login_email"
             android:textColor="@color/colorPrimaryDark" />
 
 
     </LinearLayout>
-
-
 </LinearLayout>

@@ -28,7 +28,7 @@ public class UserSoldAdapter extends RecyclerView.Adapter<UserSoldAdapter.Recent
 
     @Override
     public RecentPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_user_sold, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_user_post_sold, parent, false);
         return new RecentPostViewHolder(view);
     }
 
@@ -38,6 +38,7 @@ public class UserSoldAdapter extends RecyclerView.Adapter<UserSoldAdapter.Recent
         holder.title.setText(userModel.getTitle());
         holder.address.setText("Address: " + userModel.getAddress());
         holder.price.setText("Price: " + userModel.getPrice() + "$");
+        holder.textStatus.setText(userModel.getStatus());
 
     }
 
@@ -49,7 +50,7 @@ public class UserSoldAdapter extends RecyclerView.Adapter<UserSoldAdapter.Recent
     }
 
     class RecentPostViewHolder extends RecyclerView.ViewHolder {
-        private TextView title, address, price;
+        private TextView title, address, price, textStatus;
 
         RecentPostViewHolder(View itemView) {
             super(itemView);
@@ -57,6 +58,7 @@ public class UserSoldAdapter extends RecyclerView.Adapter<UserSoldAdapter.Recent
             title = itemView.findViewById(R.id.text_title);
             address = itemView.findViewById(R.id.text_address);
             price = itemView.findViewById(R.id.text_price);
+            textStatus = itemView.findViewById(R.id.text_status);
 
 
         }

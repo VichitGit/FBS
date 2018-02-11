@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d81b60</color>
-    <color name="colorPrimaryDark">#a00037</color>
-    <color name="colorAccent">#d81b60</color>
+    <!--<color name="colorPrimary">#d81b60</color>-->
+    <!--<color name="colorPrimaryDark">#a00037</color>-->
+    <!--<color name="colorAccent">#d81b60</color>-->
+
+
+    <color name="colorPrimary">#006064</color>
+    <color name="colorPrimaryDark">#00363a</color>
+    <color name="colorAccent">#428e92</color>
+
 
     <!--color-->
     <color name="colorHint">#b4b4b4</color>
@@ -11,4 +17,6 @@
     <color name="colorBackgroundLayout">#E9ECEF</color>
     <color name="colorHintIcon">#525252</color>
     <color name="colorRed">#ff5252</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorWhite">#FFF</color>
 </resources>

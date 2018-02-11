@@ -24,17 +24,16 @@
         </activity>
         <activity android:name=".ui.activity.StartLoginActivity" />
         <activity android:name=".ui.activity.LoginDifferentActivity" />
-        <activity android:name=".ui.activity.RegisterUserActivity" />
         <activity android:name=".ui.activity.VerificationCodeActivity" />
         <activity android:name=".ui.activity.PostToSellActivity" />
         <activity android:name=".ui.activity.MainCategoryActivity" />
-        <activity android:name=".ui.activity.UserProfileActivity" />
+        <activity android:name=".ui.activity.profile.UserProfileActivity" />
         <activity android:name=".ui.activity.PostToBuyActivity" />
         <activity android:name=".ui.activity.BookmarkCategoriesActivity" />
         <activity android:name=".ui.activity.DetailProductSellerActivity" />
         <activity android:name=".ui.activity.SearchProductActivity" />
-        <activity android:name=".ui.activity.EditUserProfileActivity" />
-        <activity android:name=".ui.activity.SettingsActivity"/>
+        <activity android:name=".ui.activity.profile.EditUserProfileActivity" />
+        <activity android:name=".ui.activity.SettingsActivity" />
 
         <!-- Google Map Meta -->
         <meta-data
@@ -42,6 +41,10 @@
             android:value="@string/google_map_api_key" />
         <!-- Close Google Map -->
 
+        <activity android:name=".ui.activity.profile.ProductSoldActivity" />
+        <activity android:name=".ui.activity.profile.ProductBoughtActivity" />
+        <activity android:name=".ui.activity.profile.RePostToSellActivity" />
+        <activity android:name=".ui.activity.profile.RePostToBuyActivity"></activity>
     </application>
 
 </manifest>
