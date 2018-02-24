@@ -20,13 +20,12 @@
             android:layout_marginBottom="@dimen/dp_5"
             android:background="@color/colorWhite"
             android:stretchColumns="1"
-            app:tabBackground="@drawable/tab_selector"
             app:tabGravity="fill"
-            app:tabIndicatorHeight="0dp"
+            app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabSelectedTextColor="@color/colorBlack"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabTextColor="@color/colorBlack" />
+            app:tabTextColor="@color/colorHint" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_recent"
@@ -38,4 +37,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</LinearLayout><!--app:tabSelectedTextColor="@color/colorWhite"--><!--app:tabBackground="@drawable/tab_selector"-->

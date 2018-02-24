@@ -32,4 +32,54 @@
         <item name="behavior_skipCollapsed">true</item>
     </style>
 
+
+    <style name="EditTextInput">
+
+        <item name="android:textSize">@dimen/text_size_sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:lines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/background_layout</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:lineSpacingMultiplier">1</item>
+        <item name="android:padding">17dp</item>
+
+    </style>
+
+
+    <style name="EditTextInputWithIcon">
+        <item name="android:textSize">@dimen/text_size_sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:lines">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/background_small_layout</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:drawableTint" tools:ignore="NewApi">@color/colorHintIcon</item>
+        <item name="android:drawablePadding">@dimen/dp_10</item>
+        <item name="android:lineSpacingMultiplier">1</item>
+    </style>
+
+    <style name="ButtonPrimary">
+
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_size_button_sp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+
+    </style>
+
+
+    <style name="ImageViewUpload">
+
+        <item name="android:src">@drawable/ic_add</item>
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_marginEnd">@dimen/dp_5</item>
+
+
+    </style>
+
+
 </resources>

@@ -68,22 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         textLogin.setOnClickListener(this);
         textRegister.setOnClickListener(this);
-//        fab.setMenuListener(new SimpleMenuListenerAdapter() {
-//            @Override
-//            public boolean onMenuItemSelected(MenuItem menuItem) {
-//                if (menuItem.getItemId() == R.id.action_post_buy) {
-//
-//                    startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
-//
-//                } else {
-//
-//                    startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
-//                }
-//
-//
-//                return false;
-//            }
-//        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
                 break;
             case R.id.text_register:
-                startActivity(new Intent(getApplicationContext(), RegisterUserActivity.class));
+                //startActivity(new Intent(getApplicationContext(), RegisterUserActivity.class));
                 break;
         }
     }

@@ -1,9 +1,13 @@
 <resources>
-    <string name="app_name">FBS</string>
+    <string name="app_name">Norton E-Commerce</string>
     <string name="google_map_api_key">AIzaSyAYOxGbk2y5b6TblCSHbbgs3zcS5meuTrE</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="FACEBOOK_APP_ID">1375528659218887</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">270af008a236d14f6cdad613e09efbaa</string>
+    <string name="ak_login_protocol_scheme">ak1375528659218887</string>
 
     <!--<string name="more_location">ទីតាំងបន្ថែម</string>-->
     <!--<string name="location">ទីតាំង</string>-->

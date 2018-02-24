@@ -4,12 +4,15 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "vichitpov.com.fbs"
-        minSdkVersion 19
+        minSdkVersion 18
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "en", "fr", "pt-rBR"
     }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -37,12 +40,17 @@ dependencies {
 
     //image slider
     compile 'com.github.therealshabi:AutoImageFlipper:v1.4.1'
+    compile 'com.ss.bannerslider:bannerslider:1.8.0'
 
     //google map
-    compile 'com.google.android.gms:play-services-places:11.8.0'
+    implementation 'com.google.android.gms:play-services-places:11.8.0'
+    implementation 'com.google.android.gms:play-services-base:11.8.0'
 
     //dialog bottom
     compile 'com.github.rubensousa:bottomsheetbuilder:1.6.0'
+
+    //account kit
+    compile 'com.facebook.android:account-kit-sdk:4.30.0'
 
 
     testImplementation 'junit:junit:4.12'

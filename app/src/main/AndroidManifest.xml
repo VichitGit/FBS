@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="vichitpov.com.fbs">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_fbs_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_fbs_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="icon, label">
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".ui.activity.login.StartLoginActivity" />
-        <activity android:name=".ui.activity.PostToSellActivity" />
+        <activity android:name=".ui.activity.PostToSellActivity" >
+
+
+        </activity>
         <activity android:name=".ui.activity.MainCategoryActivity" />
-        <activity android:name=".ui.activity.profile.UserProfileActivity" />
+        <activity android:name=".ui.activity.profile.UserProfileActivity" >
+
+
+        </activity>
         <activity android:name=".ui.activity.PostToBuyActivity" />
         <activity android:name=".ui.activity.BookmarkCategoriesActivity" />
         <activity android:name=".ui.activity.DetailProductSellerActivity" />
@@ -43,7 +54,37 @@
         <activity android:name=".ui.activity.profile.ProductBoughtActivity" />
         <activity android:name=".ui.activity.profile.RePostToSellActivity" />
         <activity android:name=".ui.activity.profile.RePostToBuyActivity" />
-        <activity android:name=".ui.activity.login.RegisterUserActivity"></activity>
+        <activity android:name=".ui.activity.login.RegisterUserActivity" />
+
+        <!-- account kit -->
+
+        <meta-data
+            android:name="com.facebook.accountkit.ApplicationName"
+            android:value="@string/app_name" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FACEBOOK_APP_ID" />
+        <meta-data
+            android:name="com.facebook.accountkit.ClientToken"
+            android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+        <meta-data
+            android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
+            android:value="false" />
+
+        <activity android:name="com.facebook.accountkit.ui.AccountKitEmailRedirectActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/ak_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
+
+        <!--  -->
+
     </application>
 
 </manifest>

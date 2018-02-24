@@ -1,5 +1,6 @@
 package vichitpov.com.fbs.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -34,13 +35,13 @@ public class RecentSellerPostAdapter extends RecyclerView.Adapter<RecentSellerPo
         return new RecentPostViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecentPostViewHolder holder, int position) {
         UserModel userModel = postList.get(position);
         holder.title.setText(userModel.getTitle());
         holder.address.setText("Address: " + userModel.getAddress());
         holder.price.setText("Price: " + userModel.getPrice() + "$");
-        holder.category.setText("Category: " + userModel.getCategory());
 
     }
 
@@ -59,7 +60,6 @@ public class RecentSellerPostAdapter extends RecyclerView.Adapter<RecentSellerPo
 
             title = itemView.findViewById(R.id.text_title);
             address = itemView.findViewById(R.id.text_address);
-            category = itemView.findViewById(R.id.text_category);
             price = itemView.findViewById(R.id.text_price);
 
             itemView.setOnClickListener(this);

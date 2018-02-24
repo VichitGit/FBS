@@ -13,21 +13,40 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="160dp"
             android:background="?selectableItemBackground"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp_5"
             android:paddingStart="@dimen/dp_5"
             android:paddingTop="@dimen/dp_5">
 
-            <ImageView
-                android:id="@+id/image_thumbnail"
-                android:layout_width="130dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/dp_5"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_test" />
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/image_thumbnail"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_test" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#50006064"
+                    android:gravity="center"
+                    android:text="Norton E-Commerce"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sp_10"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,10 +62,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:ellipsize="end"
+                    android:lineSpacingExtra="2dp"
                     android:maxLines="2"
                     android:text="I want the caller photo to be displayed full screen. "
                     android:textColor="@color/colorHintIcon"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_15"
                     android:textStyle="bold" />
 
                 <View
@@ -87,18 +107,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:gravity="end"
                     android:weightSum="2">
 
-                    <TextView
-                        android:id="@+id/text_category"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:text="Category: Phone"
-                        android:textSize="12sp"
-                        android:textStyle="normal|bold" />
+
+                    <ImageView
+                        android:id="@+id/imageFavorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_favorite"
+                        android:tint="@color/colorHint" />
 
 
                     <ImageView
