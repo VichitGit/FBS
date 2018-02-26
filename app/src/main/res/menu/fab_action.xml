@@ -3,7 +3,7 @@
     <item
 
         android:id="@+id/action_post_sell"
-        android:actionLayout="@layout/nav_header_main"
+
         android:icon="@drawable/ic_settings"
         android:title="ផុសលក់" />
     <item
@@ -11,3 +11,4 @@
         android:icon="@drawable/ic_location"
         android:title="ផុសទិញ" />
 </menu>
+    <!--android:actionLayout="@layout/nav_header_main"-->

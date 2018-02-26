@@ -37,7 +37,8 @@
                 <TextView
                     android:id="@+id/text_toolbar"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/image_back"
                     android:text="@string/text_product_sold"

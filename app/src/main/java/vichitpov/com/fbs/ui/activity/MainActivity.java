@@ -115,6 +115,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
     }
 
+
     private void setUpCategoryHeader() {
         layoutManager = new GridLayoutManager(MainActivity.this, 3);
         recyclerCategoryHeader.setLayoutManager(layoutManager);
@@ -131,7 +132,7 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void setUpRecentlyBuyer() {
-        layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+        layoutManager = new GridLayoutManager(this, 1, LinearLayoutManager.HORIZONTAL, false);
         recyclerRecentlyBuyer.setLayoutManager(layoutManager);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -172,12 +173,13 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void setUpRecentlySeller() {
+
         layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
         recyclerRecentSeller.setLayoutManager(layoutManager);
 
         relativeRecentlySeller.setVisibility(View.GONE);
 
-        Call<ProductResponse> call = apiService.singlePageBuyer();
+        Call<ProductResponse> call = apiService.singlePageSeller();
         call.enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
@@ -185,18 +187,19 @@ public class MainActivity extends BaseAppCompatActivity {
 
                     RecentlySingleBuyerAdapter adapter = new RecentlySingleBuyerAdapter(getApplicationContext(), response.body().getData());
                     recyclerRecentSeller.setAdapter(adapter);
-
                     relativeRecentlySeller.setVisibility(View.VISIBLE);
 
 
                 } else {
+
                     relativeRecentlySeller.setVisibility(View.GONE);
                     Log.e("pppp", response.code() + " = " + response.message());
+
                 }
             }
 
             @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
 
                 t.printStackTrace();
                 Log.e("pppp", t.getMessage());

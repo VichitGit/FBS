@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import vichitpov.com.fbs.R;
@@ -45,6 +47,10 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
         holder.title.setText(productModel.getTitle());
         holder.price.setText(productModel.getPrice().get(0).getMin() + " - " + productModel.getPrice().get(0).getMax());
 
+        Picasso.with(context)
+                .load(R.mipmap.ic_launcher)
+                .error(R.drawable.ic_no_image)
+                .into(holder.thumbnail);
 
     }
 

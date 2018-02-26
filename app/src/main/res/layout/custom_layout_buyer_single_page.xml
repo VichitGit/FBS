@@ -9,14 +9,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp">
+        android:background="#ff0000"
+        android:layout_height="150dp">
 
         <ImageView
             android:id="@+id/imageThumbnail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_test" />
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_no_image"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/textPrice"
@@ -31,7 +32,7 @@
         <LinearLayout
             android:id="@+id/linearTitle"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/background_for_title_transparent"
             android:weightSum="6">
