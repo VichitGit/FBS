@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.adapter;
+package vichitpov.com.fbs.adapter1;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -53,7 +53,7 @@ public class RecentSellerPostAdapter extends RecyclerView.Adapter<RecentSellerPo
     }
 
     class RecentPostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView title, address, category, price;
+        private TextView title, address, price;
 
         RecentPostViewHolder(View itemView) {
             super(itemView);

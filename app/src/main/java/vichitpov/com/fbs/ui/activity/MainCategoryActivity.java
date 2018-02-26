@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter.CategoryAdapter;
+import vichitpov.com.fbs.adapter1.CategoryAdapter;
 import vichitpov.com.fbs.model.CategoriesModel;
 
 public class MainCategoryActivity extends AppCompatActivity implements View.OnClickListener {

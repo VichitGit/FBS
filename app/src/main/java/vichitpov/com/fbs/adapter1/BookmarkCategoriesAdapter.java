@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.adapter;
+package vichitpov.com.fbs.adapter1;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

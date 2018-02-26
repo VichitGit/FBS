@@ -35,12 +35,7 @@ public class DetailProductSellerActivity extends AppCompatActivity implements Vi
             view.setImageUrl(url[i])
                     .setImageScaleType(ImageView.ScaleType.CENTER_CROP) //You can use any ScaleType
                     .setDescription("Description")
-                    .setOnFlipperClickListener(new FlipperView.OnFlipperClickListener() {
-                        @Override
-                        public void onFlipperClick(FlipperView flipperView) {
-                            Toast.makeText(getApplicationContext(), "Clicked: " + finalI, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    .setOnFlipperClickListener(flipperView -> Toast.makeText(getApplicationContext(), "Clicked: " + finalI, Toast.LENGTH_SHORT).show());
 
             flipperLayout.setScrollTimeInSec(3);
             flipperLayout.getScrollTimeInSec();

@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter.UserBoughtAdapter;
-import vichitpov.com.fbs.adapter.UserSoldAdapter;
+import vichitpov.com.fbs.adapter1.UserSoldAdapter;
 import vichitpov.com.fbs.model.UserModel;
 
 public class RePostToSellActivity extends AppCompatActivity implements View.OnClickListener {

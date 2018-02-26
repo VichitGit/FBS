@@ -82,4 +82,12 @@
     </style>
 
 
+    <style name="Tab">
+
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+
+    </style>
+
+
 </resources>

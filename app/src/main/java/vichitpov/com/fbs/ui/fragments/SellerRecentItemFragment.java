@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter.RecentSellerPostAdapter;
+import vichitpov.com.fbs.adapter1.RecentSellerPostAdapter;
 import vichitpov.com.fbs.model.UserModel;
 
 /**

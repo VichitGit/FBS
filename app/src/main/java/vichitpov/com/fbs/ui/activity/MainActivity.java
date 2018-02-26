@@ -2,191 +2,240 @@ package vichitpov.com.fbs.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
-import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import technolifestyle.com.imageslider.FlipperLayout;
+import technolifestyle.com.imageslider.FlipperView;
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter.TabAdapter;
-import vichitpov.com.fbs.model.TabModel;
-import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
+import vichitpov.com.fbs.adapter.CategoryHeaderAdapter;
+import vichitpov.com.fbs.adapter.RecentlySingleBuyerAdapter;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
+import vichitpov.com.fbs.model.CategoryHeaderModel;
+import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.retrofit.service.ApiService;
+import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activity.profile.UserProfileActivity;
-import vichitpov.com.fbs.ui.fragments.BuyerRecentItemFragment;
-import vichitpov.com.fbs.ui.fragments.SellerRecentItemFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    private DrawerLayout drawer;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+public class MainActivity extends BaseAppCompatActivity {
 
+    private RecyclerView recyclerCategoryHeader, recyclerRecentlyBuyer, recyclerRecentSeller;
+    private RecyclerView.LayoutManager layoutManager;
+    private ApiService apiService;
+    private SwipeRefreshLayout refreshLayout;
+    private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer;
+    private FlipperLayout sliderShow;
+    private FloatingActionButton floatingScroll;
+    private ScrollView scrollView;
+    private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer;
+    private ProgressBar progressBar;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        View navHeaderView = navigationView.getHeaderView(0);
-        //FabSpeedDial fab = findViewById(R.id.fab_speed_dial);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        apiService = ServiceGenerator.createService(ApiService.class);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        initView();
+        setUpSliderHeader();
+        setUpCategoryHeader();
+        setUpRecentlyBuyer();
+        setUpRecentlySeller();
+        eventListener();
 
-        drawer = findViewById(R.id.drawer_layout);
-        viewPager = findViewById(R.id.view_pager_recent);
-        tabLayout = findViewById(R.id.tab_layout_recent);
-
-        TextView textLogin = navHeaderView.findViewById(R.id.text_login);
-        TextView textRegister = navHeaderView.findViewById(R.id.text_register);
+        refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
 
 
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+    }
 
-        setUpTabLayout();
+    private void setUpSliderHeader() {
+        int num_of_pages = 3;
 
-        navigationView.setNavigationItemSelectedListener(this);
-        textLogin.setOnClickListener(this);
-        textRegister.setOnClickListener(this);
-        fab.setOnClickListener(new View.OnClickListener() {
+        String url[] = new String[]{
+                "https://s3.envato.com/files/228473424/590x300.jpg",
+                "https://kalidas365itsolutions.files.wordpress.com/2014/06/every-sale.jpg",
+                "https://microlancer.lancerassets.com/v2/services/3f/c593d0437011e6ac7853977e2e0bdc/large__original_1.jpg",
+        };
+
+        for (int i = 0; i < num_of_pages; i++) {
+            FlipperView view = new FlipperView(getBaseContext());
+            final int finalI = i;
+            view.setImageUrl(url[i])
+                    .setImageScaleType(ImageView.ScaleType.CENTER_CROP) //You can use any ScaleType
+                    .setOnFlipperClickListener(flipperView -> Toast.makeText(getApplicationContext(), "Clicked: " + finalI, Toast.LENGTH_SHORT).show());
+
+            sliderShow.setScrollTimeInSec(3);
+            sliderShow.addFlipperView(view);
+
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void eventListener() {
+        textProfile.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), UserProfileActivity.class)));
+        textSearch.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SearchProductActivity.class)));
+        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
-            public void onClick(View view) {
-                dialogBottom();
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+
+                floatingScroll.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
+        seeMoreBuyer.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), BuyerSeeMoreActivity.class)));
+
+    }
+
+    private void setUpCategoryHeader() {
+        layoutManager = new GridLayoutManager(MainActivity.this, 3);
+        recyclerCategoryHeader.setLayoutManager(layoutManager);
+
+        List<CategoryHeaderModel> modelList = new ArrayList<>();
+        modelList.add(new CategoryHeaderModel("Setting", R.drawable.ic_setting_background));
+        modelList.add(new CategoryHeaderModel("Favorite", R.drawable.ic_star_background));
+        modelList.add(new CategoryHeaderModel("Categories", R.drawable.ic_category_background));
+
+        CategoryHeaderAdapter adapter = new CategoryHeaderAdapter(getApplicationContext(), modelList);
+        recyclerCategoryHeader.setAdapter(adapter);
+
+
+    }
+
+    private void setUpRecentlyBuyer() {
+        layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+        recyclerRecentlyBuyer.setLayoutManager(layoutManager);
+        progressBar.setVisibility(View.VISIBLE);
+
+        Call<ProductResponse> call = apiService.singlePageBuyer();
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
+                if (response.isSuccessful()) {
+
+                    RecentlySingleBuyerAdapter adapter = new RecentlySingleBuyerAdapter(getApplicationContext(), response.body().getData());
+                    recyclerRecentlyBuyer.setAdapter(adapter);
+
+                    progressBar.setVisibility(View.GONE);
+                    relativeRecentlyBuyer.setVisibility(View.VISIBLE);
+
+                } else {
+
+                    progressBar.setVisibility(View.GONE);
+                    relativeRecentlyBuyer.setVisibility(View.GONE);
+                    Log.e("pppp", response.code() + " = " + response.message());
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                Log.e("pppp", t.getMessage());
+
+                progressBar.setVisibility(View.GONE);
+                relativeRecentlyBuyer.setVisibility(View.GONE);
+
+
             }
         });
 
 
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.text_login:
-                startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
-                break;
-            case R.id.text_register:
-                //startActivity(new Intent(getApplicationContext(), RegisterUserActivity.class));
-                break;
-        }
-    }
+    private void setUpRecentlySeller() {
+        layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+        recyclerRecentSeller.setLayoutManager(layoutManager);
 
+        relativeRecentlySeller.setVisibility(View.GONE);
 
-    private void setUpTabLayout() {
-        SellerRecentItemFragment sellerRecentItemFragment = new SellerRecentItemFragment();
-        BuyerRecentItemFragment buyerRecentItemFragment = new BuyerRecentItemFragment();
-        TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), this);
-        adapter.addTab(new TabModel(getString(R.string.tab_new_seller), sellerRecentItemFragment));
-        adapter.addTab(new TabModel(getString(R.string.tab_new_buyer), buyerRecentItemFragment));
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(2);//set it for handle loading data again and again
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        return true;
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_search) {
-            startActivity(new Intent(getApplicationContext(), SearchProductActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.nav_home:
-                break;
-            case R.id.nav_category:
-                startActivity(new Intent(this, MainCategoryActivity.class));
-                break;
-            case R.id.nav_account:
-                startActivity(new Intent(this, UserProfileActivity.class));
-                break;
-
-            case R.id.nav_logout:
-                logoutUser();
-                break;
-            case R.id.nav_favorite:
-                break;
-            case R.id.nav_change_language:
-                break;
-            case R.id.nav_about_us:
-                break;
-            case R.id.nav_settings:
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void logoutUser() {
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
-        dialogBuilder.setView(dialogView);
-        final AlertDialog alertDialog = dialogBuilder.create();
-
-        TextView textTitle = dialogView.findViewById(R.id.text_title);
-        TextView textMessage = dialogView.findViewById(R.id.text_message);
-        TextView textLogout = dialogView.findViewById(R.id.text_logout);
-        TextView textCancel = dialogView.findViewById(R.id.text_cancel);
-
-        textCancel.setOnClickListener(new View.OnClickListener() {
+        Call<ProductResponse> call = apiService.singlePageBuyer();
+        call.enqueue(new Callback<ProductResponse>() {
             @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
+            public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
+                if (response.isSuccessful()) {
+
+                    RecentlySingleBuyerAdapter adapter = new RecentlySingleBuyerAdapter(getApplicationContext(), response.body().getData());
+                    recyclerRecentSeller.setAdapter(adapter);
+
+                    relativeRecentlySeller.setVisibility(View.VISIBLE);
+
+
+                } else {
+                    relativeRecentlySeller.setVisibility(View.GONE);
+                    Log.e("pppp", response.code() + " = " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+
+                t.printStackTrace();
+                Log.e("pppp", t.getMessage());
+
+                relativeRecentlySeller.setVisibility(View.GONE);
+
             }
         });
-
-        textLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-                Toast.makeText(MainActivity.this, "Logout", Toast.LENGTH_SHORT).show();
-            }
-        });
-        alertDialog.show();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
+    private void initView() {
+
+        recyclerCategoryHeader = findViewById(R.id.recyclerCategories);
+        recyclerRecentlyBuyer = findViewById(R.id.recyclerRecentlyBuyer);
+        recyclerRecentSeller = findViewById(R.id.recyclerRecentlySeller);
+        refreshLayout = findViewById(R.id.swipeRefresh);
+
+        textProfile = findViewById(R.id.textProfile);
+        textSearch = findViewById(R.id.textSearch);
+        seeMoreBuyer = findViewById(R.id.textSeeMoreBuyer);
+        seeMoreSeller = findViewById(R.id.textSeeMoreSeller);
+
+        sliderShow = findViewById(R.id.headerSlideShow);
+        floatingScroll = findViewById(R.id.floatingScroll);
+        scrollView = findViewById(R.id.scrollView);
+
+        progressBar = findViewById(R.id.progressBar);
+        relativeRecentlySeller = findViewById(R.id.relativeRecentlySeller);
+        relativeRecentlyBuyer = findViewById(R.id.relativeRecentlyBuyer);
+
+        progressBar.setVisibility(View.GONE);
+        relativeRecentlySeller.setVisibility(View.GONE);
+        relativeRecentlyBuyer.setVisibility(View.GONE);
+        floatingScroll.setVisibility(View.GONE);
+
+
     }
+
 
     private void dialogBottom() {
         @SuppressLint("ResourceAsColor") BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
@@ -194,16 +243,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setIconTintColorResource(R.color.colorPrimary)
                 .setItemTextColor(R.color.colorPrimary)
                 .setMenu(R.menu.menu_dialog_post)
-                .setItemClickListener(new BottomSheetItemClickListener() {
-                    @Override
-                    public void onBottomSheetItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.dialog_bottom_post_to_buy) {
-                            startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
-                        } else if (item.getItemId() == R.id.dialog_bottom_post_to_sell) {
-                            startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
-                        }
-
+                .setItemClickListener(item -> {
+                    if (item.getItemId() == R.id.dialog_bottom_post_to_buy) {
+                        startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
+                    } else if (item.getItemId() == R.id.dialog_bottom_post_to_sell) {
+                        startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
                     }
+
                 })
                 .createDialog();
 

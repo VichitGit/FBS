@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.adapter;
+package vichitpov.com.fbs.adapter1;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +30,7 @@ public class RecentBuyerPostAdapter extends RecyclerView.Adapter<RecentBuyerPost
 
     @Override
     public RecentPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_product_buyer_recently, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_buyer_see_more, parent, false);
         return new RecentPostViewHolder(view);
     }
 

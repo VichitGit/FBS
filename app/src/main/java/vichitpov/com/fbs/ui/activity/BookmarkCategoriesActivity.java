@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter.BookmarkCategoriesAdapter;
+import vichitpov.com.fbs.adapter1.BookmarkCategoriesAdapter;
 import vichitpov.com.fbs.model.BookmarkModel;
 
 public class BookmarkCategoriesActivity extends AppCompatActivity {

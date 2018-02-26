@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.adapter;
+package vichitpov.com.fbs.adapter1;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

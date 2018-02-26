@@ -37,7 +37,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="#50006064"
+                    android:background="#99853FFF"
                     android:gravity="center"
                     android:text="Norton E-Commerce"
                     android:textColor="@color/colorWhite"
@@ -93,10 +93,12 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:padding="@dimen/dp_5"
+                    android:background="@drawable/background_radius_right_red"
                     android:text="Price: 200$ - 350$"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/colorWhite"
                     android:textSize="12sp"
-                    android:textStyle="normal|bold" />
+                    android:textStyle="normal" />
 
                 <View
                     android:layout_width="match_parent"
