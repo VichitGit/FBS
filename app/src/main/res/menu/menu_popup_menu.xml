@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/popFavorite"
+        android:title="Favorite" />
+    <item
+        android:id="@+id/popNotification"
+        android:title="Send Notificaion"
+        app:showAsAction="ifRoom" />
+</menu>

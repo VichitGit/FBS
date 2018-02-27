@@ -3,7 +3,6 @@ package vichitpov.com.fbs.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.ConvertDate;
+import vichitpov.com.fbs.base.Convert;
+import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.constant.Url;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 
@@ -27,11 +28,18 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
 
     private Context context;
     private List<ProductResponse.Data> productList;
+    private MyOnClickListener myOnClickListener;
 
-    public RecentlySingleSellerAdapter(Context context, List<ProductResponse.Data> productList) {
+    public RecentlySingleSellerAdapter(Context context) {
         this.context = context;
-        this.productList = productList;
+        productList = new ArrayList<>();
     }
+
+    public void addItem(List<ProductResponse.Data> productList) {
+        this.productList = productList;
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,11 +62,9 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
         if (productResponse.getProductimages() != null && productResponse.getCreateddate() != null && productResponse.getContactaddress() != null) {
 
             String subDate = productResponse.getCreateddate().getDate().substring(0, 10);
-            String dateConverted = ConvertDate.dateConverter(subDate);
+            String dateConverted = Convert.dateConverter(subDate);
             holder.date.setText("Posted: " + dateConverted);
             holder.address.setText(productResponse.getContactaddress());
-
-            Log.e("pppp", Url.BASE_URL + productResponse.getProductimages().get(0));
 
             Picasso.with(context)
                     .load(Url.BASE_URL + productResponse.getProductimages().get(0))
@@ -79,10 +85,17 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
     }
 
 
+    public void setOnCLickListener(MyOnClickListener myOnClickListener) {
+        if (productList != null) {
+            this.myOnClickListener = myOnClickListener;
+        }
+    }
+
+
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, price, date, address;
-        private ImageView thumbnail, notification, favorite;
+        private ImageView thumbnail, notification, favorite, more;
 
         ProductViewHolder(View itemView) {
             super(itemView);
@@ -92,8 +105,26 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
             date = itemView.findViewById(R.id.textDate);
             address = itemView.findViewById(R.id.textAddress);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            favorite = itemView.findViewById(R.id.imageFavorite);
-            notification = itemView.findViewById(R.id.imageNotification);
+            more = itemView.findViewById(R.id.imageMore);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    myOnClickListener.setOnItemClick(getAdapterPosition(), productList);
+
+                }
+            });
+
+            more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    myOnClickListener.setOnViewClick(getAdapterPosition(), view);
+
+                }
+            });
+
 
         }
     }

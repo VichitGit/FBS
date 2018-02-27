@@ -10,8 +10,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,16 +38,17 @@ import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.CategoryHeaderAdapter;
 import vichitpov.com.fbs.adapter.RecentlySingleBuyerAdapter;
 import vichitpov.com.fbs.adapter.RecentlySingleSellerAdapter;
-import vichitpov.com.fbs.adapter1.RecentSellerPostAdapter;
 import vichitpov.com.fbs.base.BaseAppCompatActivity;
+import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
+import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activity.profile.UserProfileActivity;
 
-public class MainActivity extends BaseAppCompatActivity {
+public class MainActivity extends BaseAppCompatActivity implements MyOnClickListener {
 
     private RecyclerView recyclerCategoryHeader, recyclerRecentlyBuyer, recyclerRecentSeller;
     private RecyclerView.LayoutManager layoutManager;
@@ -58,6 +61,8 @@ public class MainActivity extends BaseAppCompatActivity {
     private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer;
     private ProgressBar progressBar;
     private LinearLayout linearInternetUnavailable;
+    private RecentlySingleBuyerAdapter adapterBuyer;
+    private RecentlySingleSellerAdapter adapterSeller;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -71,22 +76,50 @@ public class MainActivity extends BaseAppCompatActivity {
         setUpSliderHeader();
         setUpCategoryHeader();
 
-        if (InternetConnection.isNetworkConnected(this)) {
+        adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
 
+        if (InternetConnection.isNetworkConnected(this)) {
             linearInternetUnavailable.setVisibility(View.GONE);
             setUpRecentlyBuyer();
             setUpRecentlySeller();
 
         } else {
-
             linearInternetUnavailable.setVisibility(View.VISIBLE);
-
         }
 
         eventListener();
+        adapterSeller.setOnCLickListener(this);
 
 
     }
+
+    @Override
+    public void setOnItemClick(int position, List<ProductResponse.Data> productList) {
+        IntentData.sendData(this, productList, position);
+
+    }
+
+    @Override
+    public void setOnViewClick(int position, View view) {
+
+        PopupMenu popup = new PopupMenu(MainActivity.this, view);
+        popup.inflate(R.menu.menu_popup_menu);
+        popup.show();
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.popFavorite) {
+
+                    Toast.makeText(MainActivity.this, "Add to favorite", Toast.LENGTH_SHORT).show();
+
+                }
+                return false;
+            }
+        });
+
+
+    }
+
 
     private void setUpSliderHeader() {
         int numOfPages = 3;
@@ -126,10 +159,10 @@ public class MainActivity extends BaseAppCompatActivity {
 
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
         seeMoreBuyer.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), BuyerSeeMoreActivity.class)));
+        seeMoreSeller.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SellerSeeMoreActivity.class)));
         refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
 
     }
-
 
     private void setUpCategoryHeader() {
         layoutManager = new GridLayoutManager(MainActivity.this, 3);
@@ -157,8 +190,8 @@ public class MainActivity extends BaseAppCompatActivity {
             public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
                 if (response.isSuccessful()) {
 
-                    RecentlySingleBuyerAdapter adapter = new RecentlySingleBuyerAdapter(getApplicationContext(), response.body().getData());
-                    recyclerRecentlyBuyer.setAdapter(adapter);
+                    adapterBuyer = new RecentlySingleBuyerAdapter(getApplicationContext(), response.body().getData());
+                    recyclerRecentlyBuyer.setAdapter(adapterBuyer);
 
                     progressBar.setVisibility(View.GONE);
                     relativeRecentlyBuyer.setVisibility(View.VISIBLE);
@@ -167,7 +200,6 @@ public class MainActivity extends BaseAppCompatActivity {
 
                     progressBar.setVisibility(View.GONE);
                     relativeRecentlyBuyer.setVisibility(View.GONE);
-                    Log.e("pppp", response.code() + " = " + response.message());
 
                 }
             }
@@ -175,7 +207,6 @@ public class MainActivity extends BaseAppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                Log.e("pppp", t.getMessage());
 
                 progressBar.setVisibility(View.GONE);
                 relativeRecentlyBuyer.setVisibility(View.GONE);
@@ -189,10 +220,8 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private void setUpRecentlySeller() {
 
-        //layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
         recyclerRecentSeller.setLayoutManager(layoutManager);
-
         relativeRecentlySeller.setVisibility(View.GONE);
 
         Call<ProductResponse> call = apiService.singlePageSeller();
@@ -201,8 +230,8 @@ public class MainActivity extends BaseAppCompatActivity {
             public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
                 if (response.isSuccessful()) {
 
-                    RecentlySingleSellerAdapter adapter = new RecentlySingleSellerAdapter(getApplicationContext(), response.body().getData());
-                    recyclerRecentSeller.setAdapter(adapter);
+                    adapterSeller.addItem(response.body().getData());
+                    recyclerRecentSeller.setAdapter(adapterSeller);
                     relativeRecentlySeller.setVisibility(View.VISIBLE);
 
 
@@ -276,6 +305,8 @@ public class MainActivity extends BaseAppCompatActivity {
 
         dialog.show();
     }
+
+
 }
 
 

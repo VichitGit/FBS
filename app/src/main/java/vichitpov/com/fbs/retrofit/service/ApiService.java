@@ -20,4 +20,7 @@ public interface ApiService {
     @GET("buys")
     Call<ProductResponse> seeMoreBuyerLoadByPagination(@Query("page") int page);
 
+    @GET("sells")
+    Call<ProductResponse> seeMoreSellerLoadByPagination(@Query("page") int page);
+
 }

@@ -26,12 +26,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.login.StartLoginActivity" />
-        <activity android:name=".ui.activity.PostToSellActivity"></activity>
+        <activity android:name=".ui.activity.PostToSellActivity" />
         <activity android:name=".ui.activity.MainCategoryActivity" />
-        <activity android:name=".ui.activity.profile.UserProfileActivity"></activity>
+        <activity android:name=".ui.activity.profile.UserProfileActivity" />
         <activity android:name=".ui.activity.PostToBuyActivity" />
         <activity android:name=".ui.activity.BookmarkCategoriesActivity" />
-        <activity android:name=".ui.activity.DetailProductSellerActivity" />
+        <activity android:name=".ui.activity.DetailProductActivity" />
         <activity android:name=".ui.activity.SearchProductActivity" />
         <activity android:name=".ui.activity.profile.EditUserProfileActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
@@ -77,7 +77,8 @@
 
         <!--  -->
 
-        <activity android:name=".ui.activity.BuyerSeeMoreActivity"></activity>
+        <activity android:name=".ui.activity.BuyerSeeMoreActivity" />
+        <activity android:name=".ui.activity.SellerSeeMoreActivity"></activity>
     </application>
 
 </manifest>

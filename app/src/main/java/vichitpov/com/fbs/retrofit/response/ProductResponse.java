@@ -2,13 +2,14 @@ package vichitpov.com.fbs.retrofit.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by VichitPov on 2/25/18.
  */
 
-public class ProductResponse {
+public class ProductResponse implements Serializable {
 
     @SerializedName("meta")
     private Meta meta;
@@ -41,7 +42,7 @@ public class ProductResponse {
         this.data = data;
     }
 
-    public static class Meta {
+    public static class Meta implements Serializable{
         @SerializedName("timestamp")
         private String timestamp;
         @SerializedName("total")
@@ -124,7 +125,7 @@ public class ProductResponse {
         }
     }
 
-    public static class Links {
+    public static class Links implements Serializable{
         @SerializedName("next")
         private String next;
         @SerializedName("last")
@@ -157,7 +158,7 @@ public class ProductResponse {
         }
     }
 
-    public static class Price {
+    public static class Price implements Serializable {
         @SerializedName("max")
         private String max;
         @SerializedName("min")
@@ -233,7 +234,7 @@ public class ProductResponse {
         }
     }
 
-    public static class Createddate {
+    public static class Createddate implements Serializable{
         @SerializedName("timezone")
         private String timezone;
         @SerializedName("timezone_type")
@@ -299,7 +300,7 @@ public class ProductResponse {
         }
     }
 
-    public static class Data {
+    public static class Data implements Serializable{
         @SerializedName("updatedDate")
         private Updateddate updateddate;
         @SerializedName("createdDate")
@@ -450,5 +451,35 @@ public class ProductResponse {
         public void setType(String type) {
             this.type = type;
         }
+
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "updateddate=" + updateddate +
+                    ", createddate=" + createddate +
+                    ", status=" + status +
+                    ", contactmapcoordinate='" + contactmapcoordinate + '\'' +
+                    ", contactaddress='" + contactaddress + '\'' +
+                    ", contactemail='" + contactemail + '\'' +
+                    ", contactphone='" + contactphone + '\'' +
+                    ", contactname='" + contactname + '\'' +
+                    ", productimages=" + productimages +
+                    ", category=" + category +
+                    ", price=" + price +
+                    ", description='" + description + '\'' +
+                    ", title='" + title + '\'' +
+                    ", id=" + id +
+                    ", type='" + type + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ProductResponse{" +
+                "meta=" + meta +
+                ", links=" + links +
+                ", data=" + data +
+                '}';
     }
 }

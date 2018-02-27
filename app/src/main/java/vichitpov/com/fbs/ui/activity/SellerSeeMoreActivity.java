@@ -6,11 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,38 +17,36 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.BuyerSeeMoreAdapter;
-import vichitpov.com.fbs.base.BaseAppCompatActivity;
+import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
-public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoadMore {
-
+public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMore {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private BuyerSeeMoreAdapter adapter;
+    private SellerSeeMoreAdapter adapter;
     private ImageView imageBack;
     private int totalPage;
     private int page = 1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buyer_see_more);
+        setContentView(R.layout.activity_seller_see_more);
 
         initView();
         listener();
         setRecyclerView();
         loadMoreBuyerPagination(page);
-
         adapter.onLoadMore(this);
 
 
     }
 
+    //all listener
     private void listener() {
 
         imageBack.setOnClickListener(view -> finish());
@@ -58,6 +54,7 @@ public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoa
     }
 
 
+    //when recycler scroll down, this method with invoke
     @Override
     public void setOnLoadMore() {
         if (page == totalPage) {
@@ -68,8 +65,8 @@ public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoa
     }
 
 
+    //request data
     private void loadMoreBuyerPagination(int page) {
-
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
         if (page == 1) {
             progressBar.setIndeterminate(true);
@@ -78,7 +75,7 @@ public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoa
         }
 
 
-        Call<ProductResponse> call = apiService.seeMoreBuyerLoadByPagination(page);
+        Call<ProductResponse> call = apiService.seeMoreSellerLoadByPagination(page);
         call.enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductResponse> call, @NonNull final Response<ProductResponse> response) {
@@ -116,7 +113,7 @@ public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoa
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new BuyerSeeMoreAdapter(this, recyclerView);
+        adapter = new SellerSeeMoreAdapter(this, recyclerView);
         recyclerView.setAdapter(adapter);
     }
 

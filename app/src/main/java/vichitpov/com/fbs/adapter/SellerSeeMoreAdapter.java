@@ -20,10 +20,10 @@ import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 
 /**
- * Created by VichitPov on 2/26/18.
+ * Created by VichitPov on 2/27/18.
  */
 
-public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_ITEM = 1;
     private static final int VIEW_PROGRESS = 0;
 
@@ -34,9 +34,9 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private int visibleThreshold = 3;
     private boolean loading = false;
 
-    public BuyerSeeMoreAdapter(Context context, RecyclerView recyclerView) {
+    public SellerSeeMoreAdapter(Context context, RecyclerView recyclerView) {
+        this.productList = new ArrayList<>();
         this.context = context;
-        productList = new ArrayList<>();
 
 
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
@@ -53,7 +53,6 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                         loading = true;
                         onLoadMore.setOnLoadMore();
-                        //Log.e("pppp list size", productList.size() + "");
 
                     }
                 }
@@ -105,18 +104,16 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         RecyclerView.ViewHolder vh = null;
 
         if (viewType == VIEW_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_buyer_see_more, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_seller_see_more, parent, false);
             vh = new ProductViewHolder(view);
         } else if (viewType == VIEW_PROGRESS) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layour_progress_pagination, parent, false);
             vh = new ProgressPagination(view);
         }
         return vh;
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -160,6 +157,7 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return 0;
     }
 
+
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
@@ -172,11 +170,8 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             address = itemView.findViewById(R.id.textAddress);
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
-
-
-//            favorite = itemView.findViewById(R.id.imageFavorite);
-//            notification = itemView.findViewById(R.id.imageNotification);
-
+            favorite = itemView.findViewById(R.id.imageFavorite);
+            notification = itemView.findViewById(R.id.imageNotification);
 
         }
     }
