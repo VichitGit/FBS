@@ -3,6 +3,7 @@ package vichitpov.com.fbs.ui.activity.login;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,24 +22,42 @@ import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickList
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ss.com.bannerslider.banners.Banner;
 import ss.com.bannerslider.banners.DrawableBanner;
 import ss.com.bannerslider.views.BannerSlider;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.preferece.UserInformationManager;
+import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
+import vichitpov.com.fbs.retrofit.service.ApiService;
+import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activity.MainActivity;
 import vichitpov.com.fbs.ui.activity.PostToBuyActivity;
 
 public class StartLoginActivity extends AppCompatActivity {
     public static int APP_REQUEST_CODE = 99;
     private TextView textLogin, textSignUp;
+    private ApiService apiService;
+    private String accessToken;
+    private UserInformationManager userInformationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_login);
 
+        userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+
         initView();
         onClickListener();
+        setUpSlider();
 
+
+    }
+
+    private void setUpSlider() {
         BannerSlider bannerSlider = findViewById(R.id.banner_slider);
         List<Banner> banners = new ArrayList<>();
         banners.add(new DrawableBanner(R.drawable.image_silde));
@@ -46,47 +65,63 @@ public class StartLoginActivity extends AppCompatActivity {
         banners.add(new DrawableBanner(R.drawable.image_silde));
         bannerSlider.setBanners(banners);
 
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == APP_REQUEST_CODE) {
 
-        if (requestCode == APP_REQUEST_CODE) { // confirm that this response matches your request
+            // confirm that this response matches your request
             AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
-            String toastMessage;
+
+            //when verify or error with account kit this condition will invoke
             if (loginResult.getError() != null) {
-                toastMessage = loginResult.getError().getErrorType().getMessage();
-                //showErrorActivity(loginResult.getError());
-                Log.e("pppp loginResultError", loginResult.getError().toString());
-
-            } else if (loginResult.wasCancelled()) {
-                toastMessage = "Login Cancelled";
-                Log.e("pppp wasCancelled", "Login Cancelled");
+                startActivity(getIntent());
             } else {
+                /*
+                  After verify success it's will process onActivityForResult, so if all above is true, this
+                  condition is available and account kit provide us to get access token. finally, after we
+                  got access token, we must to send to those access token to server and than server will check
+                  if access token that sent is new user, we need to provide register screen to user but if access token
+                  that sent is old user, we no need to provide register screen to user.
+                */
                 if (loginResult.getAccessToken() != null) {
-                    toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
-                    Log.e("pppp Success", loginResult.getAccessToken().getAccountId());
-                    Log.e("pppp getAccessToken", loginResult.getAccessToken().getToken());
-                } else {
-                    toastMessage = String.format("Success:%s...", loginResult.getAuthorizationCode().substring(0, 10));
-                    Log.e("pppp else", loginResult.getAuthorizationCode().substring(0, 10));
+                    accessToken = loginResult.getAccessToken().getToken();
+                    apiService = ServiceGenerator.createService(ApiService.class);
+                    Call<UserInformationResponse> call = apiService.getUserInformation(accessToken);
+                    call.enqueue(new Callback<UserInformationResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
+                            if (response.isSuccessful()) {
+
+                                if (response.body().getData().getStatus().contains("new")) {
+
+                                    //save user information into share preference
+                                    userInformationManager.saveInformation(response.body());
+                                    userInformationManager.saveAccessToken(accessToken);
+                                    startActivity(new Intent(getApplicationContext(), RegisterUserActivity.class));
+
+                                } else if (response.body().getData().getStatus().contains("old")) {
+
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                                }
+                            } else if (response.code() == 401) {
+                                startActivity(getIntent());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserInformationResponse> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
                 }
-
-                // If you have an authorization code, retrieve it from
-                // loginResult.getAuthorizationCode()
-                // and pass it to your server and exchange it for an access token.
-
-                // Success! Start your next activity...
-                startActivity(new Intent(getApplicationContext(), RegisterUserActivity.class));
             }
-
-            // Surface the result to your user in an appropriate way.
-            Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
         }
-
     }
+
 
     public void phoneLogin(View view) {
         final Intent intent = new Intent(this, AccountKitActivity.class);
@@ -120,19 +155,22 @@ public class StartLoginActivity extends AppCompatActivity {
     }
 
     private void onClickListener() {
-        textLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                phoneLogin(view);
-            }
-        });
+        textLogin.setOnClickListener(this::phoneLogin);
     }
 
     private void initView() {
-        textLogin = findViewById(R.id.textLogin);
-        textSignUp = findViewById(R.id.textSignUp);
+        textLogin = findViewById(R.id.textLoginPhone);
+        textSignUp = findViewById(R.id.textLoginEmail);
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

@@ -10,196 +10,255 @@
     tools:context="vichitpov.com.fbs.ui.activity.login.RegisterUserActivity">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="Norton E-Commerce "
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/sp_25" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/dp_20"
-        android:text="Confirmation Account "
-        android:textColor="@color/colorPrimary"
-
-        android:textSize="@dimen/sp_15" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputFullName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/editFullName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Full Name"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/sp_15"
-            android:theme="@style/AppTheme.PopupOverlay"
-            tools:ignore="TextFields" />
+            android:orientation="vertical">
 
-    </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="Norton E-Commerce "
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_25" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputContactNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:text="Confirmation Account "
+                android:textColor="@color/colorPrimary"
 
-        <EditText
-            android:id="@+id/editContactNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Contact Phone Number"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/sp_15"
-            android:theme="@style/AppTheme.PopupOverlay"
-            tools:ignore="TextFields" />
+                android:textSize="@dimen/sp_15" />
 
-    </android.support.design.widget.TextInputLayout>
+            <LinearLayout
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/editEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Contact Email"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/sp_15"
-            android:theme="@style/AppTheme.PopupOverlay"
-            tools:ignore="TextFields" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2">
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputAddress1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/editAddress1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Address 1(St.123)"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15"
-                android:theme="@style/AppTheme.PopupOverlay"
-                tools:ignore="TextFields" />
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputFirstName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputAddress2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+                    <EditText
+                        android:id="@+id/editFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="Full Name"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_15"
+                        android:theme="@style/AppTheme.PopupOverlay"
+                        tools:ignore="TextFields" />
 
-            <EditText
-                android:id="@+id/editAddress2"
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputLastName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/editLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="Last Name"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_15"
+                        android:theme="@style/AppTheme.PopupOverlay"
+                        tools:ignore="TextFields" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Address 2(Commune)"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15"
-                android:theme="@style/AppTheme.PopupOverlay"
-                tools:ignore="TextFields" />
-
-        </android.support.design.widget.TextInputLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2">
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="@color/colorHint"
+                app:ms_arrowSize="16dp"
+                app:ms_baseColor="@color/colorPrimary"
+                app:ms_dropDownHintView="@layout/dropdown_hint_item"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="@color/colorRed"
+                app:ms_floatingLabelText="floating label"
+                app:ms_hint="Select Gender"
+                app:ms_hintColor="@color/colorBlack"
+                app:ms_multiline="false"
+                app:ms_thickness="0.3dp" />
 
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputAddress3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputContactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/editAddress3"
+                <EditText
+                    android:id="@+id/editContactNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Contact Phone Number"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_15"
+                    android:theme="@style/AppTheme.PopupOverlay"
+                    tools:ignore="TextFields" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Contact Email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_15"
+                    android:theme="@style/AppTheme.PopupOverlay"
+                    tools:ignore="TextFields" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Address 3(Districts)"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15"
-                android:theme="@style/AppTheme.PopupOverlay"
-                tools:ignore="TextFields" />
+                android:weightSum="2">
 
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputAddress4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputAddress1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-            <EditText
-                android:id="@+id/editAddress4"
+                    <EditText
+                        android:id="@+id/editAddress1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="Address 1(St.123)"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_15"
+                        android:theme="@style/AppTheme.PopupOverlay"
+                        tools:ignore="TextFields" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputAddress2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/editAddress2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="Address 2(Commune)"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_15"
+                        android:theme="@style/AppTheme.PopupOverlay"
+                        tools:ignore="TextFields" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Address 4(City)"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15"
-                android:theme="@style/AppTheme.PopupOverlay"
-                tools:ignore="TextFields" />
-
-        </android.support.design.widget.TextInputLayout>
+                android:weightSum="2">
 
 
-    </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputAddress3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-    <Button
-        android:id="@+id/buttonOk"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="Ok"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/sp_20" />
+                    <EditText
+                        android:id="@+id/editAddress3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="Address 3(Districts)"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_15"
+                        android:theme="@style/AppTheme.PopupOverlay"
+                        tools:ignore="TextFields" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputAddress4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/editAddress4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="Address 4(City)"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_15"
+                        android:theme="@style/AppTheme.PopupOverlay"
+                        tools:ignore="TextFields" />
+
+                </android.support.design.widget.TextInputLayout>
 
 
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonOk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Ok"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_20" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

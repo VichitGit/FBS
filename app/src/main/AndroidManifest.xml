@@ -19,13 +19,13 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.login.StartLoginActivity" />
+        <activity android:name=".ui.activity.login.StartLoginActivity">
+
+
+
+        </activity>
         <activity android:name=".ui.activity.PostToSellActivity" />
         <activity android:name=".ui.activity.MainCategoryActivity" />
         <activity android:name=".ui.activity.profile.UserProfileActivity" />
@@ -46,7 +46,13 @@
         <activity android:name=".ui.activity.profile.ProductBoughtActivity" />
         <activity android:name=".ui.activity.profile.RePostToSellActivity" />
         <activity android:name=".ui.activity.profile.RePostToBuyActivity" />
-        <activity android:name=".ui.activity.login.RegisterUserActivity" />
+        <activity android:name=".ui.activity.login.RegisterUserActivity" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- account kit -->
 
@@ -78,7 +84,9 @@
         <!--  -->
 
         <activity android:name=".ui.activity.BuyerSeeMoreActivity" />
-        <activity android:name=".ui.activity.SellerSeeMoreActivity"></activity>
+        <activity android:name=".ui.activity.SellerSeeMoreActivity">
+
+        </activity>
     </application>
 
 </manifest>

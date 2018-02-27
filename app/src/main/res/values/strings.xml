@@ -5,9 +5,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="FACEBOOK_APP_ID">1375528659218887</string>
-    <string name="ACCOUNT_KIT_CLIENT_TOKEN">270af008a236d14f6cdad613e09efbaa</string>
-    <string name="ak_login_protocol_scheme">ak1375528659218887</string>
+    <!--<string name="FACEBOOK_APP_ID">1375528659218887</string>-->
+
+    <string name="FACEBOOK_APP_ID">156194398367372</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">cdefae88b36c9fd56d1a8d960c66b32d</string>
+    <string name="ak_login_protocol_scheme">ak156194398367372</string>
 
     <!--<string name="more_location">ទីតាំងបន្ថែម</string>-->
     <!--<string name="location">ទីតាំង</string>-->

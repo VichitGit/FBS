@@ -37,7 +37,7 @@
             android:weightSum="2">
 
             <TextView
-                android:id="@+id/textLogin"
+                android:id="@+id/textLoginPhone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:paddingBottom="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_15"
-                android:text="Log in"
+                android:text="Phone"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_25" />
 
@@ -57,7 +57,7 @@
 
 
             <TextView
-                android:id="@+id/textSignUp"
+                android:id="@+id/textLoginEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,7 +65,7 @@
                 android:gravity="center"
                 android:paddingBottom="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_15"
-                android:text="Sign Up"
+                android:text="Email"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_25" />
         </LinearLayout>

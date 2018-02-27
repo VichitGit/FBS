@@ -1,5 +1,7 @@
 package vichitpov.com.fbs.retrofit.service;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -43,23 +45,32 @@ public class ServiceGenerator {
 
     public static <S> S createServiceBearer(Class<S> serviceClass, String token) {
 
-        httpClient.addInterceptor(chain -> {
-            Request original = chain.request();
-            Request.Builder requestBuilder = original.newBuilder()
-                    .header("Accept", "application/json")
-                    .header("Authorization", "Bearer ".concat(token));
-
-            Request request = requestBuilder.build();
-            return chain.proceed(request);
-
-        });
+//        httpClient.addInterceptor(chain -> {
+//            Request original = chain.request();
+//            Request.Builder requestBuilder = original.newBuilder()
+//                    .addHeader("access-token", token);
+//
+//            Request request = requestBuilder.build();
+//            return chain.proceed(request);
+//
+//        });
 //        //log header or body if don't need it just comment it
 //        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
 //        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 //        httpClient.addInterceptor(interceptor);
 
+        httpClient.addInterceptor(chain -> {
+            Request request = chain.request()
+                    .newBuilder()
+                    .addHeader("access-token", token)
+                    .build();
+            return chain.proceed(request);
+        });
+
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
+
+
     }
 }
