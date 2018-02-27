@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -26,7 +27,6 @@ import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +35,10 @@ import technolifestyle.com.imageslider.FlipperView;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.CategoryHeaderAdapter;
 import vichitpov.com.fbs.adapter.RecentlySingleBuyerAdapter;
+import vichitpov.com.fbs.adapter.RecentlySingleSellerAdapter;
+import vichitpov.com.fbs.adapter1.RecentSellerPostAdapter;
 import vichitpov.com.fbs.base.BaseAppCompatActivity;
+import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -54,6 +57,7 @@ public class MainActivity extends BaseAppCompatActivity {
     private ScrollView scrollView;
     private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer;
     private ProgressBar progressBar;
+    private LinearLayout linearInternetUnavailable;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -66,17 +70,26 @@ public class MainActivity extends BaseAppCompatActivity {
         initView();
         setUpSliderHeader();
         setUpCategoryHeader();
-        setUpRecentlyBuyer();
-        setUpRecentlySeller();
-        eventListener();
 
-        refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
+        if (InternetConnection.isNetworkConnected(this)) {
+
+            linearInternetUnavailable.setVisibility(View.GONE);
+            setUpRecentlyBuyer();
+            setUpRecentlySeller();
+
+        } else {
+
+            linearInternetUnavailable.setVisibility(View.VISIBLE);
+
+        }
+
+        eventListener();
 
 
     }
 
     private void setUpSliderHeader() {
-        int num_of_pages = 3;
+        int numOfPages = 3;
 
         String url[] = new String[]{
                 "https://s3.envato.com/files/228473424/590x300.jpg",
@@ -84,7 +97,7 @@ public class MainActivity extends BaseAppCompatActivity {
                 "https://microlancer.lancerassets.com/v2/services/3f/c593d0437011e6ac7853977e2e0bdc/large__original_1.jpg",
         };
 
-        for (int i = 0; i < num_of_pages; i++) {
+        for (int i = 0; i < numOfPages; i++) {
             FlipperView view = new FlipperView(getBaseContext());
             final int finalI = i;
             view.setImageUrl(url[i])
@@ -99,6 +112,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void eventListener() {
+
         textProfile.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), UserProfileActivity.class)));
         textSearch.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SearchProductActivity.class)));
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -112,6 +126,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
         seeMoreBuyer.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), BuyerSeeMoreActivity.class)));
+        refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
 
     }
 
@@ -174,7 +189,8 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private void setUpRecentlySeller() {
 
-        layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+        //layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+        layoutManager = new LinearLayoutManager(this);
         recyclerRecentSeller.setLayoutManager(layoutManager);
 
         relativeRecentlySeller.setVisibility(View.GONE);
@@ -185,7 +201,7 @@ public class MainActivity extends BaseAppCompatActivity {
             public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
                 if (response.isSuccessful()) {
 
-                    RecentlySingleBuyerAdapter adapter = new RecentlySingleBuyerAdapter(getApplicationContext(), response.body().getData());
+                    RecentlySingleSellerAdapter adapter = new RecentlySingleSellerAdapter(getApplicationContext(), response.body().getData());
                     recyclerRecentSeller.setAdapter(adapter);
                     relativeRecentlySeller.setVisibility(View.VISIBLE);
 
@@ -216,6 +232,7 @@ public class MainActivity extends BaseAppCompatActivity {
         recyclerCategoryHeader = findViewById(R.id.recyclerCategories);
         recyclerRecentlyBuyer = findViewById(R.id.recyclerRecentlyBuyer);
         recyclerRecentSeller = findViewById(R.id.recyclerRecentlySeller);
+        linearInternetUnavailable = findViewById(R.id.linearInternetUnavailable);
         refreshLayout = findViewById(R.id.swipeRefresh);
 
         textProfile = findViewById(R.id.textProfile);
@@ -235,6 +252,7 @@ public class MainActivity extends BaseAppCompatActivity {
         relativeRecentlySeller.setVisibility(View.GONE);
         relativeRecentlyBuyer.setVisibility(View.GONE);
         floatingScroll.setVisibility(View.GONE);
+        linearInternetUnavailable.setVisibility(View.GONE);
 
 
     }
@@ -258,8 +276,6 @@ public class MainActivity extends BaseAppCompatActivity {
 
         dialog.show();
     }
-
-
 }
 
 

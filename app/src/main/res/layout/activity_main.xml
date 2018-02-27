@@ -99,6 +99,30 @@
                         android:clipToPadding="false"
                         android:padding="@dimen/dp_20" />
 
+                    <LinearLayout
+                        android:id="@+id/linearInternetUnavailable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/dp_20"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_unavailable" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="No Internet Connection"
+                            android:textSize="@dimen/sp_18" />
+
+
+                    </LinearLayout>
+
                     <!--Layout Recently Seller-->
                     <RelativeLayout
                         android:id="@+id/relativeRecentlySeller"
@@ -110,7 +134,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/textRecentlySeller"
-                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -152,7 +175,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/textRecentlyBuyer"
-                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -260,11 +282,12 @@
 
     </LinearLayout>
 
+
     <ProgressBar
-        android:layout_centerInParent="true"
         android:id="@+id/progressBar"
         android:layout_width="70dp"
-        android:layout_height="70dp" />
+        android:layout_height="70dp"
+        android:layout_centerInParent="true" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingScroll"

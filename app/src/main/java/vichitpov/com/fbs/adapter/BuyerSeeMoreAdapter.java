@@ -130,15 +130,21 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ProductViewHolder productViewHolder = (ProductViewHolder) holder;
             productViewHolder.title.setText(productResponse.getTitle());
 
+            String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
+            String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+
+            productViewHolder.price.setText(priceFrom + "$" + " - " + priceTo + "$");
+
             if (productResponse.getCreateddate() != null) {
                 String subDate = productResponse.getCreateddate().getDate().substring(0, 10);
-                productViewHolder.date.setText(ConvertDate.dateConverter("Post: " + subDate));
-            } else {
-                productViewHolder.date.setVisibility(View.GONE);
+                String dateConverted = ConvertDate.dateConverter(subDate);
+                productViewHolder.date.setText("Posted: " + dateConverted);
             }
 
+            if (productResponse.getContactaddress() != null) {
+                productViewHolder.address.setText(productResponse.getContactaddress());
+            }
 
-            productViewHolder.price.setText(productResponse.getPrice().get(0).getMin() + " - " + productResponse.getPrice().get(0).getMax());
 
         } else if (holder instanceof ProgressPagination) {
             ProgressPagination progressPagination = (ProgressPagination) holder;
@@ -160,7 +166,7 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private TextView title, address, price, date;
         private ImageView favorite, notification;
 
-        public ProductViewHolder(View itemView) {
+        ProductViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.textTitle);
@@ -178,7 +184,7 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         private ProgressBar progressBar;
 
-        public ProgressPagination(View itemView) {
+        ProgressPagination(View itemView) {
             super(itemView);
 
             progressBar = itemView.findViewById(R.id.progressBar);

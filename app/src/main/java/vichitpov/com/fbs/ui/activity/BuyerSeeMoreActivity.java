@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -28,9 +29,10 @@ public class BuyerSeeMoreActivity extends AppCompatActivity implements OnLoadMor
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+    private BuyerSeeMoreAdapter adapter;
+    private ImageView imageBack;
     private int totalPage;
     private int page = 1;
-    private BuyerSeeMoreAdapter adapter;
 
 
     @Override
@@ -39,11 +41,18 @@ public class BuyerSeeMoreActivity extends AppCompatActivity implements OnLoadMor
         setContentView(R.layout.activity_buyer_see_more);
 
         initView();
+        listener();
         setRecyclerView();
         loadMoreBuyerPagination(page);
 
         adapter.onLoadMore(this);
 
+
+    }
+
+    private void listener() {
+
+        imageBack.setOnClickListener(view -> finish());
 
     }
 
@@ -112,11 +121,10 @@ public class BuyerSeeMoreActivity extends AppCompatActivity implements OnLoadMor
 
     private void initView() {
 
+        imageBack = findViewById(R.id.imageBack);
         recyclerView = findViewById(R.id.recycler);
         progressBar = findViewById(R.id.progressBar);
         refreshLayout = findViewById(R.id.swipeRefresh);
 
     }
-
-
 }

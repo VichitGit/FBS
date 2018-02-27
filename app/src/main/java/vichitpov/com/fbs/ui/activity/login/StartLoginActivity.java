@@ -26,7 +26,6 @@ import ss.com.bannerslider.banners.DrawableBanner;
 import ss.com.bannerslider.views.BannerSlider;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.ui.activity.PostToBuyActivity;
-import vichitpov.com.fbs.ui.activity.PostToSellActivity;
 
 public class StartLoginActivity extends AppCompatActivity {
     public static int APP_REQUEST_CODE = 99;

@@ -31,7 +31,7 @@ public class RecentSellerPostAdapter extends RecyclerView.Adapter<RecentSellerPo
 
     @Override
     public RecentPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_product_seller_recently_, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_seller_single_page, parent, false);
         return new RecentPostViewHolder(view);
     }
 
