@@ -54,7 +54,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
     private RecyclerView.LayoutManager layoutManager;
     private ApiService apiService;
     private SwipeRefreshLayout refreshLayout;
-    private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer;
+    private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer, textUpload;
     private FlipperLayout sliderShow;
     private FloatingActionButton floatingScroll;
     private ScrollView scrollView;
@@ -71,12 +71,12 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         setContentView(R.layout.activity_main);
 
         apiService = ServiceGenerator.createService(ApiService.class);
+        adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
 
         initView();
         setUpSliderHeader();
         setUpCategoryHeader();
 
-        adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
 
         if (InternetConnection.isNetworkConnected(this)) {
             linearInternetUnavailable.setVisibility(View.GONE);
@@ -144,14 +144,13 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
 
         textProfile.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), UserProfileActivity.class)));
         textSearch.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SearchProductActivity.class)));
-        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        textUpload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-
-                floatingScroll.setVisibility(View.VISIBLE);
-
+            public void onClick(View view) {
+                dialogBottom();
             }
         });
+        scrollView.setOnScrollChangeListener((view, i, i1, i2, i3) -> floatingScroll.setVisibility(View.VISIBLE));
 
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
         seeMoreBuyer.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), BuyerSeeMoreActivity.class)));
@@ -251,6 +250,23 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         });
     }
 
+    private void dialogBottom() {
+        @SuppressLint("ResourceAsColor") BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
+                .setMode(BottomSheetBuilder.MODE_LIST)
+                .setIconTintColorResource(R.color.colorPrimary)
+                .setItemTextColor(R.color.colorPrimary)
+                .setMenu(R.menu.menu_dialog_post)
+                .setItemClickListener(item -> {
+                    if (item.getItemId() == R.id.dialog_bottom_post_to_buy) {
+                        startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
+                    } else if (item.getItemId() == R.id.dialog_bottom_post_to_sell) {
+                        startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
+                    }
+
+                })
+                .createDialog();
+        dialog.show();
+    }
 
     private void initView() {
 
@@ -264,6 +280,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         textSearch = findViewById(R.id.textSearch);
         seeMoreBuyer = findViewById(R.id.textSeeMoreBuyer);
         seeMoreSeller = findViewById(R.id.textSeeMoreSeller);
+        textUpload = findViewById(R.id.textUpload);
 
         sliderShow = findViewById(R.id.headerSlideShow);
         floatingScroll = findViewById(R.id.floatingScroll);
@@ -282,25 +299,6 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
 
     }
 
-
-    private void dialogBottom() {
-        @SuppressLint("ResourceAsColor") BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
-                .setMode(BottomSheetBuilder.MODE_LIST)
-                .setIconTintColorResource(R.color.colorPrimary)
-                .setItemTextColor(R.color.colorPrimary)
-                .setMenu(R.menu.menu_dialog_post)
-                .setItemClickListener(item -> {
-                    if (item.getItemId() == R.id.dialog_bottom_post_to_buy) {
-                        startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
-                    } else if (item.getItemId() == R.id.dialog_bottom_post_to_sell) {
-                        startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
-                    }
-
-                })
-                .createDialog();
-
-        dialog.show();
-    }
 
 
 }

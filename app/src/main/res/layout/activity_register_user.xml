@@ -146,71 +146,12 @@
                 android:id="@+id/textValidationGender"
                 style="@style/textValidation"
                 android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Please select gender" />
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/inputContactNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/editContactNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:hint="Contact Phone Number"
-                    android:inputType="phone"
-                    android:lineSpacingMultiplier="1"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/sp_15"
-                    android:theme="@style/AppTheme.PopupOverlay"
-                    tools:ignore="TextFields" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <TextView
-                android:id="@+id/textValidationPhone"
-                style="@style/textValidation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phone cannot empty" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/inputEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/editEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:hint="Contact Email"
-                    android:inputType="textEmailAddress"
-                    android:lineSpacingMultiplier="1"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/sp_15"
-                    android:theme="@style/AppTheme.PopupOverlay"
-                    tools:ignore="TextFields" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <TextView
-                android:id="@+id/textValidationEmail"
-                style="@style/textValidation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email cannot empty" />
 
             <LinearLayout
                 android:layout_width="match_parent"

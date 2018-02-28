@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.accountkit.AccessToken;
+import com.facebook.accountkit.AccountKit;
 import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
@@ -50,6 +52,12 @@ public class StartLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start_login);
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            AccessToken accessToken = AccountKit.getCurrentAccessToken();
+            if (accessToken != null) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        }
 
         initView();
         onClickListener();
@@ -58,15 +66,6 @@ public class StartLoginActivity extends AppCompatActivity {
 
     }
 
-    private void setUpSlider() {
-        BannerSlider bannerSlider = findViewById(R.id.banner_slider);
-        List<Banner> banners = new ArrayList<>();
-        banners.add(new DrawableBanner(R.drawable.image_silde));
-        banners.add(new DrawableBanner(R.drawable.image_silde));
-        banners.add(new DrawableBanner(R.drawable.image_silde));
-        bannerSlider.setBanners(banners);
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -95,20 +94,15 @@ public class StartLoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                             if (response.isSuccessful()) {
-
                                 if (response.body().getData().getStatus().contains("new")) {
-
                                     Intent intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                                     intent.putExtra(IntentData.ACCESS_TOKEN, accessToken);
                                     intent.putExtra(IntentData.PHONE, response.body().getData().getPhone());
                                     startActivity(intent);
-
                                 } else if (response.body().getData().getStatus().contains("old")) {
-
                                     userInformationManager.deleteAccessToken();
                                     userInformationManager.saveAccessToken(accessToken);
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
                                 }
                             } else if (response.code() == 401) {
                                 startActivity(getIntent());
@@ -116,7 +110,9 @@ public class StartLoginActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
+                        public void onFailure
+                                (@NonNull Call<UserInformationResponse> call, @NonNull Throwable
+                                        t) {
                             t.printStackTrace();
                         }
                     });
@@ -125,7 +121,6 @@ public class StartLoginActivity extends AppCompatActivity {
         }
     }
 
-
     public void phoneLogin(View view) {
         final Intent intent = new Intent(this, AccountKitActivity.class);
         AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
@@ -133,6 +128,27 @@ public class StartLoginActivity extends AppCompatActivity {
 
         intent.putExtra(AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION, configurationBuilder.build());
         startActivityForResult(intent, APP_REQUEST_CODE);
+    }
+
+    private void setUpSlider() {
+        BannerSlider bannerSlider = findViewById(R.id.banner_slider);
+        List<Banner> banners = new ArrayList<>();
+        banners.add(new DrawableBanner(R.drawable.image_silde));
+        banners.add(new DrawableBanner(R.drawable.image_silde));
+        banners.add(new DrawableBanner(R.drawable.image_silde));
+        bannerSlider.setBanners(banners);
+
+    }
+
+
+    private void onClickListener() {
+        textLogin.setOnClickListener(this::phoneLogin);
+    }
+
+    private void initView() {
+        textLogin = findViewById(R.id.textLoginPhone);
+        textSignUp = findViewById(R.id.textLoginEmail);
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -157,15 +173,6 @@ public class StartLoginActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void onClickListener() {
-        textLogin.setOnClickListener(this::phoneLogin);
-    }
-
-    private void initView() {
-        textLogin = findViewById(R.id.textLoginPhone);
-        textSignUp = findViewById(R.id.textLoginEmail);
-
-    }
 
     @Override
     protected void onRestart() {

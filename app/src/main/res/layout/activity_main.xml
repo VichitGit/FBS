@@ -38,7 +38,7 @@
                     android:drawableTint="@color/colorBlack"
                     android:gravity="center_vertical"
                     android:hint="Search product"
-                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingStart="@dimen/dp_10"
                     android:textColorHint="@color/colorHint"
                     android:textSize="@dimen/sp_15"
                     tools:targetApi="m" />

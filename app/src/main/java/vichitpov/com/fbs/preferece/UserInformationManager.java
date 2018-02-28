@@ -116,20 +116,20 @@ public class UserInformationManager {
 
         UserInFormationModel user = new UserInFormationModel();
         user.setId(preferences.getString(ID, "N/A"));
-        user.setType(preferences.getString(TYPE, "Null"));
-        user.setFirstName(preferences.getString(FIRST_NAME, "Null"));
-        user.setLastName(preferences.getString(LAST_NAME, "Null"));
-        user.setEmail(preferences.getString(EMAIL, "Null"));
-        user.setPhone(preferences.getString(PHONE, "Null"));
-        user.setGender(preferences.getString(GENDER, "Null"));
-        user.setAddress(preferences.getString(TYPE, "Null"));
-        user.setCity(preferences.getString(CITY, "Null"));
-        user.setProfile(preferences.getString(PROFILE, "Null"));
-        user.setRole(preferences.getString(ROLE, "Null"));
-        user.setStatus(preferences.getString(STATUS, "Null"));
-        user.setTotalBuyer(preferences.getString(TOTAL_POST_BUY, "Null"));
-        user.setTotalSeller(preferences.getString(TOTAL_POST_SELL, "Null"));
-        user.setType(preferences.getString(TYPE, "Null"));
+        user.setType(preferences.getString(TYPE, "N/A"));
+        user.setFirstName(preferences.getString(FIRST_NAME, "N/A"));
+        user.setLastName(preferences.getString(LAST_NAME, "N/A"));
+        user.setEmail(preferences.getString(EMAIL, "N/A"));
+        user.setPhone(preferences.getString(PHONE, "N/A"));
+        user.setGender(preferences.getString(GENDER, "N/A"));
+        user.setAddress(preferences.getString(TYPE, "N/A"));
+        user.setCity(preferences.getString(CITY, "N/A"));
+        user.setProfile(preferences.getString(PROFILE, "N/A"));
+        user.setRole(preferences.getString(ROLE, "N/A"));
+        user.setStatus(preferences.getString(STATUS, "N/A"));
+        user.setTotalBuyer(preferences.getString(TOTAL_POST_BUY, "N/A"));
+        user.setTotalSeller(preferences.getString(TOTAL_POST_SELL, "N/A"));
+        user.setAccessToken(preferences.getString(ACCESS_TOKEN, "N/A"));
 
         return user;
 

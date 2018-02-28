@@ -66,13 +66,14 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
             holder.date.setText("Posted: " + dateConverted);
             holder.address.setText(productResponse.getContactaddress());
 
-            Picasso.with(context)
-                    .load(Url.BASE_URL + productResponse.getProductimages().get(0))
-                    .resize(200, 200)
-                    .centerCrop()
-                    .error(R.drawable.ic_unavailable)
-                    .into(holder.thumbnail);
-
+            if (productResponse.getProductimages().size() != 0) {
+                Picasso.with(context)
+                        .load(Url.BASE_URL + productResponse.getProductimages().get(0))
+                        .resize(200, 200)
+                        .centerCrop()
+                        .error(R.drawable.ic_unavailable)
+                        .into(holder.thumbnail);
+            }
         }
     }
 

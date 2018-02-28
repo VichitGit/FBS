@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,11 +34,11 @@ import vichitpov.com.fbs.ui.activity.MainActivity;
 
 public class RegisterUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    private EditText editFirstName, editLastName, editPhone, editEmail, editAddressStress, editAddressCommune, editAddressDistricts, editAddressCity;
+    private EditText editFirstName, editLastName, editAddressStress, editAddressCommune, editAddressDistricts, editAddressCity;
     private MaterialSpinner spinnerGender;
     private Button buttonSave;
     private UserInformationManager userInformationManager;
-    private String userAccessToken, userPhone, selectedGender = "null";
+    private String userAccessToken, selectedGender = "null";
     private LinearLayout layoutValidationName, layoutValidationAddress1, layoutValidationAddress2;
     private TextView validationFirstName, validationLastName, validationGender, validationPhone, validationEmail, validationStress, validationCommune, validationDistricts, validationCity;
 
@@ -50,10 +48,11 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
-        userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-
         init();
-        getDataFromIntent();
+
+        userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+        userAccessToken = getIntent().getStringExtra(IntentData.ACCESS_TOKEN);
+
         setUpSpinnerGender();
         listener();
 
@@ -90,22 +89,18 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
             String mFirstName = editFirstName.getText().toString();
             String mLastName = editLastName.getText().toString();
             String mGender = selectedGender;
-            String mPhone = editPhone.getText().toString();
-            String mEmail = editEmail.getText().toString();
             String addressStreet = editAddressStress.getText().toString();
             String addressDistricts = editAddressDistricts.getText().toString();
             String addressCommune = editAddressCommune.getText().toString();
             String addressCity = editAddressCity.getText().toString();
 
-            if (mFirstName.isEmpty() && mLastName.isEmpty() && mGender.equals("null") && mPhone.isEmpty() && mEmail.isEmpty()
-                    && addressStreet.isEmpty() && addressDistricts.isEmpty() && addressCommune.isEmpty() && addressCity.isEmpty()) {
+            if (mFirstName.isEmpty() && mLastName.isEmpty() && mGender.equals("null") &&
+                    addressStreet.isEmpty() && addressDistricts.isEmpty() && addressCommune.isEmpty() && addressCity.isEmpty()) {
 
                 hideLayout(true);
 
                 validationFirstName.setText("Required first name");
                 validationLastName.setText("Required last name");
-                validationPhone.setText("Required phone number ");
-                validationEmail.setText("Required email");
                 validationGender.setText("Please select gender");
                 validationStress.setText("Required address(Street or...)");
                 validationDistricts.setText("Required address(Districts or...)");
@@ -127,21 +122,6 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
                     validationGender.setVisibility(View.VISIBLE);
                     validationGender.setText("Please select gender");
                     validationGender.setFocusable(true);
-
-                } else if (mPhone.isEmpty()) {
-                    validationPhone.setVisibility(View.VISIBLE);
-                    validationPhone.setText("Required phone number");
-                    editPhone.setFocusable(true);
-
-                } else if (mEmail.isEmpty()) {
-                    validationEmail.setVisibility(View.VISIBLE);
-                    validationEmail.setText("Required email");
-                    editEmail.setFocusable(true);
-
-                } else if (!isEmailValid(mEmail)) {
-                    validationEmail.setVisibility(View.VISIBLE);
-                    validationEmail.setText("Invalid email(example@domain.com");
-                    editEmail.setFocusable(true);
 
                 } else if (addressStreet.isEmpty()) {
                     layoutValidationAddress1.setVisibility(View.VISIBLE);
@@ -165,7 +145,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
                 } else {
                     String mergeAddress = addressStreet + ", " + addressCommune + ", " + addressDistricts;
                     if (InternetConnection.isNetworkConnected(getApplicationContext())) {
-                        uploadInformation(userAccessToken, mFirstName, mLastName, mGender, mPhone, mEmail, mergeAddress, addressCity, "not_yet_do_iamge.png");
+                        uploadInformation(userAccessToken, mFirstName, mLastName, mGender, mergeAddress, addressCity, "not_yet_do_iamge.png");
                     } else {
                         Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                     }
@@ -174,9 +154,9 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-    private void uploadInformation(String accessToken, String firstName, String lastName, String gender, String contactPhone, String contactEmail, String address, String city, String profileImage) {
+    private void uploadInformation(String accessToken, String firstName, String lastName, String gender, String address, String city, String profileImage) {
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
-        Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, contactPhone, contactEmail, address, city, profileImage);
+        Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, address, city, profileImage);
         call.enqueue(new Callback<UserInformationResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
@@ -186,15 +166,11 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                 } else if (response.code() == 401) {
-
                     Toast.makeText(RegisterUserActivity.this, "Account is unavailable please try again", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
 
-
                 } else {
-                    Log.e("pppp", response.code() + " = " + response.message());
                     Toast.makeText(RegisterUserActivity.this, "Server problem", Toast.LENGTH_SHORT).show();
-
                 }
 
             }
@@ -208,14 +184,6 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         });
 
 
-    }
-
-    private void getDataFromIntent() {
-        userAccessToken = getIntent().getStringExtra(IntentData.ACCESS_TOKEN);
-        userPhone = getIntent().getStringExtra(IntentData.PHONE);
-        if (userPhone != null) {
-            editPhone.setText(userPhone);
-        }
     }
 
 
@@ -239,8 +207,6 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
         validationFirstName.setText("");
         validationLastName.setText("");
-        validationPhone.setText("");
-        validationEmail.setText("");
         validationGender.setText("");
         validationStress.setText("");
         validationDistricts.setText("");
@@ -252,16 +218,12 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
     private void hideLayout(boolean visible) {
         if (visible) {
             layoutValidationName.setVisibility(View.VISIBLE);
-            validationPhone.setVisibility(View.VISIBLE);
-            validationEmail.setVisibility(View.VISIBLE);
             validationGender.setVisibility(View.VISIBLE);
             layoutValidationAddress1.setVisibility(View.VISIBLE);
             layoutValidationAddress2.setVisibility(View.VISIBLE);
 
         } else {
             layoutValidationName.setVisibility(View.GONE);
-            validationPhone.setVisibility(View.GONE);
-            validationEmail.setVisibility(View.GONE);
             validationGender.setVisibility(View.GONE);
             layoutValidationAddress1.setVisibility(View.GONE);
             layoutValidationAddress2.setVisibility(View.GONE);
@@ -280,8 +242,6 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
         editFirstName = findViewById(R.id.editFirstName);
         editLastName = findViewById(R.id.editLastName);
-        editPhone = findViewById(R.id.editContactNumber);
-        editEmail = findViewById(R.id.editEmail);
         editAddressStress = findViewById(R.id.editAddress1);
         editAddressCommune = findViewById(R.id.editAddress2);
         editAddressDistricts = findViewById(R.id.editAddress3);
@@ -297,12 +257,10 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         validationFirstName = findViewById(R.id.textValidationFirstName);
         validationLastName = findViewById(R.id.textValidationLastName);
         validationGender = findViewById(R.id.textValidationGender);
-        validationEmail = findViewById(R.id.textValidationEmail);
         validationStress = findViewById(R.id.textValidationAddressStreet);
         validationCommune = findViewById(R.id.textValidationAddressCommune);
         validationDistricts = findViewById(R.id.textValidationAddressDistrict);
         validationCity = findViewById(R.id.textValidationAddressCity);
-        validationPhone = findViewById(R.id.textValidationPhone);
 
         hideLayout(false);
         clearTextValidation();
