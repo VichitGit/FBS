@@ -3,6 +3,7 @@ package vichitpov.com.fbs.preferece;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
+import vichitpov.com.fbs.model.UserInFormationModel;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 
 /**
@@ -56,22 +57,39 @@ public class UserInformationManager {
     }
 
 
-    public void saveInformation(UserInformationResponse user) {
-        editor.putString(TYPE, user.getData().getType()).commit();
-        editor.putString(ID, String.valueOf(user.getData().getId())).commit();
-        editor.putString(FIRST_NAME, user.getData().getFirstname()).commit();
-        editor.putString(LAST_NAME, user.getData().getLastname()).commit();
-        editor.putString(EMAIL, user.getData().getEmail()).commit();
-        editor.putString(PHONE, user.getData().getPhone()).commit();
-        editor.putString(GENDER, user.getData().getGender()).commit();
-        editor.putString(ADDRESS, user.getData().getAddress()).commit();
-        editor.putString(CITY, user.getData().getCity()).commit();
-        editor.putString(PROFILE, user.getData().getProfilepicture()).commit();
-        editor.putString(ROLE, user.getData().getRole()).commit();
-        editor.putString(STATUS, user.getData().getStatus()).commit();
-        editor.putString(TOTAL_POST_BUY, String.valueOf(user.getData().getTotalpostsbuy())).commit();
-        editor.putString(TOTAL_POST_SELL, String.valueOf(user.getData().getTotalpostssell())).commit();
-        editor.putString(SIGN_UP_DATE, String.valueOf(user.getData().getSignupdate())).commit();
+    public void saveInformation(UserInformationResponse userResponse) {
+
+//        editor.putString(TYPE, user.getType()).commit();
+//        editor.putString(ID, user.getId()).commit();
+//        editor.putString(FIRST_NAME, user.getFirstName()).commit();
+//        editor.putString(LAST_NAME, user.getLastName()).commit();
+//        editor.putString(EMAIL, user.getEmail()).commit();
+//        editor.putString(PHONE, user.getPhone()).commit();
+//        editor.putString(GENDER, user.getGender()).commit();
+//        editor.putString(ADDRESS, user.getAddress()).commit();
+//        editor.putString(CITY, user.getCity()).commit();
+//        editor.putString(PROFILE, user.getProfile()).commit();
+//        editor.putString(ROLE, user.getRole()).commit();
+//        editor.putString(STATUS, user.getStatus()).commit();
+//        editor.putString(TOTAL_POST_BUY, user.getTotalBuyer()).commit();
+//        editor.putString(TOTAL_POST_SELL, user.getTotalSeller()).commit();
+//        editor.putString(SIGN_UP_DATE, user.getSignUpDate()).commit();
+
+        editor.putString(TYPE, userResponse.getData().getType()).commit();
+        editor.putString(ID, String.valueOf(userResponse.getData().getId())).commit();
+        editor.putString(FIRST_NAME, userResponse.getData().getFirstname()).commit();
+        editor.putString(LAST_NAME, userResponse.getData().getLastname()).commit();
+        editor.putString(EMAIL, userResponse.getData().getEmail()).commit();
+        editor.putString(PHONE, userResponse.getData().getPhone()).commit();
+        editor.putString(GENDER, userResponse.getData().getGender()).commit();
+        editor.putString(ADDRESS, userResponse.getData().getAddress()).commit();
+        editor.putString(CITY, userResponse.getData().getCity()).commit();
+        editor.putString(PROFILE, userResponse.getData().getProfilepicture()).commit();
+        editor.putString(ROLE, userResponse.getData().getRole()).commit();
+        editor.putString(STATUS, userResponse.getData().getStatus()).commit();
+        editor.putString(TOTAL_POST_BUY, String.valueOf(userResponse.getData().getTotalpostsbuy())).commit();
+        editor.putString(TOTAL_POST_SELL, String.valueOf(userResponse.getData().getTotalpostssell())).commit();
+        editor.putString(SIGN_UP_DATE, String.valueOf(userResponse.getData().getSignupdate())).commit();
     }
 
 
@@ -94,27 +112,26 @@ public class UserInformationManager {
         editor.remove(SIGN_UP_DATE).commit();
     }
 
-    public UserInformationResponse.Data getUser() {
+    public UserInFormationModel getUser() {
 
-        UserInformationResponse.Data user = new UserInformationResponse.Data();
-        user.setId(Integer.parseInt(preferences.getString(ID, "Null")));
+        UserInFormationModel user = new UserInFormationModel();
+        user.setId(preferences.getString(ID, "N/A"));
         user.setType(preferences.getString(TYPE, "Null"));
-        user.setFirstname(preferences.getString(FIRST_NAME, "Null"));
-        user.setLastname(preferences.getString(LAST_NAME, "Null"));
+        user.setFirstName(preferences.getString(FIRST_NAME, "Null"));
+        user.setLastName(preferences.getString(LAST_NAME, "Null"));
         user.setEmail(preferences.getString(EMAIL, "Null"));
         user.setPhone(preferences.getString(PHONE, "Null"));
         user.setGender(preferences.getString(GENDER, "Null"));
         user.setAddress(preferences.getString(TYPE, "Null"));
         user.setCity(preferences.getString(CITY, "Null"));
-        user.setProfilepicture(preferences.getString(PROFILE, "Null"));
+        user.setProfile(preferences.getString(PROFILE, "Null"));
         user.setRole(preferences.getString(ROLE, "Null"));
         user.setStatus(preferences.getString(STATUS, "Null"));
-        user.setTotalpostsbuy(Integer.parseInt(preferences.getString(TOTAL_POST_BUY, "Null")));
-        user.setTotalpostssell(Integer.parseInt(preferences.getString(TOTAL_POST_SELL, "Null")));
+        user.setTotalBuyer(preferences.getString(TOTAL_POST_BUY, "Null"));
+        user.setTotalSeller(preferences.getString(TOTAL_POST_SELL, "Null"));
         user.setType(preferences.getString(TYPE, "Null"));
 
         return user;
 
     }
-
 }

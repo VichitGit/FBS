@@ -90,4 +90,15 @@
     </style>
 
 
+    <style name="textValidation">
+
+        <item name="android:layout_marginEnd">@dimen/dp_10</item>
+        <item name="android:layout_marginStart">@dimen/dp_10</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+
 </resources>

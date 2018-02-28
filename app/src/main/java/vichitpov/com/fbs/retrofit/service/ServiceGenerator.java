@@ -31,7 +31,8 @@ public class ServiceGenerator {
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request.Builder requestBuilder = original.newBuilder()
-                    .header("Accept", "application/json");
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json");
             Request request = requestBuilder.build();
             return chain.proceed(request);
         });

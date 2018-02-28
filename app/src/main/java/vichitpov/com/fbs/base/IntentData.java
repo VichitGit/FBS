@@ -26,6 +26,9 @@ public class IntentData {
     public static final String CONTACT_ADDRESS = "CONTACT_ADDRESS";
     public static final String DATE = "DATE";
 
+    public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+    public static final String PHONE = "PHONE";
+
 
     public static void sendData(Context context, List<ProductResponse.Data> productList, int position) {
         Intent intent = new Intent(context, DetailProductActivity.class);

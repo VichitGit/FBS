@@ -105,21 +105,17 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         PopupMenu popup = new PopupMenu(MainActivity.this, view);
         popup.inflate(R.menu.menu_popup_menu);
         popup.show();
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.popFavorite) {
+        popup.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.popFavorite) {
 
-                    Toast.makeText(MainActivity.this, "Add to favorite", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Add to favorite", Toast.LENGTH_SHORT).show();
 
-                }
-                return false;
             }
+            return false;
         });
 
 
     }
-
 
     private void setUpSliderHeader() {
         int numOfPages = 3;

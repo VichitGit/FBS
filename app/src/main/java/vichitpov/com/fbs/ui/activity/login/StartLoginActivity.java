@@ -29,6 +29,7 @@ import ss.com.bannerslider.banners.Banner;
 import ss.com.bannerslider.banners.DrawableBanner;
 import ss.com.bannerslider.views.BannerSlider;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.preferece.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -97,13 +98,15 @@ public class StartLoginActivity extends AppCompatActivity {
 
                                 if (response.body().getData().getStatus().contains("new")) {
 
-                                    //save user information into share preference
-                                    userInformationManager.saveInformation(response.body());
-                                    userInformationManager.saveAccessToken(accessToken);
-                                    startActivity(new Intent(getApplicationContext(), RegisterUserActivity.class));
+                                    Intent intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
+                                    intent.putExtra(IntentData.ACCESS_TOKEN, accessToken);
+                                    intent.putExtra(IntentData.PHONE, response.body().getData().getPhone());
+                                    startActivity(intent);
 
                                 } else if (response.body().getData().getStatus().contains("old")) {
 
+                                    userInformationManager.deleteAccessToken();
+                                    userInformationManager.saveAccessToken(accessToken);
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                                 }
@@ -113,7 +116,7 @@ public class StartLoginActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<UserInformationResponse> call, Throwable t) {
+                        public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
                             t.printStackTrace();
                         }
                     });
