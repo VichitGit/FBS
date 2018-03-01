@@ -14,6 +14,7 @@ public class UserInFormationModel {
     private String email;
     private String phone;
     private String address;
+    private String mapCondinate;
     private String city;
     private String profile;
     private String role;
@@ -86,6 +87,14 @@ public class UserInFormationModel {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getMapCondinate() {
+        return mapCondinate;
+    }
+
+    public void setMapCondinate(String mapCondinate) {
+        this.mapCondinate = mapCondinate;
     }
 
     public String getCity() {

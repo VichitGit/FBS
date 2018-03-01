@@ -144,12 +144,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
 
         textProfile.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), UserProfileActivity.class)));
         textSearch.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SearchProductActivity.class)));
-        textUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogBottom();
-            }
-        });
+        textUpload.setOnClickListener(view -> dialogBottom());
         scrollView.setOnScrollChangeListener((view, i, i1, i2, i3) -> floatingScroll.setVisibility(View.VISIBLE));
 
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));

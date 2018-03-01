@@ -22,6 +22,7 @@ public class UserInformationManager {
     private static final String GENDER = "GENDER";
     private static final String ADDRESS = "ADDRESS";
     private static final String CITY = "CITY";
+    private static final String MAP_COORDINATE = "MAP_COORDINATE";
     private static final String PROFILE = "PROFILE";
     private static final String ROLE = "ROLE";
     private static final String STATUS = "STATUS";
@@ -82,6 +83,7 @@ public class UserInformationManager {
         editor.putString(EMAIL, userResponse.getData().getEmail()).commit();
         editor.putString(PHONE, userResponse.getData().getPhone()).commit();
         editor.putString(GENDER, userResponse.getData().getGender()).commit();
+        editor.putString(MAP_COORDINATE, userResponse.getData().getMapCondinate());
         editor.putString(ADDRESS, userResponse.getData().getAddress()).commit();
         editor.putString(CITY, userResponse.getData().getCity()).commit();
         editor.putString(PROFILE, userResponse.getData().getProfilepicture()).commit();
@@ -103,6 +105,7 @@ public class UserInformationManager {
         editor.remove(PHONE).commit();
         editor.remove(GENDER).commit();
         editor.remove(ADDRESS).commit();
+        editor.remove(MAP_COORDINATE).commit();
         editor.remove(CITY).commit();
         editor.remove(PROFILE).commit();
         editor.remove(ROLE).commit();
@@ -122,7 +125,8 @@ public class UserInformationManager {
         user.setEmail(preferences.getString(EMAIL, "N/A"));
         user.setPhone(preferences.getString(PHONE, "N/A"));
         user.setGender(preferences.getString(GENDER, "N/A"));
-        user.setAddress(preferences.getString(TYPE, "N/A"));
+        user.setMapCondinate(preferences.getString(MAP_COORDINATE, "N/A"));
+        user.setAddress(preferences.getString(ADDRESS, "N/A"));
         user.setCity(preferences.getString(CITY, "N/A"));
         user.setProfile(preferences.getString(PROFILE, "N/A"));
         user.setRole(preferences.getString(ROLE, "N/A"));
@@ -130,6 +134,7 @@ public class UserInformationManager {
         user.setTotalBuyer(preferences.getString(TOTAL_POST_BUY, "N/A"));
         user.setTotalSeller(preferences.getString(TOTAL_POST_SELL, "N/A"));
         user.setAccessToken(preferences.getString(ACCESS_TOKEN, "N/A"));
+
 
         return user;
 

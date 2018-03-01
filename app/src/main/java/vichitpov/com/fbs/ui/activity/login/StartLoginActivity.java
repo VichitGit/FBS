@@ -102,6 +102,7 @@ public class StartLoginActivity extends AppCompatActivity {
                                 } else if (response.body().getData().getStatus().contains("old")) {
                                     userInformationManager.deleteAccessToken();
                                     userInformationManager.saveAccessToken(accessToken);
+                                    userInformationManager.saveInformation(response.body());
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }
                             } else if (response.code() == 401) {

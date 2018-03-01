@@ -72,6 +72,8 @@ public class UserInformationResponse {
         private String address;
         @SerializedName("gender")
         private String gender;
+        @SerializedName("map_coordinate")
+        private String mapCondinate;
         @SerializedName("phone")
         private String phone;
         @SerializedName("email")
@@ -203,6 +205,14 @@ public class UserInformationResponse {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public String getMapCondinate() {
+            return mapCondinate;
+        }
+
+        public void setMapCondinate(String mapCondinate) {
+            this.mapCondinate = mapCondinate;
         }
 
         @Override
