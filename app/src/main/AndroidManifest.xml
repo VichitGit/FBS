@@ -19,20 +19,21 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".ui.activity.login.StartLoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+        </activity>
+        <activity android:name=".ui.activity.login.StartLoginActivity">
+
 
 
         </activity>
         <activity android:name=".ui.activity.PostToSellActivity" />
-        <activity android:name=".ui.activity.MainCategoryActivity" />
+        <activity android:name=".ui.activity.MainCategoryActivity" >
+
+        </activity>
         <activity android:name=".ui.activity.profile.UserProfileActivity" />
         <activity android:name=".ui.activity.PostToBuyActivity" />
         <activity android:name=".ui.activity.BookmarkCategoriesActivity" />
@@ -40,6 +41,12 @@
         <activity android:name=".ui.activity.SearchProductActivity" />
         <activity android:name=".ui.activity.profile.EditUserProfileActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
+        <activity android:name=".ui.activity.BuyerSeeMoreActivity" />
+        <activity android:name=".ui.activity.SellerSeeMoreActivity"></activity>
+        <activity android:name=".ui.activity.ChooseCategoryActivity">
+
+        </activity>
+
 
         <!-- Google Map Meta -->
         <meta-data
@@ -51,12 +58,7 @@
         <activity android:name=".ui.activity.profile.ProductBoughtActivity" />
         <activity android:name=".ui.activity.profile.RePostToSellActivity" />
         <activity android:name=".ui.activity.profile.RePostToBuyActivity" />
-        <activity android:name=".ui.activity.login.RegisterUserActivity" >
-
-
-
-
-        </activity>
+        <activity android:name=".ui.activity.login.RegisterUserActivity"></activity>
 
         <!-- account kit -->
 
@@ -87,10 +89,7 @@
 
         <!--  -->
 
-        <activity android:name=".ui.activity.BuyerSeeMoreActivity" />
-        <activity android:name=".ui.activity.SellerSeeMoreActivity">
 
-        </activity>
     </application>
 
 </manifest>

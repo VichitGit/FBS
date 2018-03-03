@@ -23,6 +23,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.accountkit.AccessToken;
+import com.facebook.accountkit.AccountKit;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 
@@ -43,9 +45,11 @@ import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
+import vichitpov.com.fbs.preferece.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
 import vichitpov.com.fbs.ui.activity.profile.UserProfileActivity;
 
 public class MainActivity extends BaseAppCompatActivity implements MyOnClickListener {
@@ -63,6 +67,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
     private LinearLayout linearInternetUnavailable;
     private RecentlySingleBuyerAdapter adapterBuyer;
     private RecentlySingleSellerAdapter adapterSeller;
+    private UserInformationManager userInformationManager;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -72,6 +77,8 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
 
         apiService = ServiceGenerator.createService(ApiService.class);
         adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
+        userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+
 
         initView();
         setUpSliderHeader();
@@ -142,7 +149,24 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void eventListener() {
 
-        textProfile.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), UserProfileActivity.class)));
+        textProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                    AccessToken accessToken = AccountKit.getCurrentAccessToken();
+                    if (accessToken != null) {
+                        startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
+                    } else {
+                        startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+                    }
+                } else {
+                    startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+                }
+
+
+            }
+        });
         textSearch.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SearchProductActivity.class)));
         textUpload.setOnClickListener(view -> dialogBottom());
         scrollView.setOnScrollChangeListener((view, i, i1, i2, i3) -> floatingScroll.setVisibility(View.VISIBLE));
@@ -293,7 +317,6 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
 
 
     }
-
 
 
 }

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
@@ -16,6 +17,8 @@ import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.ui.activity.SettingsActivity;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
+    private TextView textName, textSold, textBought;
+    private String pName, pSold, pBought;
 
 
     @Override
@@ -30,6 +33,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         LinearLayout linearBought = findViewById(R.id.linear_bought);
         LinearLayout linearRePost = findViewById(R.id.linear_reload);
 
+        checkPreference();
 
         imageBack.setOnClickListener(this);
         imageSetting.setOnClickListener(this);
@@ -37,6 +41,11 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         linearSold.setOnClickListener(this);
         linearBought.setOnClickListener(this);
         linearRePost.setOnClickListener(this);
+
+
+    }
+
+    private void checkPreference() {
 
 
     }

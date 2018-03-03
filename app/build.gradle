@@ -66,6 +66,7 @@ dependencies {
     compile 'com.github.ganfra:material-spinner:2.0.0'
     compile 'io.github.anderscheow:validator:1.1.5'
     compile 'com.github.d-max:spots-dialog:0.7@aar'
+    compile 'com.diegodobelo.expandingview:expanding-view:0.9.4'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

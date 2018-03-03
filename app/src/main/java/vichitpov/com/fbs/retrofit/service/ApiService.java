@@ -11,6 +11,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
@@ -35,6 +36,9 @@ public interface ApiService {
 
     @GET("user")
     Call<UserInformationResponse> getUserInformation(@Header("access-token") String accessToken);
+
+    @GET("categoies/parents")
+    Call<CategoriesResponse> getAllCategories();
 
     @PUT("user")
     @FormUrlEncoded

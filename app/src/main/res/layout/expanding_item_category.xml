@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="94dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:text="expanding item category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical|start"
+        android:textColor="@color/colorBlack"
+        android:textSize="22sp" />
+
+</RelativeLayout>
