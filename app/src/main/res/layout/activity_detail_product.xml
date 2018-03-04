@@ -30,10 +30,10 @@
 
             <ImageView
                 android:id="@+id/image_back"
-                android:padding="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:padding="@dimen/dp_10"
                 android:src="@drawable/ic_back" />
 
             <TextView
@@ -49,8 +49,8 @@
             <ImageView
                 android:id="@+id/image_favorite"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/dp_10"
                 android:layout_height="match_parent"
+                android:padding="@dimen/dp_10"
                 android:src="@drawable/ic_favorite" />
 
 
@@ -73,7 +73,7 @@
                 android:id="@+id/flipper_layout_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@drawable/vichit" />
+                android:background="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/textTitle"

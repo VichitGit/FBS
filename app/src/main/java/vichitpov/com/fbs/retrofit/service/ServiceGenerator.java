@@ -1,9 +1,9 @@
 package vichitpov.com.fbs.retrofit.service;
 
-import android.text.TextUtils;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -40,6 +40,9 @@ public class ServiceGenerator {
 //        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 //        httpClient.addInterceptor(interceptor);
 
+        httpClient.connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS);
 
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();

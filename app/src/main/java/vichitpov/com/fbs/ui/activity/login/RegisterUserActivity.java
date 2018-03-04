@@ -15,9 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +22,7 @@ import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
-import vichitpov.com.fbs.preferece.UserInformationManager;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;

@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.preferece;
+package vichitpov.com.fbs.preference;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -47,6 +47,13 @@ public class UserInformationManager {
             INSTANCE = new UserInformationManager(preferences);
         }
         return INSTANCE;
+    }
+
+    public void saveCountPost(String totalBuy, String totalSell) {
+
+        editor.putString(TOTAL_POST_BUY, totalBuy).commit();
+        editor.putString(TOTAL_POST_SELL, totalSell).commit();
+
     }
 
     public void saveAccessToken(String accessToken) {

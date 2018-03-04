@@ -31,9 +31,6 @@
 
         </activity>
         <activity android:name=".ui.activity.PostToSellActivity" />
-        <activity android:name=".ui.activity.MainCategoryActivity" >
-
-        </activity>
         <activity android:name=".ui.activity.profile.UserProfileActivity" />
         <activity android:name=".ui.activity.PostToBuyActivity" />
         <activity android:name=".ui.activity.BookmarkCategoriesActivity" />

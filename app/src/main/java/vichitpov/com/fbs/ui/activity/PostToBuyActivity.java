@@ -1,7 +1,6 @@
 package vichitpov.com.fbs.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,9 +27,8 @@ import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.base.VailidationEmail;
-import vichitpov.com.fbs.preferece.UserInformationManager;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
-import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
@@ -234,6 +232,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onResponse(@NonNull Call<ProductPostedResponse> call, @NonNull Response<ProductPostedResponse> response) {
                 if (response.isSuccessful()) {
+
                     Toast.makeText(PostToBuyActivity.this, "Upload successfully.", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     finish();

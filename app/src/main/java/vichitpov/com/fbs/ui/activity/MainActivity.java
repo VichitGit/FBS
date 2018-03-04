@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,14 +22,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.accountkit.AccessToken;
-import com.facebook.accountkit.AccountKit;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,8 +43,9 @@ import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
-import vichitpov.com.fbs.preferece.UserInformationManager;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
@@ -68,6 +67,8 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
     private RecentlySingleBuyerAdapter adapterBuyer;
     private RecentlySingleSellerAdapter adapterSeller;
     private UserInformationManager userInformationManager;
+    private boolean isInformationLoadSuccess;
+    private SpotsDialog dialog;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -78,25 +79,74 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         apiService = ServiceGenerator.createService(ApiService.class);
         adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-
+        dialog = new SpotsDialog(this, "Updating...");
 
         initView();
         setUpSliderHeader();
         setUpCategoryHeader();
 
-
         if (InternetConnection.isNetworkConnected(this)) {
+            isInformationLoadSuccess = true;
             linearInternetUnavailable.setVisibility(View.GONE);
             setUpRecentlyBuyer();
             setUpRecentlySeller();
-
+            getInformationUser();
         } else {
+            isInformationLoadSuccess = false;
             linearInternetUnavailable.setVisibility(View.VISIBLE);
         }
 
         eventListener();
         adapterSeller.setOnCLickListener(this);
 
+
+    }
+
+    //load to get information user, it's means that refresh user data and delete old share preference
+    //and add new share preference(reason cuz when user upload product we cannot update share preference
+    //so if we cannot upload share preference cannot upload too. so when we go to user profile, it's will
+    //show old information. so we need to update share preference to get new information in local mobile:D
+    private void getInformationUser() {
+        if (!isInformationLoadSuccess) {
+           dialog.show();
+        }
+        String accessToken = userInformationManager.getUser().getAccessToken();
+        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            Call<UserInformationResponse> call = apiService.getUserInformation(accessToken);
+            call.enqueue(new Callback<UserInformationResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
+                    if (response.isSuccessful()) {
+
+                        userInformationManager.deleteUserInformation();
+                        userInformationManager.saveInformation(response.body());
+                        isInformationLoadSuccess = true;
+
+                    } else if (response.code() == 401) {
+
+                        isInformationLoadSuccess = false;
+
+                    } else {
+
+                        isInformationLoadSuccess = false;
+
+                    }
+
+                    if (!isInformationLoadSuccess) {
+                        dialog.dismiss();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                    if (!isInformationLoadSuccess) {
+                        dialog.dismiss();
+                    }
+                    isInformationLoadSuccess = false;
+                }
+            });
+        }
 
     }
 
@@ -149,23 +199,19 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void eventListener() {
 
-        textProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-                    AccessToken accessToken = AccountKit.getCurrentAccessToken();
-                    if (accessToken != null) {
-                        startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
-                    } else {
-                        startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
-                    }
+        textProfile.setOnClickListener(view -> {
+            Log.e("pppp ", isInformationLoadSuccess + "");
+            if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                if (isInformationLoadSuccess) {
+                    startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
                 } else {
-                    startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+                    getInformationUser();
                 }
-
-
+            } else {
+                startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
             }
+
+
         });
         textSearch.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SearchProductActivity.class)));
         textUpload.setOnClickListener(view -> dialogBottom());
