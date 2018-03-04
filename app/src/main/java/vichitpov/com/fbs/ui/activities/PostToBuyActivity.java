@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activity;
+package vichitpov.com.fbs.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -31,7 +31,7 @@ import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
+import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 public class PostToBuyActivity extends AppCompatActivity implements View.OnClickListener {
 

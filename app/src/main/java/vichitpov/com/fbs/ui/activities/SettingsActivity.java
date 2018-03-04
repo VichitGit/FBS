@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activity;
+package vichitpov.com.fbs.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

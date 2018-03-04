@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activity.profile;
+package vichitpov.com.fbs.ui.activities.profile;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -35,8 +35,8 @@ import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activity.SettingsActivity;
-import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
+import vichitpov.com.fbs.ui.activities.SettingsActivity;
+import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -151,9 +151,11 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         int id = view.getId();
         if (id == R.id.image_back)
             finish();
-        else if (id == R.id.linear_edit_profile)
-            startActivity(new Intent(getApplicationContext(), EditUserProfileActivity.class));
-        else if (id == R.id.image_setting)
+        else if (id == R.id.linear_edit_profile) {
+            Intent intent = new Intent(getApplicationContext(), EditUserProfileActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.image_setting)
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
         else if (id == R.id.linear_sold)
             startActivity(new Intent(getApplicationContext(), ProductSoldActivity.class));

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    tools:context="vichitpov.com.fbs.ui.activity.login.StartLoginActivity">
+    tools:context=".ui.activities.login.StartLoginActivity">
 
     <ss.com.bannerslider.views.BannerSlider
         android:id="@+id/banner_slider"

@@ -1,29 +1,30 @@
-package vichitpov.com.fbs.ui.activity;
+package vichitpov.com.fbs.ui.activities.profile;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import vichitpov.com.fbs.R;
 
-public class SearchProductActivity extends AppCompatActivity implements View.OnClickListener {
-    private android.support.v7.widget.SearchView searchView;
+public class RePostToSellActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_product);
+        setContentView(R.layout.activity_re_post_to_sell);
 
         ImageView imageBack = findViewById(R.id.image_back);
-        searchView = findViewById(R.id.search_product);
+        RecyclerView recyclerView = findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         imageBack.setOnClickListener(this);
 
     }
-
     @Override
     public void onClick(View view) {
-        finish();
+
     }
 }

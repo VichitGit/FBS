@@ -20,6 +20,7 @@ import java.util.List;
 
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
+import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.constant.Url;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
@@ -36,6 +37,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static final int linearLayoutManager = 15;
 
     private List<ProductResponse.Data> productList;
+    private ProductResponse.Data productResponse;
     private Context context;
     private OnLoadMore onLoadMore;
     private int checkLayoutManager;
@@ -153,10 +155,10 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        ProductResponse.Data productResponse = productList.get(position);
+        productResponse = productList.get(position);
 
         if (holder instanceof ProductViewHolder) {
+
             ProductViewHolder productViewHolder = (ProductViewHolder) holder;
             productViewHolder.title.setText(productResponse.getTitle());
 
@@ -254,6 +256,14 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             textDelete = itemView.findViewById(R.id.textDelete);
             textStatus = itemView.findViewById(R.id.textStatus);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
+
+            textEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    IntentData.sendProduct(context, productResponse);
+                }
+            });
         }
     }
 

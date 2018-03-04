@@ -38,7 +38,7 @@ public class UserInformationManager {
     private static UserInformationManager INSTANCE = null;
 
     @SuppressLint("CommitPrefEdits")
-    public UserInformationManager(SharedPreferences preferences) {
+    private UserInformationManager(SharedPreferences preferences) {
         this.preferences = preferences;
         this.editor = preferences.edit();
     }
@@ -56,6 +56,16 @@ public class UserInformationManager {
 
     public void saveAccessToken(String accessToken) {
         editor.putString(ACCESS_TOKEN, accessToken).commit();
+    }
+
+    public void saveSomeInformation(UserInformationResponse userResponse) {
+
+        editor.putString(FIRST_NAME, userResponse.getData().getFirstname()).commit();
+        editor.putString(LAST_NAME, userResponse.getData().getLastname()).commit();
+        editor.putString(GENDER, userResponse.getData().getGender()).commit();
+        editor.putString(ADDRESS, userResponse.getData().getAddress()).commit();
+        editor.putString(CITY, userResponse.getData().getCity()).commit();
+
     }
 
     public void saveInformation(UserInformationResponse userResponse) {

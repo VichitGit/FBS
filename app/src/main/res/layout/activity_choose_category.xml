@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#55aaff"
-    tools:context="vichitpov.com.fbs.ui.activity.ChooseCategoryActivity">
+    tools:context="vichitpov.com.fbs.ui.activities.ChooseCategoryActivity">
 
     <com.diegodobelo.expandingview.ExpandingList
         android:id="@+id/expanding_list_main"

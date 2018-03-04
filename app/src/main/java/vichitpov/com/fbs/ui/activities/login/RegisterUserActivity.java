@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activity.login;
+package vichitpov.com.fbs.ui.activities.login;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,7 +26,7 @@ import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activity.MainActivity;
+import vichitpov.com.fbs.ui.activities.MainActivity;
 
 
 public class RegisterUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {

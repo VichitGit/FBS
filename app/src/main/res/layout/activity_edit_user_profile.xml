@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context=".ui.activity.profile.EditUserProfileActivity">
+    tools:context=".ui.activities.profile.EditUserProfileActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/image_back"
+                        android:id="@+id/imageBack"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:padding="@dimen/dp_10"
@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/image_back"
+                        android:layout_toEndOf="@+id/imageBack"
                         android:text="@string/text_edit_profile"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/sp_20" />
@@ -105,27 +105,8 @@
 
                 </LinearLayout>
 
-                <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    app:ms_alignLabels="false"
-                    app:ms_arrowColor="@color/colorHint"
-                    app:ms_arrowSize="16dp"
-                    app:ms_baseColor="@color/colorPrimary"
-                    app:ms_dropDownHintView="@layout/dropdown_hint_item"
-                    app:ms_enableErrorLabel="false"
-                    app:ms_enableFloatingLabel="false"
-                    app:ms_errorColor="@color/colorRed"
-                    app:ms_floatingLabelText="floating label"
-                    app:ms_hint="Select Gender"
-                    app:ms_hintColor="@color/colorBlack"
-                    app:ms_multiline="false"
-                    app:ms_thickness="0.3dp" />
-
                 <EditText
-                    android:id="@+id/edit_description"
+                    android:id="@+id/editDescription"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginTop="@dimen/dp_10"

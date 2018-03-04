@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activity;
+package vichitpov.com.fbs.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -48,8 +48,8 @@ import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
-import vichitpov.com.fbs.ui.activity.profile.UserProfileActivity;
+import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
+import vichitpov.com.fbs.ui.activities.profile.UserProfileActivity;
 
 public class MainActivity extends BaseAppCompatActivity implements MyOnClickListener {
 
@@ -80,6 +80,8 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         dialog = new SpotsDialog(this, "Updating...");
+        Log.e("pppp", userInformationManager.getUser().getAccessToken());
+
 
         initView();
         setUpSliderHeader();
@@ -92,6 +94,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
             setUpRecentlySeller();
             getInformationUser();
         } else {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
             isInformationLoadSuccess = false;
             linearInternetUnavailable.setVisibility(View.VISIBLE);
         }
@@ -256,7 +259,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
                     relativeRecentlyBuyer.setVisibility(View.VISIBLE);
 
                 } else {
-
+                    Log.e("pppp", response.code() + " = " + response.message());
                     progressBar.setVisibility(View.GONE);
                     relativeRecentlyBuyer.setVisibility(View.GONE);
 

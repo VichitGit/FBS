@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activity.login;
+package vichitpov.com.fbs.ui.activities.login;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -34,8 +34,8 @@ import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activity.MainActivity;
-import vichitpov.com.fbs.ui.activity.PostToBuyActivity;
+import vichitpov.com.fbs.ui.activities.MainActivity;
+import vichitpov.com.fbs.ui.activities.PostToBuyActivity;
 
 public class StartLoginActivity extends AppCompatActivity {
     public static int APP_REQUEST_CODE = 99;

@@ -1,15 +1,13 @@
-package vichitpov.com.fbs.ui.activity.profile;
+package vichitpov.com.fbs.ui.activities.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import dmax.dialog.SpotsDialog;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -21,15 +19,15 @@ import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
+import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 public class EditUserProfileActivity extends AppCompatActivity {
-    private EditText editFirstName, editLastName, editAddress, editCity;
+    private EditText editFirstName, editLastName, editAddress, editCity, editDescription;
     private MaterialSpinner spinnerGender;
     private UserInformationManager userInformationManager;
-    private String selectedGender = "null";
     private Button buttonSave;
     private SpotsDialog dialog;
+    private ImageView imageBack;
     //private int PLACE_PICKER_REQUEST = 1;
 
 
@@ -44,12 +42,13 @@ public class EditUserProfileActivity extends AppCompatActivity {
         editAddress = findViewById(R.id.editAddress);
         editCity = findViewById(R.id.editCity);
         buttonSave = findViewById(R.id.buttonSave);
+        editDescription = findViewById(R.id.editDescription);
+        imageBack = findViewById(R.id.imageBack);
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         dialog = new SpotsDialog(this, "Updating...");
 
         getSharePreferences();
-        setUpGender();
 
         listener();
 
@@ -57,20 +56,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
     }
 
     private void listener() {
-        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0)
-                    selectedGender = "Male";
-                else
-                    selectedGender = "Female";
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        imageBack.setOnClickListener(view -> finish());
         buttonSave.setOnClickListener(view -> {
 
             if (checkValidation()) {
@@ -81,21 +67,22 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 if (!accessToken.equals("N/A")) {
                     dialog.show();
                     Call<UserInformationResponse> call = apiService.updateUser(accessToken, editFirstName.getText().toString(),
-                            editLastName.getText().toString(), selectedGender, editAddress.getText().toString(), editCity.getText().toString());
+                            editLastName.getText().toString(), userInformationManager.getUser().getGender(), editAddress.getText().toString(), editCity.getText().toString());
 
                     call.enqueue(new Callback<UserInformationResponse>() {
                         @Override
                         public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                             if (response.isSuccessful()) {
-                                userInformationManager.deleteUserInformation();
-                                userInformationManager.saveInformation(response.body());
+
                                 dialog.dismiss();
+                                userInformationManager.saveSomeInformation(response.body());
                                 startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
                                 finish();
 
                             } else if (response.code() == 401) {
                                 dialog.dismiss();
                                 startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+                                finish();
 
                             } else {
                                 dialog.dismiss();
@@ -148,18 +135,10 @@ public class EditUserProfileActivity extends AppCompatActivity {
     }
 
 
-    private void setUpGender() {
-        String[] ITEMS = {"Male", "Female"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ITEMS);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGender.setAdapter(adapter);
-    }
-
     private void getSharePreferences() {
         String pFirstName = userInformationManager.getUser().getFirstName();
         String pLastName = userInformationManager.getUser().getLastName();
         String pAddress = userInformationManager.getUser().getAddress();
-        String pGender = userInformationManager.getUser().getGender();
         String pCity = userInformationManager.getUser().getCity();
 
         if (!pFirstName.equals("N/A") && !pLastName.equals("N/A")) {
@@ -169,13 +148,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
         if (!pAddress.equals("N/A")) {
             editAddress.setText(pAddress);
-        }
-
-        if (!pGender.equals("N/A")) {
-            if (pGender.equals("Male") || pGender.equals("male"))
-                spinnerGender.setSelection(0);
-            else if (pGender.equals("Female") || pGender.equals("female"))
-                spinnerGender.setSelection(1);
         }
 
         if (!pCity.equals("N/A")) {
