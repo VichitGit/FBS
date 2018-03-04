@@ -142,7 +142,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
                 } else {
                     String mergeAddress = addressStreet + ", " + addressCommune + ", " + addressDistricts;
                     if (InternetConnection.isNetworkConnected(getApplicationContext())) {
-                        uploadInformation(userAccessToken, mFirstName, mLastName, mGender, mergeAddress, addressCity, "not_yet_do_iamge.png");
+                        uploadInformation(userAccessToken, mFirstName, mLastName, mGender, mergeAddress, addressCity);
                     } else {
                         Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                     }
@@ -151,9 +151,9 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-    private void uploadInformation(String accessToken, String firstName, String lastName, String gender, String address, String city, String profileImage) {
+    private void uploadInformation(String accessToken, String firstName, String lastName, String gender, String address, String city) {
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
-        Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, address, city, profileImage);
+        Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, address, city);
         call.enqueue(new Callback<UserInformationResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {

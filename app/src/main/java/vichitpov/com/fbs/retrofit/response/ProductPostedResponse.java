@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by VichitDeveloper on 3/1/18.
+ * Created by VichitPov on 3/1/18.
  */
 
 public class ProductPostedResponse {
@@ -61,6 +61,8 @@ public class ProductPostedResponse {
         private Createddate createddate;
         @SerializedName("favoriteCount")
         private int favoritecount;
+        @SerializedName("expired")
+        private String status;
         @SerializedName("contactMapCoordinate")
         private String contactmapcoordinate;
         @SerializedName("contactAddress")
@@ -85,6 +87,14 @@ public class ProductPostedResponse {
         private int id;
         @SerializedName("type")
         private String type;
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
 
         public Updateddate getUpdateddate() {
             return updateddate;

@@ -70,6 +70,8 @@ public class UserInformationResponse {
         private String city;
         @SerializedName("address")
         private String address;
+        @SerializedName("description")
+        private String description;
         @SerializedName("gender")
         private String gender;
         @SerializedName("map_coordinate")
@@ -86,6 +88,14 @@ public class UserInformationResponse {
         private int id;
         @SerializedName("type")
         private String type;
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
 
         public Signupdate getSignupdate() {
             return signupdate;

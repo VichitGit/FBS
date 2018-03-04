@@ -15,6 +15,7 @@ public class UserInFormationModel {
     private String phone;
     private String address;
     private String mapCondinate;
+    private String description;
     private String city;
     private String profile;
     private String role;
@@ -24,6 +25,14 @@ public class UserInFormationModel {
     private String signUpDate;
     private String accessToken;
 
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getId() {
         return id;

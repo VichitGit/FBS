@@ -23,7 +23,9 @@ import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
-public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMore {
+import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.linearLayoutManager;
+
+public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -38,21 +40,20 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
         setContentView(R.layout.activity_seller_see_more);
 
         initView();
-        listener();
         setRecyclerView();
         loadMoreBuyerPagination(page);
+
         adapter.onLoadMore(this);
-
-
-    }
-
-    //all listener
-    private void listener() {
-
+        refreshLayout.setOnRefreshListener(this);
         imageBack.setOnClickListener(view -> finish());
 
+
     }
 
+    @Override
+    public void onRefresh() {
+        refreshLayout.setRefreshing(false);
+    }
 
     //when recycler scroll down, this method with invoke
     @Override
@@ -100,9 +101,7 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
 
             @Override
             public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
-
                 t.printStackTrace();
-
             }
         });
 
@@ -113,7 +112,7 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new SellerSeeMoreAdapter(this, recyclerView);
+        adapter = new SellerSeeMoreAdapter(this, recyclerView, linearLayoutManager);
         recyclerView.setAdapter(adapter);
     }
 
@@ -125,4 +124,6 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
         refreshLayout = findViewById(R.id.swipeRefresh);
 
     }
+
+
 }

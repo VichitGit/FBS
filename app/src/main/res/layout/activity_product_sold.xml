@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
     tools:context=".ui.activity.profile.ProductSoldActivity">
 
     <LinearLayout
@@ -37,10 +36,10 @@
                 <TextView
                     android:id="@+id/text_toolbar"
                     android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/image_back"
+                    android:gravity="center_vertical"
                     android:text="@string/text_product_sold"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/sp_20" />
@@ -61,12 +60,12 @@
         </android.support.v7.widget.Toolbar>
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_sold"
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_sold"
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -75,7 +74,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progress_sold"
+        android:id="@+id/progress"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center" />

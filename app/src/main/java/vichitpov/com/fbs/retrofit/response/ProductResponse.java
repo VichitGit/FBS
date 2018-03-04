@@ -306,7 +306,7 @@ public class ProductResponse implements Serializable {
         @SerializedName("createdDate")
         private Createddate createddate;
         @SerializedName("status")
-        private int status;
+        private String status;
         @SerializedName("contactMapCoordinate")
         private String contactmapcoordinate;
         @SerializedName("contactAddress")
@@ -348,11 +348,11 @@ public class ProductResponse implements Serializable {
             this.createddate = createddate;
         }
 
-        public int getStatus() {
+        public String getStatus() {
             return status;
         }
 
-        public void setStatus(int status) {
+        public void setStatus(String status) {
             this.status = status;
         }
 

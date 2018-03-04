@@ -25,6 +25,8 @@ import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
+import static vichitpov.com.fbs.adapter.BuyerSeeMoreAdapter.PRODUCT_VIEW;
+
 public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoadMore {
 
     private SwipeRefreshLayout refreshLayout;
@@ -116,7 +118,7 @@ public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoa
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new BuyerSeeMoreAdapter(this, recyclerView);
+        adapter = new BuyerSeeMoreAdapter(this, recyclerView, PRODUCT_VIEW);
         recyclerView.setAdapter(adapter);
     }
 

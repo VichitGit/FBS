@@ -40,7 +40,7 @@ import vichitpov.com.fbs.ui.activity.login.StartLoginActivity;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView textName, textCountSell, textCountBuy, textEmail, textAddress, textPhone, textSaveProfile;
+    private TextView textName, textCountSell, textCountBuy, textEmail, textAddress, textPhone, textSaveProfile, textDescription;
     private UserInformationManager userInformationManager;
     private ImageView imageProfile, imageSetting;
     private String selectedImagePath = "null";
@@ -68,6 +68,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         textAddress = findViewById(R.id.textAddress);
         textPhone = findViewById(R.id.textPhone);
         textSaveProfile = findViewById(R.id.textSaveProfile);
+        textDescription = findViewById(R.id.textDescription);
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         dialog = new SpotsDialog(this, "Changing...");
@@ -96,6 +97,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         String pCountSell = userInformationManager.getUser().getTotalSeller();
         String pPhone = userInformationManager.getUser().getPhone();
         String pProfile = userInformationManager.getUser().getProfile();
+        String description = userInformationManager.getUser().getDescription();
 
         if (!pProfile.equals("N/A")) {
             Picasso.with(this)
@@ -133,6 +135,12 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         if (!pPhone.equals("N/A")) {
             textPhone.setText("Contact Phone: " + pPhone);
+        }
+
+        if (!description.equals("N/A")) {
+            textDescription.setText(description);
+        } else {
+            textDescription.setText("Introduction yourself?");
         }
 
 
@@ -183,7 +191,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                         public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                             if (response.isSuccessful()) {
                                 dialog.dismiss();
-                                userInformationManager.saveInformation(response.body());
+                                userInformationManager.saveImageProfile(response.body().getData().getProfilepicture());
                                 startActivity(getIntent());
                                 finish();
                                 overridePendingTransition(0, 0);
@@ -211,11 +219,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             }
 
         }
-    }
-
-    private void uploadImageProfile() {
-
-
     }
 
     @Override

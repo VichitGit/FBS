@@ -108,7 +108,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
     //show old information. so we need to update share preference to get new information in local mobile:D
     private void getInformationUser() {
         if (!isInformationLoadSuccess) {
-           dialog.show();
+            dialog.show();
         }
         String accessToken = userInformationManager.getUser().getAccessToken();
         if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
@@ -200,7 +200,6 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
     private void eventListener() {
 
         textProfile.setOnClickListener(view -> {
-            Log.e("pppp ", isInformationLoadSuccess + "");
             if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
                 if (isInformationLoadSuccess) {
                     startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));

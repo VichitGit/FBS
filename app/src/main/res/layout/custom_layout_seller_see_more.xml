@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -27,8 +27,8 @@
 
                 <ImageView
                     android:id="@+id/imageThumbnail"
-                    android:layout_width="170dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
                     android:layout_marginBottom="@dimen/dp_5"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
@@ -36,9 +36,11 @@
 
                 <TextView
                     android:id="@+id/textDate"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_alignEnd="@+id/imageThumbnail"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/imageThumbnail"
                     android:background="#70853FFF"
                     android:gravity="center"
                     android:text="11-Jan-2018"
@@ -78,7 +80,7 @@
 
                 <TextView
                     android:id="@+id/textAddress"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
@@ -108,9 +110,9 @@
                     android:background="@color/colorHint" />
 
                 <RelativeLayout
-                    android:padding="@dimen/dp_5"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_5">
 
 
                     <ImageView

@@ -26,18 +26,22 @@ import vichitpov.com.fbs.retrofit.response.ProductResponse;
 public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_ITEM = 1;
     private static final int VIEW_PROGRESS = 0;
+    public static final int PRODUCT_POSTED_BUY = 3;
+    public static final int PRODUCT_VIEW = 4;
+
 
     private List<ProductResponse.Data> productList;
     private Context context;
     private OnLoadMore onLoadMore;
+    private int checkTypeProductView;
 
     private int visibleThreshold = 3;
     private boolean loading = false;
 
-    public BuyerSeeMoreAdapter(Context context, RecyclerView recyclerView) {
+    public BuyerSeeMoreAdapter(Context context, RecyclerView recyclerView, int checkTypeProductView) {
         this.context = context;
+        this.checkTypeProductView = checkTypeProductView;
         productList = new ArrayList<>();
-
 
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
             final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -53,8 +57,6 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                         loading = true;
                         onLoadMore.setOnLoadMore();
-                        //Log.e("pppp list size", productList.size() + "");
-
                     }
                 }
             });
@@ -109,8 +111,14 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         RecyclerView.ViewHolder vh = null;
 
         if (viewType == VIEW_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_buyer_see_more, parent, false);
-            vh = new ProductViewHolder(view);
+            if (checkTypeProductView == PRODUCT_VIEW) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_buyer_see_more, parent, false);
+                vh = new ProductViewHolder(view);
+            } else if (checkTypeProductView == PRODUCT_POSTED_BUY) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_user_post_buy, parent, false);
+                vh = new ProductUserPostedBuyViewHolder(view);
+
+            }
         } else if (viewType == VIEW_PROGRESS) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layour_progress_pagination, parent, false);
             vh = new ProgressPagination(view);
@@ -122,7 +130,6 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         ProductResponse.Data productResponse = productList.get(position);
 
         if (holder instanceof ProductViewHolder) {
@@ -144,6 +151,19 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 productViewHolder.address.setText(productResponse.getContactaddress());
             }
 
+
+        } else if (holder instanceof ProductUserPostedBuyViewHolder) {
+            ProductUserPostedBuyViewHolder postedBuyViewHolder = (ProductUserPostedBuyViewHolder) holder;
+
+            String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
+            String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+
+            if (productResponse.getContactaddress() != null) {
+                postedBuyViewHolder.textAddress.setText(productResponse.getContactaddress());
+            }
+            postedBuyViewHolder.textTitle.setText(productResponse.getTitle());
+            postedBuyViewHolder.textPrice.setText(priceFrom + "$" + " - " + priceTo + "$");
+            postedBuyViewHolder.textStatus.setText(productResponse.getStatus());
 
         } else if (holder instanceof ProgressPagination) {
             ProgressPagination progressPagination = (ProgressPagination) holder;
@@ -177,6 +197,22 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //            favorite = itemView.findViewById(R.id.imageFavorite);
 //            notification = itemView.findViewById(R.id.imageNotification);
 
+
+        }
+    }
+
+    class ProductUserPostedBuyViewHolder extends RecyclerView.ViewHolder {
+        private TextView textTitle, textAddress, textPrice, textEdit, textDelete, textStatus;
+
+        public ProductUserPostedBuyViewHolder(View itemView) {
+            super(itemView);
+
+            textTitle = itemView.findViewById(R.id.textTitle);
+            textAddress = itemView.findViewById(R.id.textAddress);
+            textPrice = itemView.findViewById(R.id.textPrice);
+            textEdit = itemView.findViewById(R.id.textEdit);
+            textDelete = itemView.findViewById(R.id.textDelete);
+            textStatus = itemView.findViewById(R.id.textStatus);
 
         }
     }

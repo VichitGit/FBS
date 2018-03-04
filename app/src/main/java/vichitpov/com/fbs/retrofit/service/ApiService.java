@@ -37,6 +37,12 @@ public interface ApiService {
     @GET("user")
     Call<UserInformationResponse> getUserInformation(@Header("access-token") String accessToken);
 
+    @GET("user/sells")
+    Call<ProductResponse> getProductSellSpecificUser(@Header("access-token") String accessToken, @Query("page") int page);
+
+    @GET("user/buys")
+    Call<ProductResponse> getProductBuySpecificUser(@Header("access-token") String accessToken, @Query("page") int page);
+
     @GET("categoies/parents")
     Call<CategoriesResponse> getAllCategories();
 
@@ -44,7 +50,7 @@ public interface ApiService {
     @FormUrlEncoded
     Call<UserInformationResponse> updateUser(@Header("access-token") String accessToken, @Field("first_name") String firstName,
                                              @Field("last_name") String lastName, @Field("gender") String gender,
-                                             @Field("address") String address, @Field("city") String city, @Field("profile_pic") String profileImage);
+                                             @Field("address") String address, @Field("city") String city);
 
     @POST("user/post")
     @FormUrlEncoded

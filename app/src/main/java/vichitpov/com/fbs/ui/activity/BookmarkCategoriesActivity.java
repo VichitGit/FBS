@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.adapter1.BookmarkCategoriesAdapter;
 import vichitpov.com.fbs.model.BookmarkModel;
 
 public class BookmarkCategoriesActivity extends AppCompatActivity {
@@ -26,16 +25,6 @@ public class BookmarkCategoriesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
 
-        List<BookmarkModel> bookmarkList = new ArrayList<>();
-        bookmarkList.add(new BookmarkModel(R.drawable.ic_about_us, "Computer"));
-        bookmarkList.add(new BookmarkModel(R.drawable.ic_about_us, "Phone"));
-        bookmarkList.add(new BookmarkModel(R.drawable.ic_about_us, "Car"));
-        bookmarkList.add(new BookmarkModel(R.drawable.ic_about_us, "Moto"));
-        bookmarkList.add(new BookmarkModel(R.drawable.ic_about_us, "Electronic"));
-
-
-        BookmarkCategoriesAdapter adapter = new BookmarkCategoriesAdapter(bookmarkList, getApplicationContext());
-        recyclerView.setAdapter(adapter);
 
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override

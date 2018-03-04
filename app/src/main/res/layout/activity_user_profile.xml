@@ -321,7 +321,7 @@
 
                     <!--description-->
                     <TextView
-                        android:id="@+id/text_desc"
+                        android:id="@+id/textDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/layout_tab"
@@ -337,7 +337,7 @@
                         android:id="@+id/text_edit_infor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/text_desc"
+                        android:layout_below="@id/textDescription"
                         android:layout_centerInParent="true"
                         android:layout_marginTop="@dimen/dp_10"
                         android:text="@string/text_edit_infor"

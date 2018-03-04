@@ -50,12 +50,12 @@
         </android.support.v7.widget.Toolbar>
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_bought"
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_bought"
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -64,7 +64,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progress_bought"
+        android:id="@+id/progress"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center" />

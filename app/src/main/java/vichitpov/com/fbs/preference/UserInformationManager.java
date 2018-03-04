@@ -20,6 +20,7 @@ public class UserInformationManager {
     private static final String EMAIL = "EMAIL";
     private static final String PHONE = "PHONE";
     private static final String GENDER = "GENDER";
+    private static final String DESCRIPTION = "DESCRIPTION";
     private static final String ADDRESS = "ADDRESS";
     private static final String CITY = "CITY";
     private static final String MAP_COORDINATE = "MAP_COORDINATE";
@@ -49,46 +50,22 @@ public class UserInformationManager {
         return INSTANCE;
     }
 
-    public void saveCountPost(String totalBuy, String totalSell) {
-
-        editor.putString(TOTAL_POST_BUY, totalBuy).commit();
-        editor.putString(TOTAL_POST_SELL, totalSell).commit();
-
+    public void saveImageProfile(String photo) {
+        editor.putString(PROFILE, photo).commit();
     }
 
     public void saveAccessToken(String accessToken) {
         editor.putString(ACCESS_TOKEN, accessToken).commit();
     }
 
-    public void deleteAccessToken() {
-        editor.remove(ACCESS_TOKEN).commit();
-    }
-
-
     public void saveInformation(UserInformationResponse userResponse) {
-
-//        editor.putString(TYPE, user.getType()).commit();
-//        editor.putString(ID, user.getId()).commit();
-//        editor.putString(FIRST_NAME, user.getFirstName()).commit();
-//        editor.putString(LAST_NAME, user.getLastName()).commit();
-//        editor.putString(EMAIL, user.getEmail()).commit();
-//        editor.putString(PHONE, user.getPhone()).commit();
-//        editor.putString(GENDER, user.getGender()).commit();
-//        editor.putString(ADDRESS, user.getAddress()).commit();
-//        editor.putString(CITY, user.getCity()).commit();
-//        editor.putString(PROFILE, user.getProfile()).commit();
-//        editor.putString(ROLE, user.getRole()).commit();
-//        editor.putString(STATUS, user.getStatus()).commit();
-//        editor.putString(TOTAL_POST_BUY, user.getTotalBuyer()).commit();
-//        editor.putString(TOTAL_POST_SELL, user.getTotalSeller()).commit();
-//        editor.putString(SIGN_UP_DATE, user.getSignUpDate()).commit();
-
         editor.putString(TYPE, userResponse.getData().getType()).commit();
         editor.putString(ID, String.valueOf(userResponse.getData().getId())).commit();
         editor.putString(FIRST_NAME, userResponse.getData().getFirstname()).commit();
         editor.putString(LAST_NAME, userResponse.getData().getLastname()).commit();
         editor.putString(EMAIL, userResponse.getData().getEmail()).commit();
         editor.putString(PHONE, userResponse.getData().getPhone()).commit();
+        editor.putString(DESCRIPTION, userResponse.getData().getDescription());
         editor.putString(GENDER, userResponse.getData().getGender()).commit();
         editor.putString(MAP_COORDINATE, userResponse.getData().getMapCondinate());
         editor.putString(ADDRESS, userResponse.getData().getAddress()).commit();
@@ -101,6 +78,10 @@ public class UserInformationManager {
         editor.putString(SIGN_UP_DATE, String.valueOf(userResponse.getData().getSignupdate())).commit();
     }
 
+
+    public void deleteAccessToken() {
+        editor.remove(ACCESS_TOKEN).commit();
+    }
 
     public void deleteUserInformation() {
 
@@ -132,6 +113,7 @@ public class UserInformationManager {
         user.setEmail(preferences.getString(EMAIL, "N/A"));
         user.setPhone(preferences.getString(PHONE, "N/A"));
         user.setGender(preferences.getString(GENDER, "N/A"));
+        user.setDescription(preferences.getString(DESCRIPTION, "N/A"));
         user.setMapCondinate(preferences.getString(MAP_COORDINATE, "N/A"));
         user.setAddress(preferences.getString(ADDRESS, "N/A"));
         user.setCity(preferences.getString(CITY, "N/A"));
@@ -141,7 +123,6 @@ public class UserInformationManager {
         user.setTotalBuyer(preferences.getString(TOTAL_POST_BUY, "N/A"));
         user.setTotalSeller(preferences.getString(TOTAL_POST_SELL, "N/A"));
         user.setAccessToken(preferences.getString(ACCESS_TOKEN, "N/A"));
-
 
         return user;
 

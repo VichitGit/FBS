@@ -81,8 +81,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 if (!accessToken.equals("N/A")) {
                     dialog.show();
                     Call<UserInformationResponse> call = apiService.updateUser(accessToken, editFirstName.getText().toString(),
-                            editLastName.getText().toString(), selectedGender, editAddress.getText().toString(),
-                            editCity.getText().toString(), userInformationManager.getUser().getProfile());
+                            editLastName.getText().toString(), selectedGender, editAddress.getText().toString(), editCity.getText().toString());
 
                     call.enqueue(new Callback<UserInformationResponse>() {
                         @Override
@@ -92,6 +91,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                 userInformationManager.saveInformation(response.body());
                                 dialog.dismiss();
                                 startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
+                                finish();
 
                             } else if (response.code() == 401) {
                                 dialog.dismiss();
