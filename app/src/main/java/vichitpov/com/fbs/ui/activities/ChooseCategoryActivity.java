@@ -1,14 +1,15 @@
 package vichitpov.com.fbs.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
@@ -30,14 +31,18 @@ public class ChooseCategoryActivity extends AppCompatActivity {
     private ExpandingList mExpandingList;
     private List<CategoriesResponse.Data> categoriesResponses;
     private HashMap<String, Integer> mapCategory;
+    private String mainCategoryName = "null";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_category);
 
+        ImageView imageBack = findViewById(R.id.imageBack);
         mExpandingList = findViewById(R.id.expanding_list_main);
         getAllCategories();
+
+        imageBack.setOnClickListener(view -> finish());
 
 
     }
@@ -66,15 +71,10 @@ public class ChooseCategoryActivity extends AppCompatActivity {
                             mapCategory.put(categoryName, idCategory);
                         }
 
-
-                        Log.e("pppp", mapCategory.size() + "");
                         addItem(categoriesResponses.get(i).getCategoryname(), subItems, color);
                     }
 
-
-                } else
-
-                {
+                } else {
                     Log.e("pppp", response.code() + " = " + response.message());
                 }
 
@@ -95,7 +95,6 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         ExpandingItem item = mExpandingList.createNewItem(R.layout.expanding_layout_category);
         if (item != null) {
             item.setIndicatorColor(color);
-
             ((TextView) item.findViewById(R.id.title)).setText(title);
             item.createSubItems(subItem.size());
             for (int i = 0; i < item.getSubItemsCount(); i++) {
@@ -111,44 +110,30 @@ public class ChooseCategoryActivity extends AppCompatActivity {
     }
 
     private void configureSubItem(final ExpandingItem item, final View view, String subTitle) {
+
         ((TextView) view.findViewById(R.id.sub_title)).setText(subTitle);
         view.findViewById(R.id.sub_title).setOnClickListener(v -> {
-            Toast.makeText(ChooseCategoryActivity.this, "click", Toast.LENGTH_SHORT).show();
+
+
             for (String categoryName : mapCategory.keySet()) {
                 if (subTitle.equals(categoryName)) {
 
-                    Toast.makeText(this, "category id: " + mapCategory.get(categoryName), Toast.LENGTH_SHORT).show();
+                    String categoryId = String.valueOf(mapCategory.get(categoryName));
 
+                    Intent data = new Intent();
+                    data.putExtra("CategoryId", categoryId);
+                    data.putExtra("CategoryName", subTitle);
+                    setResult(10, data);
+                    finish();
                 }
-
             }
-
-
-//            if (mapCategory.get(subTitle).contains(subTitle)) {
-//                Toast.makeText(this, mapCategory.containsKey(subTitle) + "", Toast.LENGTH_LONG).show();
-//            }
-
-
-//            for (int i = 0; i < mapCategory.size(); i++){
-//
-//
-//
-//            }
-
-//            for (int i = 0; i < categoriesResponses.size(); i++) {
-//                String selectedCategoryName = categoriesResponses.get(i).getCategorychildren().get(0).getCategoryName();
-//
-//
-//                if (subTitle.contains(selectedCategoryName)) {
-//                    int selectedId = categoriesResponses.get(i).getCategorychildren().get(0).getId();
-//                    Toast.makeText(ChooseCategoryActivity.this, "category id = " + selectedId, Toast.LENGTH_LONG).show();
-//                    return;
-//                } else {
-//                    Log.e("pppp subTitle", subTitle);
-//                    Log.e("pppp selectedCategory", selectedCategoryName);
-//                }
-//            }
-
         });
     }
 }
+
+
+
+
+
+
+

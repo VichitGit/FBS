@@ -22,7 +22,6 @@ import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.callback.OnLoadMore;
-import vichitpov.com.fbs.constant.Url;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 
 /**
@@ -178,11 +177,13 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
             if (productResponse.getProductimages().size() != 0) {
                 Picasso.with(context)
-                        .load(Url.BASE_URL + productResponse.getProductimages().get(0))
+                        .load(productResponse.getProductimages().get(0))
                         .resize(200, 200)
                         .centerCrop()
                         .error(R.drawable.ic_unavailable)
                         .into(productViewHolder.thumbnail);
+
+                Log.e("pppp image", productResponse.getProductimages().get(0));
             }
 
 
@@ -199,7 +200,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             if (productResponse.getProductimages().size() != 0) {
                 Picasso.with(context)
-                        .load(Url.BASE_URL + productResponse.getProductimages().get(0))
+                        .load(productResponse.getProductimages().get(0))
                         .resize(200, 200)
                         .centerCrop()
                         .error(R.drawable.ic_unavailable)
@@ -261,7 +262,8 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View view) {
 
-                    IntentData.sendProduct(context, productResponse);
+                    IntentData.sendProduct(context, productList.get(getAdapterPosition()));
+
                 }
             });
         }
