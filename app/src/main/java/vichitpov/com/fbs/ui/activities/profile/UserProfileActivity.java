@@ -14,8 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.esafirm.imagepicker.features.ImagePicker;
-import com.esafirm.imagepicker.model.Image;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import com.squareup.picasso.Picasso;
@@ -164,18 +162,18 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         else if (id == R.id.linear_reload)
             dialogBottom();
         else if (id == R.id.imageChangeProfile) {
-            ImagePicker.create(this)
-                    .folderMode(true) // folder mode (false by default)
-                    .toolbarFolderTitle("Norton E-Commerce") // folder selection title
-                    .toolbarImageTitle("Select Photo") // image selection title
-                    .toolbarArrowColor(Color.WHITE)
-                    .single() // single mode
-                    .multi() // multi mode (default mode)
-                    .limit(1) // max images can be selected (99 by default)
-                    .showCamera(true) // show camera or not (true by default)
-                    .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
-                    .enableLog(false) // disabling log
-                    .start(); // start image picker activity with request code
+//            ImagePicker.create(this)
+//                    .folderMode(true) // folder mode (false by default)
+//                    .toolbarFolderTitle("Norton E-Commerce") // folder selection title
+//                    .toolbarImageTitle("Select Photo") // image selection title
+//                    .toolbarArrowColor(Color.WHITE)
+//                    .single() // single mode
+//                    .multi() // multi mode (default mode)
+//                    .limit(1) // max images can be selected (99 by default)
+//                    .showCamera(true) // show camera or not (true by default)
+//                    .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
+//                    .enableLog(false) // disabling log
+//                    .start(); // start image picker activity with request code
         } else if (id == R.id.textSaveProfile) {
             if (!selectedImagePath.equals("null")) {
                 ApiService apiService = ServiceGenerator.createService(ApiService.class);
@@ -225,17 +223,17 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
-        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-
-            textSaveProfile.setVisibility(View.VISIBLE);
-            imageSetting.setVisibility(View.GONE);
-            Image image = ImagePicker.getFirstImageOrNull(data);
-            Bitmap bitmap = BitmapFactory.decodeFile(image.getPath());
-            bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400); // convert size image
-            imageProfile.setImageBitmap(bitmap);
-            selectedImagePath = image.getPath();
-
-        }
+//        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+//
+//            textSaveProfile.setVisibility(View.VISIBLE);
+//            imageSetting.setVisibility(View.GONE);
+//            Image image = ImagePicker.getFirstImageOrNull(data);
+//            Bitmap bitmap = BitmapFactory.decodeFile(image.getPath());
+//            bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400); // convert size image
+//            imageProfile.setImageBitmap(bitmap);
+//            selectedImagePath = image.getPath();
+//
+//        }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
