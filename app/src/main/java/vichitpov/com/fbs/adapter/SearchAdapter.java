@@ -2,14 +2,21 @@ package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,29 +27,25 @@ import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 
 /**
- * Created by VichitPov on 2/26/18.
+ * Created by VichitPov on 3/7/18.
  */
 
-public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int VIEW_ITEM = 1;
-    private static final int VIEW_PROGRESS = 0;
-    public static final int PRODUCT_POSTED_BUY = 3;
-    public static final int PRODUCT_VIEW = 4;
+public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private List<ProductResponse.Data> productList;
     private Context context;
-    private OnLoadMore onLoadMore;
-    private int checkTypeProductView;
 
+    private static final int VIEW_ITEM = 1;
+    private static final int VIEW_PROGRESS = 0;
     private int visibleThreshold = 3;
     private boolean loading = false;
+    private OnLoadMore onLoadMore;
 
-    public BuyerSeeMoreAdapter(Context context, RecyclerView recyclerView, int checkTypeProductView) {
+
+    public SearchAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
-        this.checkTypeProductView = checkTypeProductView;
         productList = new ArrayList<>();
-
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
             final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -57,10 +60,15 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                         loading = true;
                         onLoadMore.setOnLoadMore();
+
                     }
                 }
             });
         }
+    }
+
+    public void onSearchLoadMore(OnLoadMore onLoadMore) {
+        this.onLoadMore = onLoadMore;
     }
 
     public void onLoaded() {
@@ -76,13 +84,6 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyItemInserted(productList.size() - 1);
     }
 
-
-    public void onLoadMore(OnLoadMore onLoadMore) {
-
-        this.onLoadMore = onLoadMore;
-
-    }
-
     //after progressBar show, it will remove progressBar
     public void removeProgressBar() {
         productList.remove(productList.size() - 1);
@@ -90,6 +91,7 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public void addMoreItems(List<ProductResponse.Data> articleList) {
+
         this.productList.addAll(articleList);
         notifyDataSetChanged();
     }
@@ -104,117 +106,86 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return (productList.get(position) != null) ? VIEW_ITEM : VIEW_PROGRESS;
     }
 
-
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh = null;
 
         if (viewType == VIEW_ITEM) {
-            if (checkTypeProductView == PRODUCT_VIEW) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_buyer_see_more, parent, false);
-                vh = new ProductViewHolder(view);
-            } else if (checkTypeProductView == PRODUCT_POSTED_BUY) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_user_post_buy, parent, false);
-                vh = new ProductUserPostedBuyViewHolder(view);
-
-            }
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_seller_see_more, parent, false);
+            vh = new MyViewHolder(view);
         } else if (viewType == VIEW_PROGRESS) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layour_progress_pagination, parent, false);
             vh = new ProgressPagination(view);
         }
         return vh;
-
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ProductResponse.Data productResponse = productList.get(position);
 
-        if (holder instanceof ProductViewHolder) {
-            ProductViewHolder productViewHolder = (ProductViewHolder) holder;
-            productViewHolder.title.setText(productResponse.getTitle());
+        if (holder instanceof MyViewHolder) {
+
+            MyViewHolder myViewHolder = (MyViewHolder) holder;
+            myViewHolder.title.setText(productResponse.getTitle());
 
             String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
             String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
 
-            productViewHolder.price.setText(priceFrom + "$" + " - " + priceTo + "$");
+            myViewHolder.price.setText(priceFrom + "$" + " - " + priceTo + "$");
 
             if (productResponse.getCreateddate() != null) {
                 String subDate = productResponse.getCreateddate().getDate().substring(0, 10);
                 String dateConverted = Convert.dateConverter(subDate);
-                productViewHolder.date.setText("Posted: " + dateConverted);
+                myViewHolder.date.setText("Posted: " + dateConverted);
             }
 
             if (productResponse.getContactaddress() != null) {
-                productViewHolder.address.setText(productResponse.getContactaddress());
+                myViewHolder.address.setText(productResponse.getContactaddress());
             }
-
-
-        } else if (holder instanceof ProductUserPostedBuyViewHolder) {
-            ProductUserPostedBuyViewHolder postedBuyViewHolder = (ProductUserPostedBuyViewHolder) holder;
-
-            String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
-            String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
-
-            if (productResponse.getContactaddress() != null) {
-                postedBuyViewHolder.textAddress.setText(productResponse.getContactaddress());
-            }
-            postedBuyViewHolder.textTitle.setText(productResponse.getTitle());
-            postedBuyViewHolder.textPrice.setText(priceFrom + "$" + " - " + priceTo + "$");
-            postedBuyViewHolder.textStatus.setText(productResponse.getStatus());
+//            if (productResponse.getProductimages().size() != 0 && productResponse.getProductimages() != null) {
+//                Picasso.with(context)
+//                        .load(productResponse.getProductimages().get(0))
+//                        .resize(200, 200)
+//                        .centerCrop()
+//                        .error(R.drawable.ic_unavailable)
+//                        .into(myViewHolder.thumbnail);
+//
+//                Log.e("pppp image", productResponse.getProductimages().get(0));
+//            }
 
         } else if (holder instanceof ProgressPagination) {
-            ProgressPagination progressPagination = (ProgressPagination) holder;
-            progressPagination.progressBar.setIndeterminate(true);
+            ((ProgressPagination) holder).progressBar.setIndeterminate(true);
         }
-
     }
 
     @Override
     public int getItemCount() {
-        if (productList != null) {
+        if (productList != null)
             return productList.size();
-        }
         return 0;
     }
 
-    class ProductViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
-        private ImageView favorite, notification;
+        private ImageView favorite, notification, thumbnail;
 
-        ProductViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.textTitle);
             address = itemView.findViewById(R.id.textAddress);
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
-
-
-//            favorite = itemView.findViewById(R.id.imageFavorite);
-//            notification = itemView.findViewById(R.id.imageNotification);
-
+            thumbnail = itemView.findViewById(R.id.imageThumbnail);
+            favorite = itemView.findViewById(R.id.imageFavorite);
+            notification = itemView.findViewById(R.id.imageNotification);
 
         }
-    }
 
-    class ProductUserPostedBuyViewHolder extends RecyclerView.ViewHolder {
-        private TextView textTitle, textAddress, textPrice, textEdit, textDelete, textStatus;
-
-        ProductUserPostedBuyViewHolder(View itemView) {
-            super(itemView);
-
-            textTitle = itemView.findViewById(R.id.textTitle);
-            textAddress = itemView.findViewById(R.id.textAddress);
-            textPrice = itemView.findViewById(R.id.textPrice);
-            textEdit = itemView.findViewById(R.id.textEdit);
-            textDelete = itemView.findViewById(R.id.textDelete);
-            textStatus = itemView.findViewById(R.id.textStatus);
-
-        }
     }
 
     class ProgressPagination extends RecyclerView.ViewHolder {
@@ -223,7 +194,6 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         ProgressPagination(View itemView) {
             super(itemView);
-
             progressBar = itemView.findViewById(R.id.progressBar);
 
         }

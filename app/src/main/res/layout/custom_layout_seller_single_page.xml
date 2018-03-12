@@ -84,19 +84,4 @@
 
         </android.support.v7.widget.CardView>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/dp_5"
-        android:background="#70853FFF"
-        android:gravity="center"
-        android:padding="@dimen/dp_5"
-        android:text="11-Jan-2018"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/sp_10" />
-
-
 </RelativeLayout>

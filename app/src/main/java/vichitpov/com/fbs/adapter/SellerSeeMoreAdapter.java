@@ -1,9 +1,13 @@
 package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,17 +16,31 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.base.IntentData;
+import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
+import vichitpov.com.fbs.preference.UserInformationManager;
+import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.retrofit.service.ApiService;
+import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activities.DetailProductActivity;
+import vichitpov.com.fbs.ui.activities.SellerSeeMoreActivity;
+import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by VichitPov on 2/27/18.
@@ -39,6 +57,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
     private ProductResponse.Data productResponse;
     private Context context;
     private OnLoadMore onLoadMore;
+    private MyOnClickListener myOnClickListener;
     private int checkLayoutManager;
 
     private int visibleThreshold = 3;
@@ -103,9 +122,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     public void onLoadMore(OnLoadMore onLoadMore) {
-
         this.onLoadMore = onLoadMore;
-
     }
 
     //after progressBar show, it will remove progressBar
@@ -153,7 +170,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         productResponse = productList.get(position);
 
         if (holder instanceof ProductViewHolder) {
@@ -183,7 +200,6 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
                         .error(R.drawable.ic_unavailable)
                         .into(productViewHolder.thumbnail);
 
-                Log.e("pppp image", productResponse.getProductimages().get(0));
             }
 
 
@@ -222,11 +238,15 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         return 0;
     }
 
+    public void mySetOnClick(MyOnClickListener myOnClickListener) {
+        this.myOnClickListener = myOnClickListener;
+
+    }
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
-        private ImageView favorite, notification, thumbnail;
+        private ImageView more, thumbnail;
 
         ProductViewHolder(View itemView) {
             super(itemView);
@@ -236,11 +256,20 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            favorite = itemView.findViewById(R.id.imageFavorite);
-            notification = itemView.findViewById(R.id.imageNotification);
+            more = itemView.findViewById(R.id.imageMore);
 
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailProductActivity.class);
+                intent.putExtra("productList", productResponse);
+                context.startActivity(intent);
+            });
+
+            more.setOnClickListener(view -> {
+                myOnClickListener.setOnViewClick(getAdapterPosition(), productList.get(getAdapterPosition()).getId(), view);
+            });
         }
     }
+
 
     class ProductGridViewHolder extends RecyclerView.ViewHolder {
 
@@ -258,14 +287,8 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             textStatus = itemView.findViewById(R.id.textStatus);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
 
-            textEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    IntentData.sendProduct(context, productList.get(getAdapterPosition()));
-
-                }
-            });
+            textEdit.setOnClickListener(view ->
+                    IntentData.sendProduct(context, productList.get(getAdapterPosition())));
         }
     }
 
@@ -280,4 +303,5 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         }
     }
+
 }

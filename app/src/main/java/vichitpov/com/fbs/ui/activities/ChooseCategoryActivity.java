@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.IntentData;
+import vichitpov.com.fbs.constant.RequestCode;
 import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
+import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
@@ -31,7 +35,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
     private ExpandingList mExpandingList;
     private List<CategoriesResponse.Data> categoriesResponses;
     private HashMap<String, Integer> mapCategory;
-    private String mainCategoryName = "null";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +44,22 @@ public class ChooseCategoryActivity extends AppCompatActivity {
 
         ImageView imageBack = findViewById(R.id.imageBack);
         mExpandingList = findViewById(R.id.expanding_list_main);
+
+        checkIntent();
         getAllCategories();
 
         imageBack.setOnClickListener(view -> finish());
 
 
+    }
+
+    private boolean checkIntent() {
+        String intentFrom = getIntent().getStringExtra(IntentData.SEND_FROM_MAIN_ACTIVITY);
+        if (intentFrom.equals(IntentData.SEND_FROM_MAIN_ACTIVITY)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void getAllCategories() {
@@ -114,17 +129,22 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         ((TextView) view.findViewById(R.id.sub_title)).setText(subTitle);
         view.findViewById(R.id.sub_title).setOnClickListener(v -> {
 
-
             for (String categoryName : mapCategory.keySet()) {
                 if (subTitle.equals(categoryName)) {
 
                     String categoryId = String.valueOf(mapCategory.get(categoryName));
-
-                    Intent data = new Intent();
-                    data.putExtra("CategoryId", categoryId);
-                    data.putExtra("CategoryName", subTitle);
-                    setResult(10, data);
-                    finish();
+                    if (checkIntent()) {
+                        Intent intent = new Intent(getApplicationContext(), ProductSellerCategoryActivity.class);
+                        intent.putExtra("CATEGORY_ID", categoryId);
+                        intent.putExtra("CATEGORY_NAME", categoryName);
+                        startActivity(intent);
+                    } else {
+                        Intent data = new Intent();
+                        data.putExtra(RequestCode.CATEGORY_ID, categoryId);
+                        data.putExtra(RequestCode.CATEGORY_NAME, subTitle);
+                        setResult(RequestCode.CHOOSE_CATEGORY, data);
+                        finish();
+                    }
                 }
             }
         });

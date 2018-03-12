@@ -2,6 +2,7 @@ package vichitpov.com.fbs.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,25 +26,35 @@ import android.widget.Toast;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ss.com.bannerslider.banners.Banner;
+import ss.com.bannerslider.banners.RemoteBanner;
+import ss.com.bannerslider.views.BannerSlider;
 import technolifestyle.com.imageslider.FlipperLayout;
 import technolifestyle.com.imageslider.FlipperView;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.CategoryHeaderAdapter;
+import vichitpov.com.fbs.adapter.FavoriteAdapter;
 import vichitpov.com.fbs.adapter.RecentlySingleBuyerAdapter;
 import vichitpov.com.fbs.adapter.RecentlySingleSellerAdapter;
 import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.callback.MyOnClickListener;
+import vichitpov.com.fbs.callback.OnClickSingle;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
 import vichitpov.com.fbs.preference.UserInformationManager;
+import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
+import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -51,24 +62,26 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 import vichitpov.com.fbs.ui.activities.profile.UserProfileActivity;
 
-public class MainActivity extends BaseAppCompatActivity implements MyOnClickListener {
+public class MainActivity extends BaseAppCompatActivity implements MyOnClickListener, OnClickSingle {
 
-    private RecyclerView recyclerCategoryHeader, recyclerRecentlyBuyer, recyclerRecentSeller;
+    private RecyclerView recyclerCategoryHeader, recyclerRecentlyBuyer, recyclerRecentSeller, recyclerFavorite;
     private RecyclerView.LayoutManager layoutManager;
     private ApiService apiService;
     private SwipeRefreshLayout refreshLayout;
     private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer, textUpload;
-    private FlipperLayout sliderShow;
     private FloatingActionButton floatingScroll;
     private ScrollView scrollView;
-    private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer;
+    private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer, relativeFavorite;
     private ProgressBar progressBar;
     private LinearLayout linearInternetUnavailable;
     private RecentlySingleBuyerAdapter adapterBuyer;
     private RecentlySingleSellerAdapter adapterSeller;
+    private FavoriteAdapter favoriteAdapter;
     private UserInformationManager userInformationManager;
     private boolean isInformationLoadSuccess;
     private SpotsDialog dialog;
+    private BannerSlider bannerSlider;
+    private CategoryHeaderAdapter categoryHeaderAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -80,8 +93,8 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         dialog = new SpotsDialog(this, "Updating...");
-        Log.e("pppp", userInformationManager.getUser().getAccessToken());
 
+        Log.e("pppp", userInformationManager.getUser().getAccessToken());
 
         initView();
         setUpSliderHeader();
@@ -90,6 +103,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         if (InternetConnection.isNetworkConnected(this)) {
             isInformationLoadSuccess = true;
             linearInternetUnavailable.setVisibility(View.GONE);
+            setFavorite();
             setUpRecentlyBuyer();
             setUpRecentlySeller();
             getInformationUser();
@@ -101,6 +115,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
 
         eventListener();
         adapterSeller.setOnCLickListener(this);
+        categoryHeaderAdapter.setOnClickListener(this);
 
 
     }
@@ -120,19 +135,15 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
                 @Override
                 public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                     if (response.isSuccessful()) {
-
                         userInformationManager.deleteUserInformation();
                         userInformationManager.saveInformation(response.body());
                         isInformationLoadSuccess = true;
 
                     } else if (response.code() == 401) {
-
                         isInformationLoadSuccess = false;
 
                     } else {
-
                         isInformationLoadSuccess = false;
-
                     }
 
                     if (!isInformationLoadSuccess) {
@@ -154,49 +165,44 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
     }
 
     @Override
-    public void setOnItemClick(int position, List<ProductResponse.Data> productList) {
-        IntentData.sendData(this, productList, position);
+    public void setOnItemClick(int position, ProductResponse.Data productResponse) {
+        Intent intent = new Intent(this, DetailProductActivity.class);
+        intent.putExtra("productList", productResponse);
+        startActivity(intent);
 
     }
 
     @Override
-    public void setOnViewClick(int position, View view) {
-
+    public void setOnViewClick(int position, int id, View view) {
         PopupMenu popup = new PopupMenu(MainActivity.this, view);
         popup.inflate(R.menu.menu_popup_menu);
         popup.show();
         popup.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.popFavorite) {
-
                 Toast.makeText(MainActivity.this, "Add to favorite", Toast.LENGTH_SHORT).show();
-
             }
             return false;
         });
+    }
 
+    //event click listener to category to activity category
+    @Override
+    public void setOnClick() {
+        Intent intent = new Intent(this, ChooseCategoryActivity.class);
+        intent.putExtra(IntentData.SEND_FROM_MAIN_ACTIVITY, IntentData.SEND_FROM_MAIN_ACTIVITY);
+        startActivity(intent);
 
     }
 
     private void setUpSliderHeader() {
-        int numOfPages = 3;
-
-        String url[] = new String[]{
-                "https://s3.envato.com/files/228473424/590x300.jpg",
-                "https://kalidas365itsolutions.files.wordpress.com/2014/06/every-sale.jpg",
-                "https://microlancer.lancerassets.com/v2/services/3f/c593d0437011e6ac7853977e2e0bdc/large__original_1.jpg",
-        };
-
-        for (int i = 0; i < numOfPages; i++) {
-            FlipperView view = new FlipperView(getBaseContext());
-            final int finalI = i;
-            view.setImageUrl(url[i])
-                    .setImageScaleType(ImageView.ScaleType.CENTER_CROP) //You can use any ScaleType
-                    .setOnFlipperClickListener(flipperView -> Toast.makeText(getApplicationContext(), "Clicked: " + finalI, Toast.LENGTH_SHORT).show());
-
-            sliderShow.setScrollTimeInSec(3);
-            sliderShow.addFlipperView(view);
-
-        }
+        List<Banner> bannersList = new ArrayList<>();
+        bannersList.add(new RemoteBanner("https://s3.envato.com/files/228473424/590x300.jpg"));
+        bannersList.add(new RemoteBanner("https://kalidas365itsolutions.files.wordpress.com/2014/06/every-sale.jpg"));
+        bannersList.add(new RemoteBanner("https://kalidas365itsolutions.files.wordpress.com/2014/06/seller-verification.jpg"));
+        bannersList.add(new RemoteBanner("https://microlancer.lancerassets.com/v2/services/3f/c593d0437011e6ac7853977e2e0bdc/large__original_1.jpg"));
+        bannersList.add(new RemoteBanner("http://alphatec.in/images/slider/ecommerce-website-development.jpg"));
+        bannersList.add(new RemoteBanner("http://www.gogits.com/images/slider3.jpg"));
+        bannerSlider.setBanners(bannersList);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -212,11 +218,15 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
             } else {
                 startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
             }
-
-
         });
+
+
         textSearch.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SearchProductActivity.class)));
-        textUpload.setOnClickListener(view -> dialogBottom());
+        textUpload.setOnClickListener(view -> {
+            if (isAccessTokenAvailable()) {
+                dialogBottom();
+            }
+        });
 //        scrollView.setOnScrollChangeListener((view, i, i1, i2, i3) -> floatingScroll.setVisibility(View.VISIBLE));
 
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
@@ -224,6 +234,16 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         seeMoreSeller.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SellerSeeMoreActivity.class)));
         refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
 
+    }
+
+    private boolean isAccessTokenAvailable() {
+        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            return true;
+        } else {
+            Intent intent = new Intent(this, StartLoginActivity.class);
+            startActivity(intent);
+            return false;
+        }
     }
 
     private void setUpCategoryHeader() {
@@ -235,8 +255,8 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         modelList.add(new CategoryHeaderModel("Favorite", R.drawable.ic_star_background));
         modelList.add(new CategoryHeaderModel("Categories", R.drawable.ic_category_background));
 
-        CategoryHeaderAdapter adapter = new CategoryHeaderAdapter(getApplicationContext(), modelList);
-        recyclerCategoryHeader.setAdapter(adapter);
+        categoryHeaderAdapter = new CategoryHeaderAdapter(getApplicationContext(), modelList);
+        recyclerCategoryHeader.setAdapter(categoryHeaderAdapter);
 
 
     }
@@ -317,6 +337,74 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         });
     }
 
+    private void setFavorite() {
+        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            //layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
+
+            recyclerFavorite.setLayoutManager(layoutManager);
+            favoriteAdapter = new FavoriteAdapter(this);
+
+            Call<FavoriteResponse> call = apiService.topFavorite(userInformationManager.getUser().getAccessToken());
+            call.enqueue(new Callback<FavoriteResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<FavoriteResponse> call, @NonNull Response<FavoriteResponse> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            Log.e("ppppp", "success: " + response.body().getData().toString());
+                            relativeFavorite.setVisibility(View.VISIBLE);
+                            favoriteAdapter.addItem(response.body().getData());
+                            recyclerFavorite.setAdapter(favoriteAdapter);
+                        } else if (response.body().getData().size() == 0) {
+                            relativeFavorite.setVisibility(View.GONE);
+                        }
+                    } else {
+                        relativeFavorite.setVisibility(View.GONE);
+                        Log.e("ppppp", "else: " + response.code() + " = " + response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<FavoriteResponse> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                    Log.e("ppppp", "onFailure: " + t.getMessage());
+                    relativeFavorite.setVisibility(View.GONE);
+                }
+            });
+        } else {
+            relativeFavorite.setVisibility(View.GONE);
+        }
+    }
+
+//    private void getAllCategories() {
+//        ApiService apiService = ServiceGenerator.createService(ApiService.class);
+//        Call<CategoriesResponse> call = apiService.getAllCategories();
+//        call.enqueue(new Callback<CategoriesResponse>() {
+//            @SuppressLint("UseSparseArrays")
+//            @Override
+//            public void onResponse(@NonNull Call<CategoriesResponse> call, @NonNull Response<CategoriesResponse> response) {
+//                if (response.isSuccessful()) {
+//                    if (response.body() != null) {
+//                        categoriesResponse = response.body();
+//
+//
+//                    }
+//                } else {
+//                    Log.e("pppp", response.code() + " = " + response.message());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<CategoriesResponse> call, @NonNull Throwable t) {
+//                t.printStackTrace();
+//                Log.e("pppp", t.getMessage());
+//            }
+//        });
+//
+//
+//    }
+
     private void dialogBottom() {
         @SuppressLint("ResourceAsColor") BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
                 .setMode(BottomSheetBuilder.MODE_LIST)
@@ -340,6 +428,7 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         recyclerCategoryHeader = findViewById(R.id.recyclerCategories);
         recyclerRecentlyBuyer = findViewById(R.id.recyclerRecentlyBuyer);
         recyclerRecentSeller = findViewById(R.id.recyclerRecentlySeller);
+        recyclerFavorite = findViewById(R.id.recyclerFavorite);
         linearInternetUnavailable = findViewById(R.id.linearInternetUnavailable);
         refreshLayout = findViewById(R.id.swipeRefresh);
 
@@ -349,17 +438,19 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         seeMoreSeller = findViewById(R.id.textSeeMoreSeller);
         textUpload = findViewById(R.id.textUpload);
 
-        sliderShow = findViewById(R.id.headerSlideShow);
         floatingScroll = findViewById(R.id.floatingScroll);
         scrollView = findViewById(R.id.scrollView);
 
         progressBar = findViewById(R.id.progressBar);
         relativeRecentlySeller = findViewById(R.id.relativeRecentlySeller);
         relativeRecentlyBuyer = findViewById(R.id.relativeRecentlyBuyer);
+        relativeFavorite = findViewById(R.id.relativeFavorite);
+        bannerSlider = findViewById(R.id.bannerSlider);
 
         progressBar.setVisibility(View.GONE);
         relativeRecentlySeller.setVisibility(View.GONE);
         relativeRecentlyBuyer.setVisibility(View.GONE);
+        relativeFavorite.setVisibility(View.GONE);
         floatingScroll.setVisibility(View.GONE);
         linearInternetUnavailable.setVisibility(View.GONE);
 

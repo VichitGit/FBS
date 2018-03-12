@@ -3,10 +3,12 @@ package vichitpov.com.fbs.ui.activities.login;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.accountkit.AccessToken;
@@ -42,6 +44,7 @@ public class StartLoginActivity extends AppCompatActivity {
     private TextView textLogin, textSignUp;
     private ApiService apiService;
     private String accessToken;
+    private ProgressBar progressBar;
     private UserInformationManager userInformationManager;
 
     @Override
@@ -60,8 +63,6 @@ public class StartLoginActivity extends AppCompatActivity {
         initView();
         onClickListener();
         setUpSlider();
-
-
     }
 
 
@@ -85,6 +86,7 @@ public class StartLoginActivity extends AppCompatActivity {
                   that sent is old user, we no need to provide register screen to user.
                 */
                 if (loginResult.getAccessToken() != null) {
+                    progressBar.setVisibility(View.VISIBLE);
                     accessToken = loginResult.getAccessToken().getToken();
                     apiService = ServiceGenerator.createService(ApiService.class);
                     Call<UserInformationResponse> call = apiService.getUserInformation(accessToken);
@@ -96,22 +98,24 @@ public class StartLoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                                     intent.putExtra(IntentData.ACCESS_TOKEN, accessToken);
                                     intent.putExtra(IntentData.PHONE, response.body().getData().getPhone());
+                                    progressBar.setVisibility(View.GONE);
                                     startActivity(intent);
                                 } else if (response.body().getData().getStatus().contains("old")) {
                                     userInformationManager.deleteAccessToken();
                                     userInformationManager.saveAccessToken(accessToken);
                                     userInformationManager.saveInformation(response.body());
+                                    progressBar.setVisibility(View.GONE);
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }
                             } else if (response.code() == 401) {
+                                progressBar.setVisibility(View.GONE);
                                 startActivity(getIntent());
                             }
                         }
 
                         @Override
-                        public void onFailure
-                                (@NonNull Call<UserInformationResponse> call, @NonNull Throwable
-                                        t) {
+                        public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
+                            progressBar.setVisibility(View.GONE);
                             t.printStackTrace();
                         }
                     });
@@ -141,12 +145,16 @@ public class StartLoginActivity extends AppCompatActivity {
 
 
     private void onClickListener() {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(() -> progressBar.setVisibility(View.GONE), 1500);
         textLogin.setOnClickListener(this::phoneLogin);
     }
 
     private void initView() {
         textLogin = findViewById(R.id.textLoginPhone);
         textSignUp = findViewById(R.id.textLoginEmail);
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.GONE);
 
     }
 

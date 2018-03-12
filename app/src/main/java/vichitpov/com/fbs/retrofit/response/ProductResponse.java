@@ -122,6 +122,20 @@ public class ProductResponse implements Serializable {
         public void setCurrentPage(int mCurrentPage) {
             this.mCurrentPage = mCurrentPage;
         }
+
+        @Override
+        public String toString() {
+            return "Meta{" +
+                    "mTimestamp='" + mTimestamp + '\'' +
+                    ", mTotal=" + mTotal +
+                    ", mTo=" + mTo +
+                    ", mPerPage=" + mPerPage +
+                    ", mPath='" + mPath + '\'' +
+                    ", mLastPage=" + mLastPage +
+                    ", mFrom=" + mFrom +
+                    ", mCurrentPage=" + mCurrentPage +
+                    '}';
+        }
     }
 
     public static class Links {
@@ -145,9 +159,17 @@ public class ProductResponse implements Serializable {
         public void setFirst(String mFirst) {
             this.mFirst = mFirst;
         }
+
+        @Override
+        public String toString() {
+            return "Links{" +
+                    "mLast='" + mLast + '\'' +
+                    ", mFirst='" + mFirst + '\'' +
+                    '}';
+        }
     }
 
-    public static class Price implements Serializable{
+    public static class Price implements Serializable {
         @SerializedName("max")
         private String mMax;
         @SerializedName("min")
@@ -415,6 +437,7 @@ public class ProductResponse implements Serializable {
         public void setContactphone(String mContactphone) {
             this.mContactphone = mContactphone;
         }
+
         public String getContactname() {
             return mContactname;
         }

@@ -14,48 +14,14 @@ import vichitpov.com.fbs.ui.activities.EditProductActivity;
  */
 
 public class IntentData {
-
-    public static final String ID = "ID";
-    public static final String TITLE = "TITLE";
-    public static final String DESCRIPTION = "DESCRIPTION";
-    public static final String PRICE_FROM = "PRICE_FROM";
-    public static final String PRICE_TO = "PRICE_TO";
-    public static final String IMAGE_THUMBNAIL = "IMAGE_THUMBNAIL";
-    public static final String CONTACT_NAME = "CONTACT_NAME";
-    public static final String CONTACT_PHONE = "CONTACT_PHONE";
-    public static final String CONTACT_EMAIL = "CONTACT_EMAIL";
-    public static final String CONTACT_ADDRESS = "CONTACT_ADDRESS";
-    public static final String DATE = "DATE";
-
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String PHONE = "PHONE";
+    public static final String SEND_FROM_MAIN_ACTIVITY = "SEND_FROM_MAIN_ACTIVITY";
 
 
     public static void sendProduct(Context context, ProductResponse.Data product) {
-
         Intent intent = new Intent(context, EditProductActivity.class);
-
         intent.putExtra("ProductList", product);
         context.startActivity(intent);
-
     }
-
-
-    public static void sendData(Context context, List<ProductResponse.Data> productList, int position) {
-        Intent intent = new Intent(context, DetailProductActivity.class);
-        intent.putExtra(ID, productList.get(position).getId());
-        intent.putExtra(TITLE, productList.get(position).getTitle());
-        intent.putExtra(DESCRIPTION, productList.get(position).getDescription());
-        intent.putExtra(PRICE_FROM, productList.get(position).getPrice().get(0).getMin());
-        intent.putExtra(PRICE_TO, productList.get(position).getPrice().get(0).getMax());
-        intent.putExtra(IMAGE_THUMBNAIL, productList.get(position));
-        intent.putExtra(CONTACT_NAME, productList.get(position).getContactname());
-        intent.putExtra(CONTACT_PHONE, productList.get(position).getContactphone());
-        intent.putExtra(CONTACT_EMAIL, productList.get(position).getContactemail());
-        intent.putExtra(CONTACT_ADDRESS, productList.get(position).getContactaddress());
-        intent.putExtra(DATE, productList.get(position).getContactname());
-        context.startActivity(intent);
-    }
-
-
 }

@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,160 +80,53 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                        <ImageView
+                            android:src="@drawable/ic_camera"
+                            android:id="@+id/imageBrowsePhoto"
+                            style="@style/ImageViewUpload" />
 
-                            <ImageView
-                                android:id="@+id/image_thumbnail_one"
-                                style="@style/ImageViewUpload" />
-
-                            <Button
-                                android:id="@+id/buttonRemove1"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_marginBottom="@dimen/dp_5"
-                                android:layout_marginEnd="@dimen/dp_5"
-                                android:layout_marginTop="@dimen/dp_5"
-                                android:background="@color/colorRed"
-                                android:src="@drawable/ic_close"
-                                android:text="Remove"
-                                android:textAllCaps="false"
-                                android:textColor="@color/colorWhite"
-                                android:textSize="@dimen/sp_10" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/image_thumbnail_two"
-                                style="@style/ImageViewUpload" />
-
-                            <Button
-                                android:id="@+id/buttonRemove2"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_marginBottom="@dimen/dp_5"
-                                android:layout_marginEnd="@dimen/dp_5"
-                                android:layout_marginTop="@dimen/dp_5"
-                                android:background="@color/colorRed"
-                                android:src="@drawable/ic_close"
-                                android:text="Remove"
-                                android:textAllCaps="false"
-                                android:textColor="@color/colorWhite"
-                                android:textSize="@dimen/sp_10" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/image_thumbnail_three"
-                                style="@style/ImageViewUpload" />
-
-                            <Button
-                                android:id="@+id/buttonRemove3"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_marginBottom="@dimen/dp_5"
-                                android:layout_marginEnd="@dimen/dp_5"
-                                android:layout_marginTop="@dimen/dp_5"
-                                android:background="@color/colorRed"
-                                android:src="@drawable/ic_close"
-                                android:text="Remove"
-                                android:textAllCaps="false"
-                                android:textColor="@color/colorWhite"
-                                android:textSize="@dimen/sp_10" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/image_thumbnail_four"
-                                style="@style/ImageViewUpload" />
-
-                            <Button
-                                android:id="@+id/buttonRemove4"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_marginBottom="@dimen/dp_5"
-                                android:layout_marginEnd="@dimen/dp_5"
-                                android:layout_marginTop="@dimen/dp_5"
-                                android:background="@color/colorRed"
-                                android:src="@drawable/ic_close"
-                                android:text="Remove"
-                                android:textAllCaps="false"
-                                android:textColor="@color/colorWhite"
-                                android:textSize="@dimen/sp_10" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/image_thumbnail_five"
-                                style="@style/ImageViewUpload" />
-
-                            <Button
-                                android:id="@+id/buttonRemove5"
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                android:layout_marginBottom="@dimen/dp_5"
-                                android:layout_marginEnd="@dimen/dp_5"
-                                android:layout_marginTop="@dimen/dp_5"
-                                android:background="@color/colorRed"
-                                android:src="@drawable/ic_close"
-                                android:text="Remove"
-                                android:textAllCaps="false"
-                                android:textColor="@color/colorWhite"
-                                android:textSize="@dimen/sp_10" />
+                        <ImageView
+                            android:id="@+id/image_thumbnail_one"
+                            style="@style/ImageViewUpload" />
 
 
-                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/image_thumbnail_two"
+                            style="@style/ImageViewUpload" />
+
+
+                        <ImageView
+                            android:id="@+id/image_thumbnail_three"
+                            style="@style/ImageViewUpload" />
+
+                        <ImageView
+                            android:id="@+id/image_thumbnail_four"
+                            style="@style/ImageViewUpload" />
+
+
+                        <ImageView
+                            android:id="@+id/image_thumbnail_five"
+                            style="@style/ImageViewUpload" />
 
 
                     </LinearLayout>
 
                 </HorizontalScrollView>
-
-
             </LinearLayout>
 
-
-            <com.oswaldogh89.picker.ImagePicker
-                android:id="@+id/picker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_20">
-
-            </com.oswaldogh89.picker.ImagePicker>
-
             <Button
-                android:id="@+id/buttonAddPhoto"
+                android:id="@+id/buttonRemovePhoto"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:text="Add Photo"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@color/colorRed"
+                android:text="Remove"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
-                android:textSize="10sp" />
-
+                android:textSize="@dimen/sp_10" />
 
             <TextView
                 android:layout_width="wrap_content"

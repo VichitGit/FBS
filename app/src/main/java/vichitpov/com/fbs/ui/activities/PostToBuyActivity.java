@@ -227,7 +227,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         String accessToken = userInformationManager.getUser().getAccessToken();
 
         dialog.show();
-        Call<ProductPostedResponse> call = apiService.postToBuy(accessToken, "buy", title, category, description, priceFrom, priceTo, contactName, contactPhone, contactEmail, address, mapCondinator);
+        Call<ProductPostedResponse> call = apiService.postProduct(accessToken, "buy", title, category, description, priceFrom, priceTo, contactName, contactPhone, contactEmail, "", address, mapCondinator);
         call.enqueue(new Callback<ProductPostedResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductPostedResponse> call, @NonNull Response<ProductPostedResponse> response) {

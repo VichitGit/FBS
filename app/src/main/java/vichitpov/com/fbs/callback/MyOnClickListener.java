@@ -13,9 +13,9 @@ import vichitpov.com.fbs.retrofit.response.ProductResponse;
 public interface MyOnClickListener {
 
 
-    void setOnItemClick(int position, List<ProductResponse.Data> productList);
+    void setOnItemClick(int position, ProductResponse.Data productResponse);
 
-    void setOnViewClick(int position, View view);
+    void setOnViewClick(int position, int id, View view);
 
 
 }

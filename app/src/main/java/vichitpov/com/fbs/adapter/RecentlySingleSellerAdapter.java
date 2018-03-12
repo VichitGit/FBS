@@ -2,6 +2,7 @@ package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,8 +42,9 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
     }
 
 
+    @NonNull
     @Override
-    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.custom_layout_seller_single_page, parent, false);
         return new ProductViewHolder(view);
@@ -50,7 +52,7 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ProductViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         ProductResponse.Data productResponse = productList.get(position);
 
         String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
@@ -61,14 +63,11 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
 
         if (productResponse.getProductimages() != null && productResponse.getCreateddate() != null && productResponse.getContactaddress() != null) {
 
-            String subDate = productResponse.getCreateddate().getDate().substring(0, 10);
-            String dateConverted = Convert.dateConverter(subDate);
-            holder.date.setText("Posted: " + dateConverted);
             holder.address.setText(productResponse.getContactaddress());
 
             if (productResponse.getProductimages().size() != 0) {
                 Picasso.with(context)
-                        .load(Url.BASE_URL + productResponse.getProductimages().get(0))
+                        .load(productResponse.getProductimages().get(0))
                         .resize(200, 200)
                         .centerCrop()
                         .error(R.drawable.ic_unavailable)
@@ -95,36 +94,23 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView title, price, date, address;
-        private ImageView thumbnail, notification, favorite, more;
+        private TextView title, price, address;
+        private ImageView thumbnail, more;
 
         ProductViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.textTitle);
             price = itemView.findViewById(R.id.textPrice);
-            date = itemView.findViewById(R.id.textDate);
             address = itemView.findViewById(R.id.textAddress);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
             more = itemView.findViewById(R.id.imageMore);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            itemView.setOnClickListener(view ->
+                    myOnClickListener.setOnItemClick(getAdapterPosition(), productList.get(getAdapterPosition())));
 
-                    myOnClickListener.setOnItemClick(getAdapterPosition(), productList);
-
-                }
-            });
-
-            more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    myOnClickListener.setOnViewClick(getAdapterPosition(), view);
-
-                }
-            });
+            more.setOnClickListener(view ->
+                    myOnClickListener.setOnViewClick(getAdapterPosition(), productList.get(getAdapterPosition()).getId(), view));
 
 
         }

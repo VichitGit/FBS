@@ -2,13 +2,14 @@ package vichitpov.com.fbs.retrofit.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by VichitDeveloper on 3/2/18.
  */
 
-public class CategoriesResponse {
+public class CategoriesResponse implements Serializable {
 
     @SerializedName("meta")
     private Meta mMeta;
@@ -31,7 +32,8 @@ public class CategoriesResponse {
         this.mData = mData;
     }
 
-    public static class Meta {
+
+    public static class Meta implements Serializable {
         @SerializedName("timestamp")
         private String mTimestamp;
 
@@ -42,9 +44,16 @@ public class CategoriesResponse {
         public void setTimestamp(String mTimestamp) {
             this.mTimestamp = mTimestamp;
         }
+
+        @Override
+        public String toString() {
+            return "Meta{" +
+                    "mTimestamp='" + mTimestamp + '\'' +
+                    '}';
+        }
     }
 
-    public static class Categorychildren {
+    public static class Categorychildren implements Serializable {
         @SerializedName("category_image")
         private String mCategoryImage;
         @SerializedName("category_name_khmer")
@@ -97,7 +106,7 @@ public class CategoriesResponse {
         }
     }
 
-    public static class Data {
+    public static class Data implements Serializable {
         @SerializedName("categoryChildren")
         private List<Categorychildren> mCategorychildren;
         @SerializedName("categoryImage")

@@ -71,7 +71,7 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
 
 
         private TextView title, price;
-        private ImageView thumbnail, notification, favorite;
+        private ImageView thumbnail, more;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -79,22 +79,14 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
             title = itemView.findViewById(R.id.textTitle);
             price = itemView.findViewById(R.id.textPrice);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            favorite = itemView.findViewById(R.id.imageFavorite);
-            notification = itemView.findViewById(R.id.imageNotification);
+            more = itemView.findViewById(R.id.imageMore);
 
-            favorite.setOnClickListener(this);
-            notification.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
             int id = view.getId();
-            if (id == R.id.imageNotification) {
-                Toast.makeText(context, "Sending notification to buyer post.", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.imageFavorite) {
-                Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show();
-            }
 
         }
     }

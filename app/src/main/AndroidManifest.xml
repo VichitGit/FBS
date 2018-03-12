@@ -21,11 +21,10 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.login.StartLoginActivity"></activity>
+        <activity android:name=".ui.activities.login.StartLoginActivity" />
         <activity android:name=".ui.activities.PostToSellActivity" />
         <activity android:name=".ui.activities.profile.UserProfileActivity" />
         <activity android:name=".ui.activities.PostToBuyActivity" />
@@ -36,7 +35,7 @@
         <activity android:name=".ui.activities.SettingsActivity" />
         <activity android:name=".ui.activities.BuyerSeeMoreActivity" />
         <activity android:name=".ui.activities.SellerSeeMoreActivity" />
-        <activity android:name=".ui.activities.ChooseCategoryActivity"></activity>
+        <activity android:name=".ui.activities.ChooseCategoryActivity" />
 
         <!-- Google Map Meta -->
         <meta-data
@@ -79,7 +78,8 @@
 
         <!--  -->
 
-        <activity android:name=".ui.activities.EditProductActivity"></activity>
+        <activity android:name=".ui.activities.EditProductActivity" />
+        <activity android:name=".ui.activities.ProductSellerCategoryActivity"></activity>
     </application>
 
 </manifest>

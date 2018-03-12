@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dp_5"
@@ -13,129 +14,96 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="150dp"
             android:background="?selectableItemBackground"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp_5"
-            android:paddingStart="@dimen/dp_5"
-            android:paddingTop="@dimen/dp_5">
+            android:padding="@dimen/dp_5">
 
-            <RelativeLayout
+
+            <ImageView
+                android:id="@+id/imageThumbnail"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_height="150dp"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_test" />
 
-                <ImageView
-                    android:id="@+id/imageThumbnail"
-                    android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_test" />
-
-                <TextView
-                    android:id="@+id/textDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_alignEnd="@+id/imageThumbnail"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignStart="@+id/imageThumbnail"
-                    android:background="#70853FFF"
-                    android:gravity="center"
-                    android:text="11-Jan-2018"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/sp_12" />
-
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_weight="3"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:weightSum="3">
 
 
                 <TextView
                     android:id="@+id/textTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginTop="@dimen/dp_5"
+                    android:layout_weight="3"
                     android:ellipsize="end"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
                     android:text="I want the caller photo to be displayed full screen. I want the caller photo to be displayed full screen. "
-                    android:textColor="@color/colorHintIcon"
-                    android:textSize="@dimen/sp_15"
-                    android:textStyle="bold" />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_20"
+                    android:textStyle="normal"
+                    tools:ignore="NestedWeights" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/colorHint" />
 
                 <TextView
                     android:id="@+id/textAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:text="Address: Phnom Penh"
-                    android:textSize="12sp"
-                    android:textStyle="normal|bold" />
-
-                <TextView
-                    android:id="@+id/textPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/background_radius_right_red"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:padding="@dimen/dp_5"
-                    android:text="Price: 200$ - 350$"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="12sp"
+                    android:textColor="@color/colorHint"
+                    android:textSize="@dimen/sp_12"
                     android:textStyle="normal" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/colorHint" />
+                <TextView
+                    android:id="@+id/textDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="11-Jan-2018"
+                    android:textColor="@color/colorHint"
+                    android:textSize="@dimen/sp_12" />
+
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/dp_5">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end">
 
-
-                    <ImageView
-                        android:id="@+id/imageFavorite"
+                    <TextView
+                        android:id="@+id/textPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@+id/imageNotification"
-                        android:padding="@dimen/dp_10"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_favorite"
-                        android:tint="@color/colorHint" />
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="200$ - 350$"
+                        android:textColor="@color/colorRed"
+                        android:textSize="12sp"
+                        android:textStyle="normal" />
 
 
                     <ImageView
-
-                        android:id="@+id/imageNotification"
+                        android:id="@+id/imageMore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_gravity="end"
-                        android:padding="@dimen/dp_10"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_notification" />
+                        android:src="@drawable/ic_more_hoz"
+                        android:tint="@color/colorHint" />
+
 
                 </RelativeLayout>
 
@@ -145,5 +113,5 @@
 
     </android.support.v7.widget.CardView>
 
-
 </LinearLayout>
+

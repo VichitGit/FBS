@@ -58,7 +58,7 @@ dependencies {
     //retrofit
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-//    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'joda-time:joda-time:2.9.4'
     compile 'com.devbrackets.android:exomedia:3.1.0'
@@ -66,16 +66,14 @@ dependencies {
     compile 'io.github.anderscheow:validator:1.1.5'
     compile 'com.github.d-max:spots-dialog:0.7@aar'
     compile 'com.diegodobelo.expandingview:expanding-view:0.9.4'
+    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
 
 
 
-//    implementation 'com.github.esafirm.android-image-picker:imagepicker:1.11.1'
-//    implementation 'com.github.esafirm.android-image-picker:rximagepicker:1.11.1'
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:1.11.1'
+    implementation 'com.github.esafirm.android-image-picker:rximagepicker:1.11.1'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
-    compile 'rebus:bottom-dialog:0.0.5'
-    compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'com.github.oswaldo89:EasyImagePicker-library:1.0.2'
 
 
     testImplementation 'junit:junit:4.12'
