@@ -60,15 +60,16 @@ import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
+import vichitpov.com.fbs.ui.activities.profile.FavoriteActivity;
 import vichitpov.com.fbs.ui.activities.profile.UserProfileActivity;
 
-public class MainActivity extends BaseAppCompatActivity implements MyOnClickListener, OnClickSingle {
+public class MainActivity extends BaseAppCompatActivity implements OnClickSingle {
 
     private RecyclerView recyclerCategoryHeader, recyclerRecentlyBuyer, recyclerRecentSeller, recyclerFavorite;
     private RecyclerView.LayoutManager layoutManager;
     private ApiService apiService;
     private SwipeRefreshLayout refreshLayout;
-    private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer, textUpload;
+    private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer, textUpload, textFavorite, textMoreFavorite;
     private FloatingActionButton floatingScroll;
     private ScrollView scrollView;
     private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer, relativeFavorite;
@@ -114,7 +115,6 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         }
 
         eventListener();
-        adapterSeller.setOnCLickListener(this);
         categoryHeaderAdapter.setOnClickListener(this);
 
 
@@ -164,27 +164,6 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
 
     }
 
-    @Override
-    public void setOnItemClick(int position, ProductResponse.Data productResponse) {
-        Intent intent = new Intent(this, DetailProductActivity.class);
-        intent.putExtra("productList", productResponse);
-        startActivity(intent);
-
-    }
-
-    @Override
-    public void setOnViewClick(int position, int id, View view) {
-        PopupMenu popup = new PopupMenu(MainActivity.this, view);
-        popup.inflate(R.menu.menu_popup_menu);
-        popup.show();
-        popup.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.popFavorite) {
-                Toast.makeText(MainActivity.this, "Add to favorite", Toast.LENGTH_SHORT).show();
-            }
-            return false;
-        });
-    }
-
     //event click listener to category to activity category
     @Override
     public void setOnClick() {
@@ -219,12 +198,17 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
                 startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
             }
         });
-
-
         textSearch.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SearchProductActivity.class)));
         textUpload.setOnClickListener(view -> {
             if (isAccessTokenAvailable()) {
                 dialogBottom();
+            }
+        });
+        textMoreFavorite.setOnClickListener(view -> {
+            if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+            } else {
+                startActivity(new Intent(getApplicationContext(), FavoriteActivity.class));
             }
         });
 //        scrollView.setOnScrollChangeListener((view, i, i1, i2, i3) -> floatingScroll.setVisibility(View.VISIBLE));
@@ -233,7 +217,13 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         seeMoreBuyer.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), BuyerSeeMoreActivity.class)));
         seeMoreSeller.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SellerSeeMoreActivity.class)));
         refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
-
+        textFavorite.setOnClickListener(view -> {
+            if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+            } else {
+                startActivity(new Intent(getApplicationContext(), FavoriteActivity.class));
+            }
+        });
     }
 
     private boolean isAccessTokenAvailable() {
@@ -339,19 +329,17 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
 
     private void setFavorite() {
         if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-            //layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
             GridLayoutManager layoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
 
             recyclerFavorite.setLayoutManager(layoutManager);
             favoriteAdapter = new FavoriteAdapter(this);
 
-            Call<FavoriteResponse> call = apiService.topFavorite(userInformationManager.getUser().getAccessToken());
-            call.enqueue(new Callback<FavoriteResponse>() {
+            Call<ProductResponse> call = apiService.getAllUserFavorite(userInformationManager.getUser().getAccessToken(), 1);
+            call.enqueue(new Callback<ProductResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<FavoriteResponse> call, @NonNull Response<FavoriteResponse> response) {
+                public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
-                            Log.e("ppppp", "success: " + response.body().getData().toString());
                             relativeFavorite.setVisibility(View.VISIBLE);
                             favoriteAdapter.addItem(response.body().getData());
                             recyclerFavorite.setAdapter(favoriteAdapter);
@@ -360,14 +348,12 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
                         }
                     } else {
                         relativeFavorite.setVisibility(View.GONE);
-                        Log.e("ppppp", "else: " + response.code() + " = " + response.message());
                     }
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<FavoriteResponse> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
                     t.printStackTrace();
-                    Log.e("ppppp", "onFailure: " + t.getMessage());
                     relativeFavorite.setVisibility(View.GONE);
                 }
             });
@@ -437,6 +423,8 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         seeMoreBuyer = findViewById(R.id.textSeeMoreBuyer);
         seeMoreSeller = findViewById(R.id.textSeeMoreSeller);
         textUpload = findViewById(R.id.textUpload);
+        textFavorite = findViewById(R.id.textFavorite);
+        textMoreFavorite = findViewById(R.id.textSeeMoreFavorite);
 
         floatingScroll = findViewById(R.id.floatingScroll);
         scrollView = findViewById(R.id.scrollView);
@@ -453,11 +441,27 @@ public class MainActivity extends BaseAppCompatActivity implements MyOnClickList
         relativeFavorite.setVisibility(View.GONE);
         floatingScroll.setVisibility(View.GONE);
         linearInternetUnavailable.setVisibility(View.GONE);
-
-
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 }
 
 

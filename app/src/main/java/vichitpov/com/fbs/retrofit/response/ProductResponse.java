@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public class ProductResponse implements Serializable {
+
     @SerializedName("meta")
     private Meta mMeta;
     @SerializedName("links")
@@ -122,23 +123,9 @@ public class ProductResponse implements Serializable {
         public void setCurrentPage(int mCurrentPage) {
             this.mCurrentPage = mCurrentPage;
         }
-
-        @Override
-        public String toString() {
-            return "Meta{" +
-                    "mTimestamp='" + mTimestamp + '\'' +
-                    ", mTotal=" + mTotal +
-                    ", mTo=" + mTo +
-                    ", mPerPage=" + mPerPage +
-                    ", mPath='" + mPath + '\'' +
-                    ", mLastPage=" + mLastPage +
-                    ", mFrom=" + mFrom +
-                    ", mCurrentPage=" + mCurrentPage +
-                    '}';
-        }
     }
 
-    public static class Links {
+    public static class Links implements Serializable {
         @SerializedName("last")
         private String mLast;
         @SerializedName("first")
@@ -158,14 +145,6 @@ public class ProductResponse implements Serializable {
 
         public void setFirst(String mFirst) {
             this.mFirst = mFirst;
-        }
-
-        @Override
-        public String toString() {
-            return "Links{" +
-                    "mLast='" + mLast + '\'' +
-                    ", mFirst='" + mFirst + '\'' +
-                    '}';
         }
     }
 
@@ -243,16 +222,195 @@ public class ProductResponse implements Serializable {
         public void setId(int mId) {
             this.mId = mId;
         }
+    }
 
-        @Override
-        public String toString() {
-            return "Category{" +
-                    "mCategoryImage='" + mCategoryImage + '\'' +
-                    ", mCategoryParent=" + mCategoryParent +
-                    ", mCategoryNameKhmer='" + mCategoryNameKhmer + '\'' +
-                    ", mCategoryName='" + mCategoryName + '\'' +
-                    ", mId=" + mId +
-                    '}';
+    public static class Signupdate implements Serializable {
+        @SerializedName("timezone")
+        private String mTimezone;
+        @SerializedName("timezone_type")
+        private int mTimezoneType;
+        @SerializedName("date")
+        private String mDate;
+
+        public String getTimezone() {
+            return mTimezone;
+        }
+
+        public void setTimezone(String mTimezone) {
+            this.mTimezone = mTimezone;
+        }
+
+        public int getTimezoneType() {
+            return mTimezoneType;
+        }
+
+        public void setTimezoneType(int mTimezoneType) {
+            this.mTimezoneType = mTimezoneType;
+        }
+
+        public String getDate() {
+            return mDate;
+        }
+
+        public void setDate(String mDate) {
+            this.mDate = mDate;
+        }
+    }
+
+    public static class DataContact implements Serializable {
+        @SerializedName("signUpDate")
+        private Signupdate mSignupdate;
+        @SerializedName("status")
+        private String mStatus;
+        @SerializedName("role")
+        private String mRole;
+        @SerializedName("profilePicture")
+        private String mProfilepicture;
+        @SerializedName("city")
+        private String mCity;
+        @SerializedName("map_coordinate")
+        private String mMapCoordinate;
+        @SerializedName("address")
+        private String mAddress;
+        @SerializedName("gender")
+        private String mGender;
+        @SerializedName("phone")
+        private String mPhone;
+        @SerializedName("email")
+        private String mEmail;
+        @SerializedName("lastName")
+        private String mLastname;
+        @SerializedName("firstName")
+        private String mFirstname;
+        @SerializedName("id")
+        private int mId;
+        @SerializedName("type")
+        private String mType;
+
+        public Signupdate getSignupdate() {
+            return mSignupdate;
+        }
+
+        public void setSignupdate(Signupdate mSignupdate) {
+            this.mSignupdate = mSignupdate;
+        }
+
+        public String getStatus() {
+            return mStatus;
+        }
+
+        public void setStatus(String mStatus) {
+            this.mStatus = mStatus;
+        }
+
+        public String getRole() {
+            return mRole;
+        }
+
+        public void setRole(String mRole) {
+            this.mRole = mRole;
+        }
+
+        public String getProfilepicture() {
+            return mProfilepicture;
+        }
+
+        public void setProfilepicture(String mProfilepicture) {
+            this.mProfilepicture = mProfilepicture;
+        }
+
+        public String getCity() {
+            return mCity;
+        }
+
+        public void setCity(String mCity) {
+            this.mCity = mCity;
+        }
+
+        public String getMapCoordinate() {
+            return mMapCoordinate;
+        }
+
+        public void setMapCoordinate(String mMapCoordinate) {
+            this.mMapCoordinate = mMapCoordinate;
+        }
+
+        public String getAddress() {
+            return mAddress;
+        }
+
+        public void setAddress(String mAddress) {
+            this.mAddress = mAddress;
+        }
+
+        public String getGender() {
+            return mGender;
+        }
+
+        public void setGender(String mGender) {
+            this.mGender = mGender;
+        }
+
+        public String getPhone() {
+            return mPhone;
+        }
+
+        public void setPhone(String mPhone) {
+            this.mPhone = mPhone;
+        }
+
+        public String getEmail() {
+            return mEmail;
+        }
+
+        public void setEmail(String mEmail) {
+            this.mEmail = mEmail;
+        }
+
+        public String getLastname() {
+            return mLastname;
+        }
+
+        public void setLastname(String mLastname) {
+            this.mLastname = mLastname;
+        }
+
+        public String getFirstname() {
+            return mFirstname;
+        }
+
+        public void setFirstname(String mFirstname) {
+            this.mFirstname = mFirstname;
+        }
+
+        public int getId() {
+            return mId;
+        }
+
+        public void setId(int mId) {
+            this.mId = mId;
+        }
+
+        public String getType() {
+            return mType;
+        }
+
+        public void setType(String mType) {
+            this.mType = mType;
+        }
+    }
+
+    public static class Contactme implements Serializable{
+
+        @SerializedName("data")
+        private List<DataContact> mDataContact;
+
+        public List<DataContact> getDatacontact() {
+            return mDataContact;
+        }
+
+        public void setDatacontact(List<DataContact> mDataContact) {
+            this.mDataContact = mDataContact;
         }
     }
 
@@ -287,18 +445,9 @@ public class ProductResponse implements Serializable {
         public void setDate(String mDate) {
             this.mDate = mDate;
         }
-
-        @Override
-        public String toString() {
-            return "Createddate{" +
-                    "mTimezone='" + mTimezone + '\'' +
-                    ", mTimezoneType=" + mTimezoneType +
-                    ", mDate='" + mDate + '\'' +
-                    '}';
-        }
     }
 
-    public static class Updateddate implements Serializable {
+    public static class Updateddate implements Serializable{
         @SerializedName("timezone")
         private String mTimezone;
         @SerializedName("timezone_type")
@@ -329,15 +478,6 @@ public class ProductResponse implements Serializable {
         public void setDate(String mDate) {
             this.mDate = mDate;
         }
-
-        @Override
-        public String toString() {
-            return "Updateddate{" +
-                    "mTimezone='" + mTimezone + '\'' +
-                    ", mTimezoneType=" + mTimezoneType +
-                    ", mDate='" + mDate + '\'' +
-                    '}';
-        }
     }
 
     public static class Data implements Serializable {
@@ -347,6 +487,10 @@ public class ProductResponse implements Serializable {
         private Createddate mCreateddate;
         @SerializedName("status")
         private String mStatus;
+        @SerializedName("contactMe")
+        private Contactme mContactme;
+        @SerializedName("viewCount")
+        private int mViewcount;
         @SerializedName("favoriteCount")
         private int mFavoritecount;
         @SerializedName("contactMapCoordinate")
@@ -396,6 +540,22 @@ public class ProductResponse implements Serializable {
 
         public void setStatus(String mStatus) {
             this.mStatus = mStatus;
+        }
+
+        public Contactme getContactme() {
+            return mContactme;
+        }
+
+        public void setContactme(Contactme mContactme) {
+            this.mContactme = mContactme;
+        }
+
+        public int getViewcount() {
+            return mViewcount;
+        }
+
+        public void setViewcount(int mViewcount) {
+            this.mViewcount = mViewcount;
         }
 
         public int getFavoritecount() {
@@ -503,495 +663,674 @@ public class ProductResponse implements Serializable {
         }
     }
 
+//    public static class DataContact implements Serializable {
+//        @SerializedName("signUpDate")
+//        private Signupdate mSignupdate;
+//        @SerializedName("status")
+//        private String mStatus;
+//        @SerializedName("role")
+//        private String mRole;
+//        @SerializedName("profilePicture")
+//        private String mProfilepicture;
+//        @SerializedName("city")
+//        private String mCity;
+//        @SerializedName("map_coordinate")
+//        private String mMapCoordinate;
+//        @SerializedName("address")
+//        private String mAddress;
+//        @SerializedName("gender")
+//        private String mGender;
+//        @SerializedName("phone")
+//        private String mPhone;
+//        @SerializedName("email")
+//        private String mEmail;
+//        @SerializedName("lastName")
+//        private String mLastname;
+//        @SerializedName("firstName")
+//        private String mFirstname;
+//        @SerializedName("id")
+//        private int mId;
+//        @SerializedName("type")
+//        private String mType;
+//
+//        public Signupdate getSignupdate() {
+//            return mSignupdate;
+//        }
+//
+//        public void setSignupdate(Signupdate mSignupdate) {
+//            this.mSignupdate = mSignupdate;
+//        }
+//
+//        public String getStatus() {
+//            return mStatus;
+//        }
+//
+//        public void setStatus(String mStatus) {
+//            this.mStatus = mStatus;
+//        }
+//
+//        public String getRole() {
+//            return mRole;
+//        }
+//
+//        public void setRole(String mRole) {
+//            this.mRole = mRole;
+//        }
+//
+//        public String getProfilepicture() {
+//            return mProfilepicture;
+//        }
+//
+//        public void setProfilepicture(String mProfilepicture) {
+//            this.mProfilepicture = mProfilepicture;
+//        }
+//
+//        public String getCity() {
+//            return mCity;
+//        }
+//
+//        public void setCity(String mCity) {
+//            this.mCity = mCity;
+//        }
+//
+//        public String getMapCoordinate() {
+//            return mMapCoordinate;
+//        }
+//
+//        public void setMapCoordinate(String mMapCoordinate) {
+//            this.mMapCoordinate = mMapCoordinate;
+//        }
+//
+//        public String getAddress() {
+//            return mAddress;
+//        }
+//
+//        public void setAddress(String mAddress) {
+//            this.mAddress = mAddress;
+//        }
+//
+//        public String getGender() {
+//            return mGender;
+//        }
+//
+//        public void setGender(String mGender) {
+//            this.mGender = mGender;
+//        }
+//
+//        public String getPhone() {
+//            return mPhone;
+//        }
+//
+//        public void setPhone(String mPhone) {
+//            this.mPhone = mPhone;
+//        }
+//
+//        public String getEmail() {
+//            return mEmail;
+//        }
+//
+//        public void setEmail(String mEmail) {
+//            this.mEmail = mEmail;
+//        }
+//
+//        public String getLastname() {
+//            return mLastname;
+//        }
+//
+//        public void setLastname(String mLastname) {
+//            this.mLastname = mLastname;
+//        }
+//
+//        public String getFirstname() {
+//            return mFirstname;
+//        }
+//
+//        public void setFirstname(String mFirstname) {
+//            this.mFirstname = mFirstname;
+//        }
+//
+//        public int getId() {
+//            return mId;
+//        }
+//
+//        public void setId(int mId) {
+//            this.mId = mId;
+//        }
+//
+//        public String getType() {
+//            return mType;
+//        }
+//
+//        public void setType(String mType) {
+//            this.mType = mType;
+//        }
+//
+//        public static class Signupdate implements Serializable {
+//            @SerializedName("timezone")
+//            private String mTimezone;
+//            @SerializedName("timezone_type")
+//            private int mTimezoneType;
+//            @SerializedName("date")
+//            private String mDate;
+//
+//            public String getTimezone() {
+//                return mTimezone;
+//            }
+//
+//            public void setTimezone(String mTimezone) {
+//                this.mTimezone = mTimezone;
+//            }
+//
+//            public int getTimezoneType() {
+//                return mTimezoneType;
+//            }
+//
+//            public void setTimezoneType(int mTimezoneType) {
+//                this.mTimezoneType = mTimezoneType;
+//            }
+//
+//            public String getDate() {
+//                return mDate;
+//            }
+//
+//            public void setDate(String mDate) {
+//                this.mDate = mDate;
+//            }
+//        }
+//    }
+
 
 //    @SerializedName("meta")
-//    private Meta meta;
+//    private Meta mMeta;
 //    @SerializedName("links")
-//    private Links links;
+//    private Links mLinks;
 //    @SerializedName("data")
-//    private List<Data> data;
+//    private List<Data> mData;
 //
 //    public Meta getMeta() {
-//        return meta;
+//        return mMeta;
 //    }
 //
-//    public void setMeta(Meta meta) {
-//        this.meta = meta;
+//    public void setMeta(Meta mMeta) {
+//        this.mMeta = mMeta;
 //    }
 //
 //    public Links getLinks() {
-//        return links;
+//        return mLinks;
 //    }
 //
-//    public void setLinks(Links links) {
-//        this.links = links;
+//    public void setLinks(Links mLinks) {
+//        this.mLinks = mLinks;
 //    }
 //
 //    public List<Data> getData() {
-//        return data;
+//        return mData;
 //    }
 //
-//    public void setData(List<Data> data) {
-//        this.data = data;
+//    public void setData(List<Data> mData) {
+//        this.mData = mData;
 //    }
 //
-//    public static class Meta implements Serializable{
+//    public static class Meta implements Serializable {
 //        @SerializedName("timestamp")
-//        private String timestamp;
+//        private String mTimestamp;
 //        @SerializedName("total")
-//        private int total;
+//        private int mTotal;
 //        @SerializedName("to")
-//        private int to;
+//        private int mTo;
 //        @SerializedName("per_page")
-//        private int perPage;
+//        private int mPerPage;
 //        @SerializedName("path")
-//        private String path;
+//        private String mPath;
 //        @SerializedName("last_page")
-//        private int lastPage;
+//        private int mLastPage;
 //        @SerializedName("from")
-//        private int from;
+//        private int mFrom;
 //        @SerializedName("current_page")
-//        private int currentPage;
+//        private int mCurrentPage;
 //
 //        public String getTimestamp() {
-//            return timestamp;
+//            return mTimestamp;
 //        }
 //
-//        public void setTimestamp(String timestamp) {
-//            this.timestamp = timestamp;
+//        public void setTimestamp(String mTimestamp) {
+//            this.mTimestamp = mTimestamp;
 //        }
 //
 //        public int getTotal() {
-//            return total;
+//            return mTotal;
 //        }
 //
-//        public void setTotal(int total) {
-//            this.total = total;
+//        public void setTotal(int mTotal) {
+//            this.mTotal = mTotal;
 //        }
 //
 //        public int getTo() {
-//            return to;
+//            return mTo;
 //        }
 //
-//        public void setTo(int to) {
-//            this.to = to;
+//        public void setTo(int mTo) {
+//            this.mTo = mTo;
 //        }
 //
 //        public int getPerPage() {
-//            return perPage;
+//            return mPerPage;
 //        }
 //
-//        public void setPerPage(int perPage) {
-//            this.perPage = perPage;
+//        public void setPerPage(int mPerPage) {
+//            this.mPerPage = mPerPage;
 //        }
 //
 //        public String getPath() {
-//            return path;
+//            return mPath;
 //        }
 //
-//        public void setPath(String path) {
-//            this.path = path;
+//        public void setPath(String mPath) {
+//            this.mPath = mPath;
 //        }
 //
 //        public int getLastPage() {
-//            return lastPage;
+//            return mLastPage;
 //        }
 //
-//        public void setLastPage(int lastPage) {
-//            this.lastPage = lastPage;
+//        public void setLastPage(int mLastPage) {
+//            this.mLastPage = mLastPage;
 //        }
 //
 //        public int getFrom() {
-//            return from;
+//            return mFrom;
 //        }
 //
-//        public void setFrom(int from) {
-//            this.from = from;
+//        public void setFrom(int mFrom) {
+//            this.mFrom = mFrom;
 //        }
 //
 //        public int getCurrentPage() {
-//            return currentPage;
+//            return mCurrentPage;
 //        }
 //
-//        public void setCurrentPage(int currentPage) {
-//            this.currentPage = currentPage;
+//        public void setCurrentPage(int mCurrentPage) {
+//            this.mCurrentPage = mCurrentPage;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "Meta{" +
+//                    "mTimestamp='" + mTimestamp + '\'' +
+//                    ", mTotal=" + mTotal +
+//                    ", mTo=" + mTo +
+//                    ", mPerPage=" + mPerPage +
+//                    ", mPath='" + mPath + '\'' +
+//                    ", mLastPage=" + mLastPage +
+//                    ", mFrom=" + mFrom +
+//                    ", mCurrentPage=" + mCurrentPage +
+//                    '}';
 //        }
 //    }
 //
-//    public static class Links implements Serializable{
-//        @SerializedName("next")
-//        private String next;
+//    public static class Links {
 //        @SerializedName("last")
-//        private String last;
+//        private String mLast;
 //        @SerializedName("first")
-//        private String first;
-//
-//        public String getNext() {
-//            return next;
-//        }
-//
-//        public void setNext(String next) {
-//            this.next = next;
-//        }
+//        private String mFirst;
 //
 //        public String getLast() {
-//            return last;
+//            return mLast;
 //        }
 //
-//        public void setLast(String last) {
-//            this.last = last;
+//        public void setLast(String mLast) {
+//            this.mLast = mLast;
 //        }
 //
 //        public String getFirst() {
-//            return first;
+//            return mFirst;
 //        }
 //
-//        public void setFirst(String first) {
-//            this.first = first;
+//        public void setFirst(String mFirst) {
+//            this.mFirst = mFirst;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "Links{" +
+//                    "mLast='" + mLast + '\'' +
+//                    ", mFirst='" + mFirst + '\'' +
+//                    '}';
 //        }
 //    }
 //
 //    public static class Price implements Serializable {
 //        @SerializedName("max")
-//        private String max;
+//        private String mMax;
 //        @SerializedName("min")
-//        private String min;
+//        private String mMin;
 //
 //        public String getMax() {
-//            return max;
+//            return mMax;
 //        }
 //
-//        public void setMax(String max) {
-//            this.max = max;
+//        public void setMax(String mMax) {
+//            this.mMax = mMax;
 //        }
 //
 //        public String getMin() {
-//            return min;
+//            return mMin;
 //        }
 //
-//        public void setMin(String min) {
-//            this.min = min;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return "Price{" +
-//                    "max='" + max + '\'' +
-//                    ", min='" + min + '\'' +
-//                    '}';
+//        public void setMin(String mMin) {
+//            this.mMin = mMin;
 //        }
 //    }
 //
 //    public static class Category implements Serializable {
 //        @SerializedName("category_image")
-//        private String categoryImage;
+//        private String mCategoryImage;
 //        @SerializedName("category_parent")
-//        private int categoryParent;
+//        private int mCategoryParent;
 //        @SerializedName("category_name_khmer")
-//        private String categoryNameKhmer;
+//        private String mCategoryNameKhmer;
 //        @SerializedName("category_name")
-//        private String categoryName;
+//        private String mCategoryName;
 //        @SerializedName("id")
-//        private int id;
+//        private int mId;
 //
 //        public String getCategoryImage() {
-//            return categoryImage;
+//            return mCategoryImage;
 //        }
 //
-//        public void setCategoryImage(String categoryImage) {
-//            this.categoryImage = categoryImage;
+//        public void setCategoryImage(String mCategoryImage) {
+//            this.mCategoryImage = mCategoryImage;
 //        }
 //
 //        public int getCategoryParent() {
-//            return categoryParent;
+//            return mCategoryParent;
 //        }
 //
-//        public void setCategoryParent(int categoryParent) {
-//            this.categoryParent = categoryParent;
+//        public void setCategoryParent(int mCategoryParent) {
+//            this.mCategoryParent = mCategoryParent;
 //        }
 //
 //        public String getCategoryNameKhmer() {
-//            return categoryNameKhmer;
+//            return mCategoryNameKhmer;
 //        }
 //
-//        public void setCategoryNameKhmer(String categoryNameKhmer) {
-//            this.categoryNameKhmer = categoryNameKhmer;
+//        public void setCategoryNameKhmer(String mCategoryNameKhmer) {
+//            this.mCategoryNameKhmer = mCategoryNameKhmer;
 //        }
 //
 //        public String getCategoryName() {
-//            return categoryName;
+//            return mCategoryName;
 //        }
 //
-//        public void setCategoryName(String categoryName) {
-//            this.categoryName = categoryName;
+//        public void setCategoryName(String mCategoryName) {
+//            this.mCategoryName = mCategoryName;
 //        }
 //
 //        public int getId() {
-//            return id;
+//            return mId;
 //        }
 //
-//        public void setId(int id) {
-//            this.id = id;
+//        public void setId(int mId) {
+//            this.mId = mId;
 //        }
 //
 //        @Override
 //        public String toString() {
 //            return "Category{" +
-//                    "categoryImage='" + categoryImage + '\'' +
-//                    ", categoryParent=" + categoryParent +
-//                    ", categoryNameKhmer='" + categoryNameKhmer + '\'' +
-//                    ", categoryName='" + categoryName + '\'' +
-//                    ", id=" + id +
+//                    "mCategoryImage='" + mCategoryImage + '\'' +
+//                    ", mCategoryParent=" + mCategoryParent +
+//                    ", mCategoryNameKhmer='" + mCategoryNameKhmer + '\'' +
+//                    ", mCategoryName='" + mCategoryName + '\'' +
+//                    ", mId=" + mId +
 //                    '}';
 //        }
 //    }
 //
-//    public static class Createddate implements Serializable{
+//    public static class Createddate implements Serializable {
 //        @SerializedName("timezone")
-//        private String timezone;
+//        private String mTimezone;
 //        @SerializedName("timezone_type")
-//        private int timezoneType;
+//        private int mTimezoneType;
 //        @SerializedName("date")
-//        private String date;
+//        private String mDate;
 //
 //        public String getTimezone() {
-//            return timezone;
+//            return mTimezone;
 //        }
 //
-//        public void setTimezone(String timezone) {
-//            this.timezone = timezone;
+//        public void setTimezone(String mTimezone) {
+//            this.mTimezone = mTimezone;
 //        }
 //
 //        public int getTimezoneType() {
-//            return timezoneType;
+//            return mTimezoneType;
 //        }
 //
-//        public void setTimezoneType(int timezoneType) {
-//            this.timezoneType = timezoneType;
+//        public void setTimezoneType(int mTimezoneType) {
+//            this.mTimezoneType = mTimezoneType;
 //        }
 //
 //        public String getDate() {
-//            return date;
+//            return mDate;
 //        }
 //
-//        public void setDate(String date) {
-//            this.date = date;
+//        public void setDate(String mDate) {
+//            this.mDate = mDate;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "Createddate{" +
+//                    "mTimezone='" + mTimezone + '\'' +
+//                    ", mTimezoneType=" + mTimezoneType +
+//                    ", mDate='" + mDate + '\'' +
+//                    '}';
 //        }
 //    }
 //
 //    public static class Updateddate implements Serializable {
 //        @SerializedName("timezone")
-//        private String timezone;
+//        private String mTimezone;
 //        @SerializedName("timezone_type")
-//        private int timezoneType;
+//        private int mTimezoneType;
 //        @SerializedName("date")
-//        private String date;
+//        private String mDate;
 //
 //        public String getTimezone() {
-//            return timezone;
+//            return mTimezone;
 //        }
 //
-//        public void setTimezone(String timezone) {
-//            this.timezone = timezone;
+//        public void setTimezone(String mTimezone) {
+//            this.mTimezone = mTimezone;
 //        }
 //
 //        public int getTimezoneType() {
-//            return timezoneType;
+//            return mTimezoneType;
 //        }
 //
-//        public void setTimezoneType(int timezoneType) {
-//            this.timezoneType = timezoneType;
+//        public void setTimezoneType(int mTimezoneType) {
+//            this.mTimezoneType = mTimezoneType;
 //        }
 //
 //        public String getDate() {
-//            return date;
+//            return mDate;
 //        }
 //
-//        public void setDate(String date) {
-//            this.date = date;
+//        public void setDate(String mDate) {
+//            this.mDate = mDate;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "Updateddate{" +
+//                    "mTimezone='" + mTimezone + '\'' +
+//                    ", mTimezoneType=" + mTimezoneType +
+//                    ", mDate='" + mDate + '\'' +
+//                    '}';
 //        }
 //    }
 //
 //    public static class Data implements Serializable {
 //        @SerializedName("updatedDate")
-//        private Updateddate updateddate;
+//        private Updateddate mUpdateddate;
 //        @SerializedName("createdDate")
-//        private Createddate createddate;
+//        private Createddate mCreateddate;
 //        @SerializedName("status")
-//        private String status;
+//        private String mStatus;
+//        @SerializedName("favoriteCount")
+//        private int mFavoritecount;
 //        @SerializedName("contactMapCoordinate")
-//        private String contactmapcoordinate;
+//        private String mContactmapcoordinate;
 //        @SerializedName("contactAddress")
-//        private String contactaddress;
+//        private String mContactaddress;
 //        @SerializedName("contactEmail")
-//        private String contactemail;
+//        private String mContactemail;
 //        @SerializedName("contactPhone")
-//        private String contactphone;
+//        private String mContactphone;
 //        @SerializedName("contactName")
-//        private String contactname;
+//        private String mContactname;
 //        @SerializedName("productImages")
-//        private List<String> productimages;
+//        private List<String> mProductimages;
 //        @SerializedName("category")
-//        private Category category;
+//        private Category mCategory;
 //        @SerializedName("price")
-//        private List<Price> price;
+//        private List<Price> mPrice;
 //        @SerializedName("description")
-//        private String description;
+//        private String mDescription;
 //        @SerializedName("title")
-//        private String title;
+//        private String mTitle;
 //        @SerializedName("id")
-//        private int id;
+//        private int mId;
 //        @SerializedName("type")
-//        private String type;
+//        private String mType;
 //
 //        public Updateddate getUpdateddate() {
-//            return updateddate;
+//            return mUpdateddate;
 //        }
 //
-//        public void setUpdateddate(Updateddate updateddate) {
-//            this.updateddate = updateddate;
+//        public void setUpdateddate(Updateddate mUpdateddate) {
+//            this.mUpdateddate = mUpdateddate;
 //        }
 //
 //        public Createddate getCreateddate() {
-//            return createddate;
+//            return mCreateddate;
 //        }
 //
-//        public void setCreateddate(Createddate createddate) {
-//            this.createddate = createddate;
+//        public void setCreateddate(Createddate mCreateddate) {
+//            this.mCreateddate = mCreateddate;
 //        }
 //
 //        public String getStatus() {
-//            return status;
+//            return mStatus;
 //        }
 //
-//        public void setStatus(String status) {
-//            this.status = status;
+//        public void setStatus(String mStatus) {
+//            this.mStatus = mStatus;
+//        }
+//
+//        public int getFavoritecount() {
+//            return mFavoritecount;
+//        }
+//
+//        public void setFavoritecount(int mFavoritecount) {
+//            this.mFavoritecount = mFavoritecount;
 //        }
 //
 //        public String getContactmapcoordinate() {
-//            return contactmapcoordinate;
+//            return mContactmapcoordinate;
 //        }
 //
-//        public void setContactmapcoordinate(String contactmapcoordinate) {
-//            this.contactmapcoordinate = contactmapcoordinate;
+//        public void setContactmapcoordinate(String mContactmapcoordinate) {
+//            this.mContactmapcoordinate = mContactmapcoordinate;
 //        }
 //
 //        public String getContactaddress() {
-//            return contactaddress;
+//            return mContactaddress;
 //        }
 //
-//        public void setContactaddress(String contactaddress) {
-//            this.contactaddress = contactaddress;
+//        public void setContactaddress(String mContactaddress) {
+//            this.mContactaddress = mContactaddress;
 //        }
 //
 //        public String getContactemail() {
-//            return contactemail;
+//            return mContactemail;
 //        }
 //
-//        public void setContactemail(String contactemail) {
-//            this.contactemail = contactemail;
+//        public void setContactemail(String mContactemail) {
+//            this.mContactemail = mContactemail;
 //        }
 //
 //        public String getContactphone() {
-//            return contactphone;
+//            return mContactphone;
 //        }
 //
-//        public void setContactphone(String contactphone) {
-//            this.contactphone = contactphone;
+//        public void setContactphone(String mContactphone) {
+//            this.mContactphone = mContactphone;
 //        }
 //
 //        public String getContactname() {
-//            return contactname;
+//            return mContactname;
 //        }
 //
-//        public void setContactname(String contactname) {
-//            this.contactname = contactname;
+//        public void setContactname(String mContactname) {
+//            this.mContactname = mContactname;
 //        }
 //
 //        public List<String> getProductimages() {
-//            return productimages;
+//            return mProductimages;
 //        }
 //
-//        public void setProductimages(List<String> productimages) {
-//            this.productimages = productimages;
+//        public void setProductimages(List<String> mProductimages) {
+//            this.mProductimages = mProductimages;
 //        }
 //
 //        public Category getCategory() {
-//            return category;
+//            return mCategory;
 //        }
 //
-//        public void setCategory(Category category) {
-//            this.category = category;
+//        public void setCategory(Category mCategory) {
+//            this.mCategory = mCategory;
 //        }
 //
 //        public List<Price> getPrice() {
-//            return price;
+//            return mPrice;
 //        }
 //
-//        public void setPrice(List<Price> price) {
-//            this.price = price;
+//        public void setPrice(List<Price> mPrice) {
+//            this.mPrice = mPrice;
 //        }
 //
 //        public String getDescription() {
-//            return description;
+//            return mDescription;
 //        }
 //
-//        public void setDescription(String description) {
-//            this.description = description;
+//        public void setDescription(String mDescription) {
+//            this.mDescription = mDescription;
 //        }
 //
 //        public String getTitle() {
-//            return title;
+//            return mTitle;
 //        }
 //
-//        public void setTitle(String title) {
-//            this.title = title;
+//        public void setTitle(String mTitle) {
+//            this.mTitle = mTitle;
 //        }
 //
 //        public int getId() {
-//            return id;
+//            return mId;
 //        }
 //
-//        public void setId(int id) {
-//            this.id = id;
+//        public void setId(int mId) {
+//            this.mId = mId;
 //        }
 //
 //        public String getType() {
-//            return type;
+//            return mType;
 //        }
 //
-//        public void setType(String type) {
-//            this.type = type;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return "Data{" +
-//                    "updateddate=" + updateddate +
-//                    ", createddate=" + createddate +
-//                    ", status=" + status +
-//                    ", contactmapcoordinate='" + contactmapcoordinate + '\'' +
-//                    ", contactaddress='" + contactaddress + '\'' +
-//                    ", contactemail='" + contactemail + '\'' +
-//                    ", contactphone='" + contactphone + '\'' +
-//                    ", contactname='" + contactname + '\'' +
-//                    ", productimages=" + productimages +
-//                    ", category=" + category +
-//                    ", price=" + price +
-//                    ", description='" + description + '\'' +
-//                    ", title='" + title + '\'' +
-//                    ", id=" + id +
-//                    ", type='" + type + '\'' +
-//                    '}';
+//        public void setType(String mType) {
+//            this.mType = mType;
 //        }
 //    }
-//
-//    @Override
-//    public String toString() {
-//        return "ProductResponse{" +
-//                "meta=" + meta +
-//                ", links=" + links +
-//                ", data=" + data +
-//                '}';
-//    }
+
 }

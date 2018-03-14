@@ -2,6 +2,7 @@ package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -18,16 +19,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.Retrofit;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
+import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.ui.activities.DetailProductActivity;
 import vichitpov.com.fbs.ui.activities.MainActivity;
 
+import static android.content.Context.MODE_PRIVATE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
- * Created by VichitDeveloper on 3/9/18.
+ * Created by VichitPov on 3/9/18.
  */
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
 
-    private List<FavoriteResponse.Data> favoritesList;
+    private List<ProductResponse.Data> favoritesList;
     private Context context;
 
     public FavoriteAdapter(Context context) {
@@ -35,7 +43,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         this.context = context;
     }
 
-    public void addItem(List<FavoriteResponse.Data> favoritesList) {
+    public void addItem(List<ProductResponse.Data> favoritesList) {
         this.favoritesList = favoritesList;
     }
 
@@ -50,7 +58,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
-        FavoriteResponse.Data favoriteResponse = favoritesList.get(position);
+        ProductResponse.Data favoriteResponse = favoritesList.get(position);
         if (favoriteResponse != null) {
             holder.title.setText(favoriteResponse.getTitle());
 
@@ -83,7 +91,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     class FavoriteViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, price;
-        private ImageView thumbnail, more;
+        private ImageView thumbnail;
 
         FavoriteViewHolder(View itemView) {
             super(itemView);
@@ -91,23 +99,33 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             title = itemView.findViewById(R.id.textTitle);
             price = itemView.findViewById(R.id.textPrice);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            more = itemView.findViewById(R.id.imageMore);
 
-            itemView.setOnClickListener(view -> Toast.makeText(context, "Click...", Toast.LENGTH_SHORT).show());
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailProductActivity.class);
+                intent.putExtra("productList", favoritesList.get(getAdapterPosition()));
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
-            more.setOnClickListener(view -> {
-                PopupMenu popup = new PopupMenu(context, view);
-                popup.inflate(R.menu.menu_popup_menu);
-                popup.show();
-                popup.setOnMenuItemClickListener(item -> {
-                    if (item.getItemId() == R.id.popFavorite) {
-                        Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show();
-                    } else if (item.getItemId() == R.id.popNotification) {
-                        Toast.makeText(context, "Send notification", Toast.LENGTH_SHORT).show();
-                    }
-                    return false;
-                });
+                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), favoritesList.get(getAdapterPosition()).getId());
+                }
+
             });
+
+//            more.setOnClickListener(view -> {
+//                PopupMenu popup = new PopupMenu(context, view);
+//                popup.inflate(R.menu.menu_popup_menu);
+//                popup.show();
+//                popup.setOnMenuItemClickListener(item -> {
+//                    if (item.getItemId() == R.id.popFavorite) {
+//                        Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show();
+//                    } else if (item.getItemId() == R.id.popNotification) {
+//                        Toast.makeText(context, "Send notification", Toast.LENGTH_SHORT).show();
+//                    }
+//                    return false;
+//                });
+//            });
 
 
         }

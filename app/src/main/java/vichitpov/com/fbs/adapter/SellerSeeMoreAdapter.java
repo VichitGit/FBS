@@ -29,6 +29,7 @@ import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.base.IntentData;
+import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.preference.UserInformationManager;
@@ -259,13 +260,22 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             more = itemView.findViewById(R.id.imageMore);
 
             itemView.setOnClickListener(view -> {
+
                 Intent intent = new Intent(context, DetailProductActivity.class);
                 intent.putExtra("productList", productResponse);
                 context.startActivity(intent);
+
+                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
+                }
+
             });
 
             more.setOnClickListener(view -> {
                 myOnClickListener.setOnViewClick(getAdapterPosition(), productList.get(getAdapterPosition()).getId(), view);
+
+
             });
         }
     }
@@ -287,8 +297,9 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             textStatus = itemView.findViewById(R.id.textStatus);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
 
-            textEdit.setOnClickListener(view ->
-                    IntentData.sendProduct(context, productList.get(getAdapterPosition())));
+            textEdit.setOnClickListener(view -> {
+                IntentData.sendProduct(context, productList.get(getAdapterPosition()));
+            });
         }
     }
 

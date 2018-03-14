@@ -64,16 +64,16 @@
                         android:textSize="@dimen/sp_12"
                         android:textStyle="normal" />
 
-                    <ImageView
-                        android:id="@+id/imageMore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/textPrice"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignTop="@+id/textPrice"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_more_hoz"
-                        android:tint="@color/colorHint" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/imageMore"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignBottom="@+id/textPrice"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_alignTop="@+id/textPrice"-->
+                        <!--android:scaleType="centerCrop"-->
+                        <!--android:src="@drawable/ic_more_hoz"-->
+                        <!--android:tint="@color/colorHint" />-->
 
                 </RelativeLayout>
             </RelativeLayout>

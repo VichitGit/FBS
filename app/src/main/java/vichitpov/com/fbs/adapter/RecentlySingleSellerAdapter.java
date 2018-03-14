@@ -2,6 +2,7 @@ package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,9 +18,15 @@ import java.util.List;
 
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
+import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.constant.Url;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.ui.activities.DetailProductActivity;
+
+import static android.content.Context.MODE_PRIVATE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by VichitPov on 2/26/18.
@@ -85,17 +92,16 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
     }
 
 
-    public void setOnCLickListener(MyOnClickListener myOnClickListener) {
-        if (productList != null) {
-            this.myOnClickListener = myOnClickListener;
-        }
-    }
-
+//    public void setOnCLickListener(MyOnClickListener myOnClickListener) {
+//        if (productList != null) {
+//            this.myOnClickListener = myOnClickListener;
+//        }
+//    }
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, price, address;
-        private ImageView thumbnail, more;
+        private ImageView thumbnail;
 
         ProductViewHolder(View itemView) {
             super(itemView);
@@ -104,15 +110,18 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
             price = itemView.findViewById(R.id.textPrice);
             address = itemView.findViewById(R.id.textAddress);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            more = itemView.findViewById(R.id.imageMore);
 
-            itemView.setOnClickListener(view ->
-                    myOnClickListener.setOnItemClick(getAdapterPosition(), productList.get(getAdapterPosition())));
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailProductActivity.class);
+                intent.putExtra("productList", productList.get(getAdapterPosition()));
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
-            more.setOnClickListener(view ->
-                    myOnClickListener.setOnViewClick(getAdapterPosition(), productList.get(getAdapterPosition()).getId(), view));
-
-
+                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
+                }
+            });
         }
     }
 }

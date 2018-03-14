@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,8 +24,15 @@ import java.util.List;
 
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
+import vichitpov.com.fbs.base.IntentData;
+import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.OnLoadMore;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.ui.activities.DetailProductActivity;
+
+import static android.content.Context.MODE_PRIVATE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by VichitPov on 3/7/18.
@@ -145,16 +153,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (productResponse.getContactaddress() != null) {
                 myViewHolder.address.setText(productResponse.getContactaddress());
             }
-//            if (productResponse.getProductimages().size() != 0 && productResponse.getProductimages() != null) {
-//                Picasso.with(context)
-//                        .load(productResponse.getProductimages().get(0))
-//                        .resize(200, 200)
-//                        .centerCrop()
-//                        .error(R.drawable.ic_unavailable)
-//                        .into(myViewHolder.thumbnail);
-//
-//                Log.e("pppp image", productResponse.getProductimages().get(0));
-//            }
+            if (productResponse.getProductimages().size() != 0 && productResponse.getProductimages() != null) {
+                Picasso.with(context)
+                        .load(productResponse.getProductimages().get(0))
+                        .resize(200, 200)
+                        .centerCrop()
+                        .error(R.drawable.ic_unavailable)
+                        .into(myViewHolder.thumbnail);
+            }
 
         } else if (holder instanceof ProgressPagination) {
             ((ProgressPagination) holder).progressBar.setIndeterminate(true);
@@ -171,7 +177,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
-        private ImageView favorite, notification, thumbnail;
+        private ImageView thumbnail, more;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -181,8 +187,22 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            favorite = itemView.findViewById(R.id.imageFavorite);
-            notification = itemView.findViewById(R.id.imageNotification);
+            more = itemView.findViewById(R.id.imageMore);
+            more.setVisibility(View.GONE);
+
+            itemView.setOnClickListener(view -> {
+
+                Toast.makeText(context, "Waiting fix error!", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(context, DetailProductActivity.class);
+//                intent.putExtra("productList", productList.get(getAdapterPosition()));
+//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(intent);
+//
+//                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+//                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+//                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
+//                }
+            });
 
         }
 

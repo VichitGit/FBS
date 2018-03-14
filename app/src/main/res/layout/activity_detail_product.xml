@@ -1,225 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    android:orientation="vertical"
     tools:context="vichitpov.com.fbs.ui.activities.DetailProductActivity">
 
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_scrollFlags="enterAlways|scroll|snap"
-        app:popupTheme="@style/AppTheme.NoActionBar">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonCall"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="enterAlways|scroll|snap"
+            app:popupTheme="@style/AppTheme.NoActionBar">
 
-            <ImageView
-                android:id="@+id/image_back"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:padding="@dimen/dp_10"
-                android:src="@drawable/ic_back" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
                 android:gravity="center_vertical"
-                android:text="@string/text_product"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_20" />
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-
-            <ImageView
-                android:id="@+id/image_favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="@dimen/dp_10"
-                android:src="@drawable/ic_favorite" />
-
-
-        </LinearLayout>
-
-
-    </android.support.v7.widget.Toolbar>
-
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ss.com.bannerslider.views.BannerSlider
-                android:id="@+id/bannerSlider"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginBottom="@dimen/dp_10"
-                app:animateIndicators="true"
-                app:defaultIndicators="square"
-                app:interval="2000"
-                app:loopSlides="true" />
-
-            <TextView
-                android:id="@+id/textTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_8"
-                android:lineSpacingExtra="@dimen/dp_4"
-                android:text="ត្រូវការលក់ទូរស័ព្ទ Galaxy Note 8 មួយទឹក មានកាស មាសឆ្នាំងសាក។ "
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_20" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/colorHint" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_8"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textPrice"
+                <ImageView
+                    android:id="@+id/image_back"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:text="600$ - 700$"
-                    android:textColor="@color/colorRed"
-                    android:textSize="@dimen/sp_15" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_8"
-                android:layout_marginStart="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_8"
-                android:lineSpacingExtra="@dimen/dp_4"
-                android:text="ទីតាំង: ភ្នំពេញ, ផ្ទះលេខ 10, ផ្លូវ កែវ ចន្តា, សង្កាត់ ជ្រោយចង្វា, ខ័ណ្ឌ ជ្រោយចង្វា, រាជធានីភ្នំពេញ"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/colorHint" />
-
-            <TextView
-                android:id="@+id/textDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_8"
-                android:layout_marginStart="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_8"
-                android:lineSpacingExtra="@dimen/dp_4"
-                android:text="ហាងទូរស័ព្ទយើងខ្ញុំមានលក់ទូរស័ព្ទដៃថ្មីៗ​ នឹងមួយទឹកល្អៗទំនើបៗ​ដូចជាsumsung, iphone, LG, Sony, Ione​។ ជាពិសេសមានទទួលជុសជួលទូរស័ព្ទដៃគ្រប់ប្រភេទ។ "
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/colorHint" />
-
-            <TextView
-                android:id="@+id/textName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_8"
-                android:layout_marginStart="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_8"
-                android:lineSpacingExtra="@dimen/dp_4"
-                android:text="អ្នកលក់: Vichit Pov"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15" />
-
-            <TextView
-                android:id="@+id/textPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_8"
-                android:layout_marginStart="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_8"
-                android:lineSpacingExtra="@dimen/dp_4"
-                android:text="លេខទូរស័ព្ទ: 093 795 224"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15" />
-
-            <TextView
-                android:id="@+id/textEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_8"
-                android:layout_marginStart="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_8"
-                android:lineSpacingExtra="@dimen/dp_4"
-                android:text=" អុីម៉ែល: v.vichitpov@gmail.com"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/colorHint" />
-
-            <LinearLayout
-                android:id="@+id/layout_show_map"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="@dimen/dp_8"
-                android:background="@color/colorHint"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Show Map"
+                    android:padding="@dimen/dp_10"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_product"
                     android:textColor="@color/colorWhite"
-                    android:textSize="40sp" />
+                    android:textSize="@dimen/sp_20" />
+
+
+                <ImageView
+                    android:id="@+id/image_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_10"
+                    android:src="@drawable/ic_favorite" />
+
 
             </LinearLayout>
 
 
-        </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ss.com.bannerslider.views.BannerSlider
+                    android:id="@+id/bannerSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    app:animateIndicators="true"
+                    app:defaultIndicators="square"
+                    app:interval="2000"
+                    app:loopSlides="true" />
+
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_8"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:textStyle="bold"
+                    android:text="ត្រូវការលក់ទូរស័ព្ទ Galaxy Note 8 មួយទឹក មានកាស មាសឆ្នាំងសាក។ "
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_20" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/colorHint" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:text="600$ - 700$"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorRed"
+                        android:textSize="@dimen/sp_20" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:text="ទីតាំង: ភ្នំពេញ, ផ្ទះលេខ 10, ផ្លូវ កែវ ចន្តា, សង្កាត់ ជ្រោយចង្វា, ខ័ណ្ឌ ជ្រោយចង្វា, រាជធានីភ្នំពេញ"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_15" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/colorHint" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:text="Description"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_18" />
+
+                <TextView
+                    android:id="@+id/textDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:text="ហាងទូរស័ព្ទយើងខ្ញុំមានលក់ទូរស័ព្ទដៃថ្មីៗ​ នឹងមួយទឹកល្អៗទំនើបៗ​ដូចជាsumsung, iphone, LG, Sony, Ione​។ ជាពិសេសមានទទួលជុសជួលទូរស័ព្ទដៃគ្រប់ប្រភេទ។ "
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_15" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/colorHint" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:text="Contact"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_18" />
+
+                <TextView
+                    android:id="@+id/textName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:text="អ្នកលក់: Vichit Pov"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_15" />
+
+                <TextView
+                    android:id="@+id/textPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:text="លេខទូរស័ព្ទ: 093 795 224"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_15" />
+
+                <TextView
+                    android:id="@+id/textEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:lineSpacingExtra="@dimen/dp_4"
+                    android:text=" អុីម៉ែល: v.vichitpov@gmail.com"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_15" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/colorHint" />
+
+                <LinearLayout
+                    android:id="@+id/layout_show_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:background="@color/colorHint"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Show Map"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="40sp" />
+
+                </LinearLayout>
 
 
-    </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dp_5"
+        android:background="@color/colorRed"
+        android:text="Call"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/sp_18" />
+
+
+</RelativeLayout>
 
 
 

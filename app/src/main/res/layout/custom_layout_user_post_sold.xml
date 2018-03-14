@@ -9,9 +9,8 @@
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_5"
         android:layout_marginEnd="@dimen/dp_5"
-        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
         android:layout_weight="1">
 
         <LinearLayout

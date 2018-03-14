@@ -1,18 +1,18 @@
-package vichitpov.com.fbs.ui.activities;
+package vichitpov.com.fbs.ui.activities.profile;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -20,12 +20,10 @@ import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
 import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
@@ -37,93 +35,47 @@ import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.linearLayoutManager;
 
-public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener, MyOnClickListener {
+public class FavoriteActivity extends AppCompatActivity implements OnLoadMore, MyOnClickListener {
+    private UserInformationManager userInformationManager;
     private SwipeRefreshLayout refreshLayout;
+    private SellerSeeMoreAdapter adapter;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private SellerSeeMoreAdapter adapter;
+    private ApiService apiService;
+    private TextView textNotFound;
     private ImageView imageBack;
     private int totalPage;
     private int page = 1;
-    private ApiService apiService;
-    private UserInformationManager userInformationManager;
-    private List<Integer> favoriteList = new ArrayList<>();
-    private int pageFavorite = 1;
-    private int lastPageFavorite = 1;
+
     private NiftyDialogBuilder dialogBuilder;
-    private boolean isFavoriteSuccess = false;
+    private List<Integer> favoriteList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seller_see_more);
+        setContentView(R.layout.activity_favorite);
+
 
         initView();
         apiService = ServiceGenerator.createService(ApiService.class);
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         dialogBuilder = NiftyDialogBuilder.getInstance(this);
 
-
-        getAllFavorite();
-
         setRecyclerView();
-        loadMoreBuyerPagination(page);
+        loadMoreBuyerPagination(userInformationManager.getUser().getAccessToken(), page);
 
         adapter.onLoadMore(this);
         adapter.mySetOnClick(this);
-        refreshLayout.setOnRefreshListener(this);
         imageBack.setOnClickListener(view -> finish());
+        refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
 
     }
 
-    private void getAllFavorite() {
-        Log.e("pppp", "getAllFavorite: " + favoriteList.size());
-        if (isFavoriteSuccess) {
-            pageFavorite = 1;
-            favoriteList.clear();
-        }
-
-        Call<ProductResponse> call = apiService.getAllUserFavorite(userInformationManager.getUser().getAccessToken(), pageFavorite);
-        call.enqueue(new Callback<ProductResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
-                if (response.isSuccessful()) {
-                    isFavoriteSuccess = false;
-                    pageFavorite = response.body().getMeta().getCurrentPage();
-                    lastPageFavorite = response.body().getMeta().getLastPage();
-                    if (pageFavorite <= lastPageFavorite) {
-                        for (int i = 0; i < response.body().getData().size(); i++) {
-                            favoriteList.add(response.body().getData().get(i).getId());
-                        }
-
-                        Log.e("pppp", "favoriteList: " + favoriteList.size());
-                        pageFavorite = pageFavorite + 1;
-                        getAllFavorite();
-                    } else if (pageFavorite > lastPageFavorite) {
-                        Log.e("pppp", "return: " + favoriteList.size());
-                        return;
-                    }
-                } else {
-                    Log.e("pppp", response.message() + " = " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
-                t.printStackTrace();
-                Log.e("pppp onFailure", t.getMessage());
-
-            }
-        });
-
-    }
-
-    //click on Item
     @Override
     public void setOnItemClick(int position, ProductResponse.Data productResponse) {
+
     }
 
-    //click on view
     @Override
     public void setOnViewClick(int position, int id, View view) {
         PopupMenu popup = new PopupMenu(this, view);
@@ -140,9 +92,10 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
             }
         }
 
+
         popup.setOnMenuItemClickListener(item -> {
-            String accessToken = userInformationManager.getUser().getAccessToken();
             if (item.getItemId() == R.id.popFavorite) {
+                String accessToken = userInformationManager.getUser().getAccessToken();
                 if (accessToken.equals("N/A")) {
                     startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
                     finish();
@@ -157,9 +110,7 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
                             .withButton2Text("NO")
                             .isCancelableOnTouchOutside(false)
                             .setButton1Click(view1 -> {
-                                Retrofit.addFavorite(this, accessToken, id);
-                                isFavoriteSuccess = true;
-                                getAllFavorite();
+                                //delete funtion
                                 dialogBuilder.dismiss();
                             })
                             .setButton2Click(view12 -> dialogBuilder.dismiss())
@@ -167,28 +118,7 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
                 }
 
             } else if (item.getItemId() == R.id.popRemoveFavorite) {
-                if (accessToken.equals("N/A")) {
-                    startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
-                    finish();
-                } else {
-                    dialogBuilder
-                            .withTitle("Remove favorite!")
-                            .withMessage("Do you want to Remove this product from your favorite?")
-                            .withTitleColor(Color.WHITE)
-                            .withMessageColor(Color.WHITE)
-                            .withDialogColor("#8cff3737")
-                            .withButton1Text("YES")
-                            .withButton2Text("NO")
-                            .isCancelableOnTouchOutside(false)
-                            .setButton1Click(view1 -> {
-                                Retrofit.removeFavorite(this, accessToken, id);
-                                isFavoriteSuccess = true;
-                                getAllFavorite();
-                                dialogBuilder.dismiss();
-                            })
-                            .setButton2Click(view12 -> dialogBuilder.dismiss())
-                            .show();
-                }
+                Toast.makeText(this, "Remove favorite", Toast.LENGTH_SHORT).show();
 
             } else if (item.getItemId() == R.id.popNotification) {
                 Toast.makeText(this, "Send notification to user", Toast.LENGTH_SHORT).show();
@@ -197,25 +127,22 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
         });
 
         popup.show();
+
     }
 
-    @Override
-    public void onRefresh() {
-        refreshLayout.setRefreshing(false);
-    }
-
-    //when recycler scroll down, this method with invoke
     @Override
     public void setOnLoadMore() {
         if (page == totalPage) {
             return;
         }
         adapter.addProgressBar();
-        loadMoreBuyerPagination(++page);
+        loadMoreBuyerPagination(userInformationManager.getUser().getAccessToken(), ++page);
+
     }
 
     //request data
-    private void loadMoreBuyerPagination(int page) {
+    private void loadMoreBuyerPagination(String accessToken, int page) {
+        textNotFound.setVisibility(View.GONE);
 
         if (page == 1) {
             progressBar.setIndeterminate(true);
@@ -224,7 +151,7 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
         }
 
 
-        Call<ProductResponse> call = apiService.seeMoreSellerLoadByPagination(page);
+        Call<ProductResponse> call = apiService.getAllUserFavorite(accessToken, page);
         call.enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductResponse> call, @NonNull final Response<ProductResponse> response) {
@@ -239,10 +166,17 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
 
                     List<ProductResponse.Data> productList = response.body().getData();
                     if (productList != null) {
-                        adapter.addMoreItems(productList);
+                        if (productList.size() != 0) {
+                            adapter.addMoreItems(productList);
+                        } else {
+                            textNotFound.setVisibility(View.VISIBLE);
+                        }
                     }
                     adapter.onLoaded();
                     progressBar.setVisibility(View.GONE);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    textNotFound.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -263,25 +197,14 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
         recyclerView.setAdapter(adapter);
     }
 
-
     private void initView() {
 
         imageBack = findViewById(R.id.imageBack);
         recyclerView = findViewById(R.id.recycler);
         progressBar = findViewById(R.id.progressBar);
         refreshLayout = findViewById(R.id.swipeRefresh);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+        textNotFound = findViewById(R.id.textNotFound);
+        textNotFound.setVisibility(View.GONE);
 
     }
 
@@ -289,4 +212,25 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
 }

@@ -2,6 +2,8 @@ package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.Retrofit;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.ui.activities.DetailProductActivity;
+
+import static android.content.Context.MODE_PRIVATE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by VichitPov on 2/25/18.
@@ -31,8 +39,9 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
         this.productList = productList;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.custom_layout_buyer_single_page, parent, false);
@@ -42,7 +51,7 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ProductResponse.Data productResponse = productList.get(position);
 
         String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
@@ -69,9 +78,8 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-
         private TextView title, price;
-        private ImageView thumbnail, more;
+        private ImageView thumbnail;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -79,15 +87,22 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
             title = itemView.findViewById(R.id.textTitle);
             price = itemView.findViewById(R.id.textPrice);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            more = itemView.findViewById(R.id.imageMore);
 
+            itemView.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
-            int id = view.getId();
+            Intent intent = new Intent(context, DetailProductActivity.class);
+            intent.putExtra("productList", productList.get(getAdapterPosition()));
+            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
 
+            UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+            if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
+            }
         }
     }
 }

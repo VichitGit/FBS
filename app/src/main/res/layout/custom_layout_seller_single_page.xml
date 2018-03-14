@@ -67,18 +67,18 @@
                     android:textSize="@dimen/sp_10"
                     android:textStyle="normal" />
 
-                <ImageView
-                    android:id="@+id/imageMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="center"
-                    android:background="?selectableItemBackground"
-                    android:padding="@dimen/dp_5"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_more_hoz"
-                    android:tint="@color/colorHint" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/imageMore"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:background="?selectableItemBackground"-->
+                    <!--android:padding="@dimen/dp_5"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@drawable/ic_more_hoz"-->
+                    <!--android:tint="@color/colorHint" />-->
 
             </RelativeLayout>
 

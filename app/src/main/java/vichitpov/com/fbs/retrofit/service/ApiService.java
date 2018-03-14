@@ -1,7 +1,10 @@
 package vichitpov.com.fbs.retrofit.service;
 
+import org.json.JSONObject;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -53,11 +56,17 @@ public interface ApiService {
     @GET("sells/category/{category_id}")
     Call<ProductResponse> getProductByCategory(@Path("category_id") int categoryId, @Query("page") int page);
 
-    @GET("user/favorites/top")
-    Call<FavoriteResponse> topFavorite(@Header("access-token") String accessToken);
+//    @GET("user/favorites/top")
+//    Call<Fa> topFavorite(@Header("access-token") String accessToken);
 
     @GET("user/favorites/")
     Call<ProductResponse> getAllUserFavorite(@Header("access-token") String accessToken, @Query("page") int page);
+
+    @DELETE("user/favorites/{id}")
+    Call<String> removeFavorite(@Header("access-token") String accessToken, @Path("id") int productId);
+
+    @GET("view/{id}")
+    Call<JSONObject> countView(@Header("access-Token") String accessToken, @Path("id") int productId);
 
     @PUT("user")
     @FormUrlEncoded

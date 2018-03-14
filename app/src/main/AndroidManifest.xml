@@ -21,6 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -79,7 +80,8 @@
         <!--  -->
 
         <activity android:name=".ui.activities.EditProductActivity" />
-        <activity android:name=".ui.activities.ProductSellerCategoryActivity"></activity>
+        <activity android:name=".ui.activities.ProductSellerCategoryActivity" />
+        <activity android:name=".ui.activities.profile.FavoriteActivity"></activity>
     </application>
 
 </manifest>

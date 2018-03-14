@@ -1,10 +1,13 @@
 package vichitpov.com.fbs.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +33,9 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
 
     private ImageView imageBack;
     private BannerSlider bannerSlider;
+    private Button buttonCall;
     private TextView textTitle, textDescription, textPrice, textName, textPhone, textEmail, textAddress;
+    private String getPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +46,19 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         getIntentFromAnotherActivity();
 
         imageBack.setOnClickListener(this);
-
-
+        buttonCall.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + getPhone));
+            startActivity(intent);
+        });
     }
 
     @SuppressLint("SetTextI18n")
     private void getIntentFromAnotherActivity() {
         ProductResponse.Data productResponse = (ProductResponse.Data) getIntent().getSerializableExtra("productList");
         if (productResponse != null) {
+            getPhone = productResponse.getContactphone();
+
             List<Banner> imageSliderList = new ArrayList<>();
             if (productResponse.getProductimages().size() != 0) {
                 for (int i = 0; i < productResponse.getProductimages().size(); i++) {
@@ -67,7 +77,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
             textName.setText("Contact Name: " + productResponse.getContactname());
             textPhone.setText("Contact Phone: " + productResponse.getContactphone());
 
-            if (productResponse.getContactemail().equals("norton@null.com")) {
+            if (productResponse.getContactemail().equals("norton@null.com") || productResponse.getContactemail() == null) {
                 textEmail.setVisibility(View.GONE);
             } else {
                 textEmail.setVisibility(View.VISIBLE);
@@ -86,6 +96,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         textEmail = findViewById(R.id.textEmail);
         textAddress = findViewById(R.id.textAddress);
         bannerSlider = findViewById(R.id.bannerSlider);
+        buttonCall = findViewById(R.id.buttonCall);
     }
 
 
