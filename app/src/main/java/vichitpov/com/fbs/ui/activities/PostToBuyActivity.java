@@ -25,21 +25,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.base.VailidationEmail;
+import vichitpov.com.fbs.constant.RequestCode;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
+import static vichitpov.com.fbs.constant.RequestCode.POST_TO_BUY;
+
 public class PostToBuyActivity extends AppCompatActivity implements View.OnClickListener {
 
     private UserInformationManager userInformationManager;
     private EditText editName, editEmail, editAddress, editPhone, editTitle, editPriceFrom, editPriceTo, editDescription;
     private TextView validationTitle, validationCategory, validationPriceStart, validationPriceTo, validationDescription, validationName, validationPhone, validationAddress, validationEmail;
+    private TextView textCategory;
     private LinearLayout layoutValidationPrice;
-    private String selectedCategory = "null";
+    private int selectedCategory = 1010;
     private Button buttonUpload;
     private SpotsDialog dialog;
 
@@ -48,6 +53,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_to_buy);
+
         initView();
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         dialog = new SpotsDialog(this, "Uploading...");
@@ -57,14 +63,22 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         displayValidationContact(false);
 
         checkUserInformation();
-        setUpCategory();
         listener();
 
 
     }
 
-    private void listener() {
-        buttonUpload.setOnClickListener(this);
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("pppp", "onActivityResult");
+        if (requestCode == POST_TO_BUY && resultCode != RESULT_CANCELED) {
+
+            selectedCategory = Integer.parseInt(data.getStringExtra(RequestCode.CATEGORY_ID));
+            textCategory.setText(data.getStringExtra(RequestCode.CATEGORY_NAME));
+
+        }
     }
 
     @Override
@@ -79,6 +93,10 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
             } else {
                 Toast.makeText(this, "No Internet Connection.", Toast.LENGTH_SHORT).show();
             }
+        } else if (id == R.id.textCategory) {
+            Intent intent = new Intent(getApplicationContext(), ChooseCategoryActivity.class);
+            intent.putExtra(IntentData.POST_TO_BUY, IntentData.POST_TO_BUY);
+            startActivityForResult(intent, POST_TO_BUY);
         }
     }
 
@@ -123,27 +141,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         validationAddress.setText("");
         validationEmail.setText("");
 
-    }
 
-    private void setUpCategory() {
-
-        List<String> list = new ArrayList<>();
-        list.add("Phone");
-        list.add("Computer");
-        list.add("Car");
-        list.add("Shirt");
-        list.add("Electronic");
-
-        MaterialSpinner spinnerCategory = findViewById(R.id.spinnerCategory);
-        spinnerCategory.setItems(list);
-        spinnerCategory.setOnItemSelectedListener((view, position, id, item) -> {
-            if (position == 0) {
-                selectedCategory = "null";
-            } else {
-                selectedCategory = "69";
-            }
-            Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
-        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -157,7 +155,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         String priceTo = editPriceTo.getText().toString();
         String description = editDescription.getText().toString();
 
-        if (title.isEmpty() && selectedCategory.equals("null") && priceFrom.isEmpty() && priceTo.isEmpty() && description.isEmpty()) {
+        if (title.isEmpty() && selectedCategory == 1010 && priceFrom.isEmpty() && priceTo.isEmpty() && description.isEmpty()) {
             displayValidationProduct(true);
 
             validationTitle.setText("Required title");
@@ -170,7 +168,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
                 validationTitle.setVisibility(View.VISIBLE);
                 validationTitle.setText("Required title");
 
-            } else if (selectedCategory.equals("null")) {
+            } else if (selectedCategory == 1010) {
                 validationCategory.setVisibility(View.VISIBLE);
                 validationCategory.setText("Please select category");
 
@@ -204,7 +202,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
                 validationEmail.setText("Invalid email(example@gmail.com");
             } else {
                 if (InternetConnection.isNetworkConnected(this)) {
-                    int category = Integer.parseInt(selectedCategory);
+                    int category = selectedCategory;
                     int priceStart = Integer.parseInt(priceFrom);
                     int priceEnd = Integer.parseInt(priceTo);
 
@@ -232,7 +230,6 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onResponse(@NonNull Call<ProductPostedResponse> call, @NonNull Response<ProductPostedResponse> response) {
                 if (response.isSuccessful()) {
-
                     Toast.makeText(PostToBuyActivity.this, "Upload successfully.", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     finish();
@@ -284,6 +281,11 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    private void listener() {
+        buttonUpload.setOnClickListener(this);
+        textCategory.setOnClickListener(this);
+    }
+
     private void initView() {
         validationTitle = findViewById(R.id.validationTitle);
         validationCategory = findViewById(R.id.validationCategory);
@@ -295,6 +297,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         validationPhone = findViewById(R.id.validationPhone);
         validationAddress = findViewById(R.id.validationAddress);
         layoutValidationPrice = findViewById(R.id.layoutValidationPrice);
+        textCategory = findViewById(R.id.textCategory);
 
         buttonUpload = findViewById(R.id.buttonUpload);
 
@@ -306,7 +309,30 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         editPriceFrom = findViewById(R.id.editPriceFrom);
         editPriceTo = findViewById(R.id.editPriceTo);
         editDescription = findViewById(R.id.editDescription);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

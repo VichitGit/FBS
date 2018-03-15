@@ -1,5 +1,7 @@
 package vichitpov.com.fbs.ui.activities.profile;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
 import java.util.List;
 
@@ -18,15 +23,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.BuyerSeeMoreAdapter;
+import vichitpov.com.fbs.base.InternetConnection;
+import vichitpov.com.fbs.base.Retrofit;
+import vichitpov.com.fbs.callback.OnClickDelete;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.BuyerSeeMoreAdapter.PRODUCT_POSTED_BUY;
 
-public class ProductBoughtActivity extends AppCompatActivity implements View.OnClickListener, OnLoadMore, SwipeRefreshLayout.OnRefreshListener {
+public class ProductBoughtActivity extends AppCompatActivity implements View.OnClickListener, OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickDelete {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -34,6 +43,7 @@ public class ProductBoughtActivity extends AppCompatActivity implements View.OnC
     private int totalPage;
     private int page = 1;
     private UserInformationManager userInformationManager;
+    private NiftyDialogBuilder dialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +56,44 @@ public class ProductBoughtActivity extends AppCompatActivity implements View.OnC
         refreshLayout = findViewById(R.id.swipeRefresh);
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+        dialogBuilder = NiftyDialogBuilder.getInstance(this);
 
         setRecyclerView();
         loadMoreBuyerPagination(page);
 
         imageBack.setOnClickListener(this);
         adapter.onLoadMore(this);
+        adapter.setOnDeleteClick(this);
         refreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void setOnClick(int id, int position) {
+        if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            startActivity(new Intent(this, StartLoginActivity.class));
+        } else {
+            if (InternetConnection.isNetworkConnected(this)) {
+                dialogBuilder
+                        .withTitle("Delete!")
+                        .withMessage("Do you want to delete this post?")
+                        .withTitleColor(Color.WHITE)
+                        .withMessageColor(Color.WHITE)
+                        .withDialogColor("#8cff3737")
+                        .withButton1Text("YES")
+                        .withButton2Text("NO")
+                        .isCancelableOnTouchOutside(false)
+                        .setButton1Click(view1 -> {
+                            Retrofit.deleteUserPost(this, userInformationManager.getUser().getAccessToken(), id);
+                            adapter.refreshData(position);
+                            dialogBuilder.dismiss();
+                        })
+                        .setButton2Click(view12 -> dialogBuilder.dismiss())
+                        .show();
+            } else {
+                Toast.makeText(this, "No internet connection!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     @Override
@@ -128,4 +169,6 @@ public class ProductBoughtActivity extends AppCompatActivity implements View.OnC
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 }

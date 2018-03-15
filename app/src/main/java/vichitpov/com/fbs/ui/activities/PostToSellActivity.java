@@ -154,7 +154,8 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         if (id == R.id.buttonUpload) {
             validator.validate();
         } else if (id == R.id.textCategory) {
-            startActivityForResult(new Intent(getApplicationContext(), ChooseCategoryActivity.class), RequestCode.CHOOSE_CATEGORY);
+            startActivityForResult(new Intent(getApplicationContext(),
+                    ChooseCategoryActivity.class), RequestCode.CHOOSE_CATEGORY);
         }
     }
 
@@ -177,17 +178,6 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
             int from = Integer.parseInt(priceFrom);
             int to = Integer.parseInt(priceTo);
             int cateId = Integer.parseInt(selectedCategoryId);
-
-            Log.e("pppp", title);
-            Log.e("pppp", description);
-            Log.e("pppp", email);
-            Log.e("pppp", phone);
-            Log.e("pppp", address);
-            Log.e("pppp", from + "");
-            Log.e("pppp", to + "");
-
-
-            Toast.makeText(this, "out: " + cateId, Toast.LENGTH_SHORT).show();
 
             if (email.isEmpty()) {
                 email = "norton@null.com";
@@ -464,6 +454,4 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         textCategory = findViewById(R.id.textCategory);
         buttonUpload = findViewById(R.id.buttonUpload);
     }
-
-
 }

@@ -31,6 +31,8 @@ import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.MyOnClickListener;
+import vichitpov.com.fbs.callback.OnClickDelete;
+import vichitpov.com.fbs.callback.OnClickSingle;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
@@ -63,6 +65,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private int visibleThreshold = 3;
     private boolean loading = false;
+    private OnClickDelete onClickDelete;
 
     public SellerSeeMoreAdapter(Context context, RecyclerView recyclerView, int checkLayoutCheck) {
         this.productList = new ArrayList<>();
@@ -137,9 +140,10 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyDataSetChanged();
     }
 
-    public void clearList() {
-        this.productList.clear();
-        notifyDataSetChanged();
+    public void refreshData(int position) {
+        this.productList.remove(position);
+        this.notifyItemRemoved(position);
+        this.notifyItemRangeChanged(position, productList.size());
     }
 
     @Override
@@ -280,6 +284,10 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    public void setOnDeleteClickListener(OnClickDelete onClickDelete) {
+        this.onClickDelete = onClickDelete;
+    }
+
 
     class ProductGridViewHolder extends RecyclerView.ViewHolder {
 
@@ -300,6 +308,9 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             textEdit.setOnClickListener(view -> {
                 IntentData.sendProduct(context, productList.get(getAdapterPosition()));
             });
+
+            textDelete.setOnClickListener(view ->
+                    onClickDelete.setOnClick(productList.get(getAdapterPosition()).getId(), getAdapterPosition()));
         }
     }
 

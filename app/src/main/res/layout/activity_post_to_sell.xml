@@ -89,7 +89,7 @@
                         android:hint="Product Title" />
 
 
-                    =<TextView
+                    <TextView
                         android:id="@+id/textCategory"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"

@@ -45,7 +45,8 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         ImageView imageBack = findViewById(R.id.imageBack);
         mExpandingList = findViewById(R.id.expanding_list_main);
 
-        checkIntent();
+        checkIntentMainActivity();
+        checkIntentPostToBuy();
         getAllCategories();
 
         imageBack.setOnClickListener(view -> finish());
@@ -53,13 +54,28 @@ public class ChooseCategoryActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkIntent() {
-        String intentFrom = getIntent().getStringExtra(IntentData.SEND_FROM_MAIN_ACTIVITY);
-        if (intentFrom.equals(IntentData.SEND_FROM_MAIN_ACTIVITY)) {
-            return true;
-        } else {
-            return false;
+    private boolean checkIntentMainActivity() {
+        String intentMainActivity = getIntent().getStringExtra(IntentData.SEND_FROM_MAIN_ACTIVITY);
+        if (intentMainActivity != null) {
+            if (intentMainActivity.equals(IntentData.SEND_FROM_MAIN_ACTIVITY)) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return false;
+    }
+
+    private boolean checkIntentPostToBuy() {
+        String intentPostToBuy = getIntent().getStringExtra(IntentData.POST_TO_BUY);
+        if (intentPostToBuy != null) {
+            if (intentPostToBuy.equals(IntentData.POST_TO_BUY)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     private void getAllCategories() {
@@ -133,12 +149,21 @@ public class ChooseCategoryActivity extends AppCompatActivity {
                 if (subTitle.equals(categoryName)) {
 
                     String categoryId = String.valueOf(mapCategory.get(categoryName));
-                    if (checkIntent()) {
+                    if (checkIntentMainActivity()) {
                         Intent intent = new Intent(getApplicationContext(), ProductSellerCategoryActivity.class);
                         intent.putExtra("CATEGORY_ID", categoryId);
                         intent.putExtra("CATEGORY_NAME", categoryName);
                         startActivity(intent);
+                    } else if (checkIntentPostToBuy()) {
+                        Log.e("pppp", "checkIntentPostToBuy");
+                        Intent data = new Intent();
+                        data.putExtra(RequestCode.CATEGORY_ID, categoryId);
+                        data.putExtra(RequestCode.CATEGORY_NAME, subTitle);
+                        setResult(RequestCode.POST_TO_BUY, data);
+                        finish();
+
                     } else {
+                        Log.e("pppp", "else");
                         Intent data = new Intent();
                         data.putExtra(RequestCode.CATEGORY_ID, categoryId);
                         data.putExtra(RequestCode.CATEGORY_NAME, subTitle);

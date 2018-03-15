@@ -18,6 +18,7 @@ import java.util.List;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.base.Retrofit;
+import vichitpov.com.fbs.callback.OnClickDelete;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
@@ -36,7 +37,6 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static final int PRODUCT_POSTED_BUY = 3;
     public static final int PRODUCT_VIEW = 4;
 
-
     private List<ProductResponse.Data> productList;
     private Context context;
     private OnLoadMore onLoadMore;
@@ -44,6 +44,7 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private int visibleThreshold = 3;
     private boolean loading = false;
+    private OnClickDelete onClickDelete;
 
     public BuyerSeeMoreAdapter(Context context, RecyclerView recyclerView, int checkTypeProductView) {
         this.context = context;
@@ -101,10 +102,12 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
-    public void clearList() {
-        this.productList.clear();
-        notifyDataSetChanged();
+    public void refreshData(int position) {
+        this.productList.remove(position);
+        this.notifyItemRemoved(position);
+        this.notifyItemRangeChanged(position, productList.size());
     }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -187,6 +190,10 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return 0;
     }
 
+    public void setOnDeleteClick(OnClickDelete onDeleteClick) {
+        this.onClickDelete = onDeleteClick;
+    }
+
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
@@ -199,11 +206,6 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             address = itemView.findViewById(R.id.textAddress);
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
-
-
-//            favorite = itemView.findViewById(R.id.imageFavorite);
-//            notification = itemView.findViewById(R.id.imageNotification);
-
 
         }
     }
@@ -220,6 +222,9 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             textEdit = itemView.findViewById(R.id.textEdit);
             textDelete = itemView.findViewById(R.id.textDelete);
             textStatus = itemView.findViewById(R.id.textStatus);
+
+
+            textDelete.setOnClickListener(view -> onClickDelete.setOnClick(productList.get(getAdapterPosition()).getId(), getAdapterPosition()));
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, DetailProductActivity.class);

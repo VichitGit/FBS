@@ -56,9 +56,6 @@ public interface ApiService {
     @GET("sells/category/{category_id}")
     Call<ProductResponse> getProductByCategory(@Path("category_id") int categoryId, @Query("page") int page);
 
-//    @GET("user/favorites/top")
-//    Call<Fa> topFavorite(@Header("access-token") String accessToken);
-
     @GET("user/favorites/")
     Call<ProductResponse> getAllUserFavorite(@Header("access-token") String accessToken, @Query("page") int page);
 
@@ -74,6 +71,9 @@ public interface ApiService {
                                              @Field("last_name") String lastName, @Field("gender") String gender,
                                              @Field("address") String address, @Field("city") String city);
 
+
+    @DELETE("user/post/{id}")
+    Call<String> deleteUserPost(@Header("access-token") String accessToken, @Path("id") int productId);
 
     @POST("user/post")
     @FormUrlEncoded

@@ -17,6 +17,7 @@ public class IntentData {
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String PHONE = "PHONE";
     public static final String SEND_FROM_MAIN_ACTIVITY = "SEND_FROM_MAIN_ACTIVITY";
+    public static final String POST_TO_BUY = "POST_TO_BUY";
 
 
     public static void sendProduct(Context context, ProductResponse.Data product) {

@@ -12,7 +12,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Header;
+import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
+import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.SellerSeeMoreActivity;
@@ -103,7 +105,37 @@ public class Retrofit {
             public void onFailure(@NonNull Call<JSONObject> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 Log.e("pppp", "onFailure: " + t.getMessage());
+            }
+        });
+    }
 
+    public static void deleteUserPost(Context context, String accessToken, int id) {
+        ApiService apiService = ServiceGenerator.createService(ApiService.class);
+        SpotsDialog dialog = new SpotsDialog(context, "Deleting...");
+        dialog.show();
+        Call<String> call = apiService.deleteUserPost(accessToken, id);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                if (response.isSuccessful()) {
+                    if (response.code() == 204) {
+                        dialog.dismiss();
+                        Toast.makeText(context, "Delete successfully!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    dialog.dismiss();
+                    Log.e("pppp", "else: " + response.code() + " = " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                dialog.dismiss();
+                Log.e("pppp", "onFailure: " + t.getMessage());
             }
         });
 
