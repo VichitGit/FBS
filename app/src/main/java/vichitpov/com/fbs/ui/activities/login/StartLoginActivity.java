@@ -1,15 +1,20 @@
 package vichitpov.com.fbs.ui.activities.login;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.accountkit.AccessToken;
 import com.facebook.accountkit.AccountKit;
@@ -17,9 +22,6 @@ import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
-import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
-import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
-import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,14 @@ import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.MainActivity;
-import vichitpov.com.fbs.ui.activities.PostToBuyActivity;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.READ_PHONE_STATE;
+import static android.Manifest.permission.RECEIVE_SMS;
+import static android.Manifest.permission.SEND_SMS;
 
 public class StartLoginActivity extends AppCompatActivity {
     public static int APP_REQUEST_CODE = 99;
@@ -46,6 +55,7 @@ public class StartLoginActivity extends AppCompatActivity {
     private String accessToken;
     private ProgressBar progressBar;
     private UserInformationManager userInformationManager;
+    public static final int RequestPermissionCode = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +157,82 @@ public class StartLoginActivity extends AppCompatActivity {
     private void onClickListener() {
         progressBar.setVisibility(View.VISIBLE);
         new Handler().postDelayed(() -> progressBar.setVisibility(View.GONE), 1500);
-        textLogin.setOnClickListener(this::phoneLogin);
+
+
+        textLogin.setOnClickListener(view -> {
+            if (checkingPermissionIsEnabledOrNot()) {
+                phoneLogin(view);
+            } else {
+                requestMultiplePermission();
+            }
+
+        });
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case RequestPermissionCode:
+                if (grantResults.length > 0) {
+                    boolean isCameraPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean isAccessFineLocationPermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean isAccessCrossLocationPermission = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+                    boolean isReadExternalStoragePermission = grantResults[3] == PackageManager.PERMISSION_GRANTED;
+                    boolean isReadPhoneStatePermission = grantResults[4] == PackageManager.PERMISSION_GRANTED;
+                    boolean isSendSmsPermission = grantResults[5] == PackageManager.PERMISSION_GRANTED;
+                    boolean isReceiveSmsPermission = grantResults[6] == PackageManager.PERMISSION_GRANTED;
+
+                    if (isCameraPermission && isAccessFineLocationPermission && isAccessCrossLocationPermission && isReadExternalStoragePermission && isReadPhoneStatePermission && isSendSmsPermission && isReceiveSmsPermission) {
+
+                        Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle("Request permission app!");
+                        builder.setMessage("You must to allow all permission to use feature!");
+                        builder.setPositiveButton("GO TO SETTING", (dialogInterface, i) -> {
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", getPackageName(), null));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            dialogInterface.dismiss();
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                }
+
+                break;
+        }
+    }
+
+    private void requestMultiplePermission() {
+
+        // Creating String Array with Permissions.
+        ActivityCompat.requestPermissions(StartLoginActivity.this, new String[]{
+                CAMERA, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, READ_EXTERNAL_STORAGE,
+                READ_PHONE_STATE, SEND_SMS, RECEIVE_SMS
+        }, RequestPermissionCode);
+
+    }
+
+    public boolean checkingPermissionIsEnabledOrNot() {
+
+        int firstPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
+        int secondPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
+        int thirdPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_COARSE_LOCATION);
+        int forthPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), READ_PHONE_STATE);
+        int fivePermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), SEND_SMS);
+        int sixPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), RECEIVE_SMS);
+        int sevenPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+
+        return firstPermissionResult == PackageManager.PERMISSION_GRANTED &&
+                secondPermissionResult == PackageManager.PERMISSION_GRANTED &&
+                thirdPermissionResult == PackageManager.PERMISSION_GRANTED &&
+                forthPermissionResult == PackageManager.PERMISSION_GRANTED &&
+                fivePermissionResult == PackageManager.PERMISSION_GRANTED &&
+                sixPermissionResult == PackageManager.PERMISSION_GRANTED &&
+                sevenPermissionResult == PackageManager.PERMISSION_GRANTED;
     }
 
     private void initView() {
@@ -157,29 +242,6 @@ public class StartLoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
     }
-
-    @SuppressLint("ResourceAsColor")
-    private void dialogBottom() {
-        BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
-                .setMode(BottomSheetBuilder.MODE_LIST)
-                .setIconTintColorResource(R.color.colorPrimary)
-                .setItemTextColor(R.color.colorPrimary)
-                .setMenu(R.menu.login_with)
-                .setItemClickListener(new BottomSheetItemClickListener() {
-                    @Override
-                    public void onBottomSheetItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.dialog_bottom_login_phone) {
-                            startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
-                        } else if (item.getItemId() == R.id.dialog_bottom_login_email) {
-                        }
-
-                    }
-                })
-                .createDialog();
-
-        dialog.show();
-    }
-
 
     @Override
     protected void onRestart() {

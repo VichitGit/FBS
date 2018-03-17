@@ -110,4 +110,7 @@
     <string name="text_phone_number">Phone Number</string>
     <string name="text_login_email">Login Email</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

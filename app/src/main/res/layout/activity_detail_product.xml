@@ -88,10 +88,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_8"
                     android:lineSpacingExtra="@dimen/dp_4"
-                    android:textStyle="bold"
                     android:text="ត្រូវការលក់ទូរស័ព្ទ Galaxy Note 8 មួយទឹក មានកាស មាសឆ្នាំងសាក។ "
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_20"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
@@ -113,9 +113,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
                         android:text="600$ - 700$"
-                        android:textStyle="bold"
                         android:textColor="@color/colorRed"
-                        android:textSize="@dimen/sp_20" />
+                        android:textSize="@dimen/sp_20"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -147,9 +147,9 @@
                     android:layout_marginTop="@dimen/dp_8"
                     android:lineSpacingExtra="@dimen/dp_4"
                     android:text="Description"
-                    android:textStyle="bold"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textDescription"
@@ -179,9 +179,9 @@
                     android:layout_marginTop="@dimen/dp_8"
                     android:lineSpacingExtra="@dimen/dp_4"
                     android:text="Contact"
-                    android:textStyle="bold"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textName"
@@ -227,21 +227,13 @@
                     android:background="@color/colorHint" />
 
                 <LinearLayout
-                    android:id="@+id/layout_show_map"
+                    android:id="@+id/layoutShowMap"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="300dp"
                     android:layout_marginTop="@dimen/dp_8"
                     android:background="@color/colorHint"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="Show Map"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="40sp" />
 
                 </LinearLayout>
 

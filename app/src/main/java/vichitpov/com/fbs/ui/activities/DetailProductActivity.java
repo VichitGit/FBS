@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.constant.Url;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.ui.fragment.ShowMapFragment;
 
 public class DetailProductActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,6 +38,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private Button buttonCall;
     private TextView textTitle, textDescription, textPrice, textName, textPhone, textEmail, textAddress;
     private String getPhone;
+    private LinearLayout layoutShowMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,18 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                 textEmail.setVisibility(View.VISIBLE);
                 textEmail.setText("Contact Email: " + productResponse.getContactemail());
             }
+
+            if (productResponse.getContactmapcoordinate() != null) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("LatLng", productResponse.getContactmapcoordinate());
+                ShowMapFragment showMapFragment = new ShowMapFragment();
+//                showMapFragment.setArguments(bundle);
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layoutShowMap, showMapFragment)
+                        .commit();
+            }
+
         }
     }
 
@@ -97,6 +112,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         textAddress = findViewById(R.id.textAddress);
         bannerSlider = findViewById(R.id.bannerSlider);
         buttonCall = findViewById(R.id.buttonCall);
+        layoutShowMap = findViewById(R.id.layoutShowMap);
     }
 
 

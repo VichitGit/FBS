@@ -5,7 +5,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
@@ -41,7 +45,7 @@
         <!-- Google Map Meta -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_map_api_key" />
+            android:value="@string/google_maps_key" />
         <!-- Close Google Map -->
 
         <activity android:name=".ui.activities.profile.ProductSoldActivity" />
@@ -81,7 +85,7 @@
 
         <activity android:name=".ui.activities.EditProductActivity" />
         <activity android:name=".ui.activities.ProductSellerCategoryActivity" />
-        <activity android:name=".ui.activities.profile.FavoriteActivity"></activity>
+        <activity android:name=".ui.activities.profile.FavoriteActivity" />
     </application>
 
 </manifest>
