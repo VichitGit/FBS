@@ -7,17 +7,18 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.File;
+
 import dmax.dialog.SpotsDialog;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Header;
-import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
-import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activities.SellerSeeMoreActivity;
 
 /**
  * Created by VichitPov on 3/12/18.
@@ -140,5 +141,15 @@ public class Retrofit {
         });
 
 
+    }
+
+    public static MultipartBody.Part multipartBoy(File file) {
+        RequestBody requestBodyImage = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        return MultipartBody.Part.createFormData("image_file[]", file.getName(), requestBodyImage);
+    }
+
+    public static MultipartBody.Part returnNull() {
+        RequestBody requestBodyImage = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+        return MultipartBody.Part.createFormData("image_file[]", "", requestBodyImage);
     }
 }

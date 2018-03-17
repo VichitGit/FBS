@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
-import com.google.android.gms.common.api.Api;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -181,7 +179,6 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
 
             if (email.isEmpty()) {
                 email = "norton@null.com";
-                Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
             }
 
             uploadImage(title, description, name, email, phone, address, from, to, cateId);
@@ -190,6 +187,7 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
     }
 
 
+    //upload product after upload image success
     private void uploadProduct(String title, String description, String name, String email, String phone, String address, int priceFrom, int priceTo, int category, String image) {
 
         accessToken = userInformationManager.getUser().getAccessToken();
@@ -208,19 +206,18 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
                     }
                 } else {
                     dialog.dismiss();
-                    Log.e("pppp else", response.code() + " = " + response.message());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ProductPostedResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                Log.e("pppp onFailure", t.getMessage());
                 dialog.dismiss();
             }
         });
     }
 
+    //upload image only.
     private void uploadImage(String title, String description, String name, String email, String phone, String address, int priceFrom, int priceTo, int category) {
 
         MultipartBody.Part photoBody1;
@@ -273,7 +270,6 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
             public void onResponse(@NonNull Call<ImagePostResponse> call, @NonNull Response<ImagePostResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.e("pppp success", response.body().getDescription());
                         String image = response.body().getDescription();
                         uploadProduct(title, description, name, email, phone, address, priceFrom, priceTo, category, image);
 
@@ -282,7 +278,6 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
                     }
                 } else {
                     dialog.dismiss();
-                    Log.e("pppp out", response.code() + " = " + response.message());
                 }
             }
 
@@ -290,7 +285,6 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
             public void onFailure(@NonNull Call<ImagePostResponse> call, @NonNull Throwable t) {
                 dialog.dismiss();
                 t.printStackTrace();
-                Log.e("pppp onFailure ", t.getMessage());
             }
         });
     }

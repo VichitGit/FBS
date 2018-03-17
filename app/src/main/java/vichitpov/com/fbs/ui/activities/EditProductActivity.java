@@ -1,51 +1,59 @@
 package vichitpov.com.fbs.ui.activities;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.MediaType;
+import dmax.dialog.SpotsDialog;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.ConvertBitmap;
 import vichitpov.com.fbs.preference.UserInformationManager;
+import vichitpov.com.fbs.retrofit.response.ImagePostResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
-import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
+import vichitpov.com.fbs.retrofit.service.ApiService;
+import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+
+import static vichitpov.com.fbs.base.Retrofit.multipartBoy;
+import static vichitpov.com.fbs.base.Retrofit.returnNull;
 
 public class EditProductActivity extends AppCompatActivity {
 
     private ImageView image1, image2, image3, image4, image5;
     private EditText editTitle, editDescription, editPriceStart, editPriceEnd, editContactName, editContactEmail, editContactAddress, editContactPhone;
     private TextView textCategory, textChangeCategory;
-    private String selectCategoryId, checkImageIndex;
-    private String currentPathPhoto1, currentPathPhoto2, currentPathPhoto3, currentPathPhoto4, currentPathPhoto5;
+    private String selectCategoryId, clickImage;
+    private String currentPathPhoto1 = "null", currentPathPhoto2 = "null", currentPathPhoto3 = "null", currentPathPhoto4 = "null", currentPathPhoto5 = "null";
     private List<String> listImage;
     private UserInformationManager userInformationManager;
+    private List<String> pathImageList;
+    private Button buttonUpdate;
+    private ApiService apiService;
+    private String accessToken;
+    private SpotsDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +63,13 @@ public class EditProductActivity extends AppCompatActivity {
         ImageView imageBrowseGallery = findViewById(R.id.imageBrowsePhoto);
         initView();
 
+        apiService = ServiceGenerator.createService(ApiService.class);
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+        accessToken = userInformationManager.getUser().getAccessToken();
+        dialog = new SpotsDialog(this, "Updating...");
         listImage = new ArrayList<>();
+        pathImageList = new ArrayList<>();
+
 
         checkIntent();
 
@@ -67,19 +80,24 @@ public class EditProductActivity extends AppCompatActivity {
         });
 
         image1.setOnClickListener(view -> {
-            checkImageIndex = "image1";
+            clickImage = "image1";
+            browsePhoto();
         });
         image2.setOnClickListener(view -> {
-            checkImageIndex = "image2";
+            clickImage = "image2";
+            browsePhoto();
         });
         image3.setOnClickListener(view -> {
-            checkImageIndex = "image3";
+            clickImage = "image3";
+            browsePhoto();
         });
         image4.setOnClickListener(view -> {
-            checkImageIndex = "image4";
+            clickImage = "image4";
+            browsePhoto();
         });
         image5.setOnClickListener(view -> {
-            checkImageIndex = "image5";
+            clickImage = "image5";
+            browsePhoto();
         });
 
         imageBrowseGallery.setOnClickListener(view -> {
@@ -89,20 +107,81 @@ public class EditProductActivity extends AppCompatActivity {
                 Toast.makeText(this, "Photo limit 5.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadImage();
+            }
+        });
     }
 
     private void uploadImage() {
+        MultipartBody.Part photoBody1;
+        MultipartBody.Part photoBody2;
+        MultipartBody.Part photoBody3;
+        MultipartBody.Part photoBody4;
+        MultipartBody.Part photoBody5;
 
-        List<String> newListPath = new ArrayList<>();
-        for (int i = 0; i < listImage.size(); i++) {
-            if (listImage.get(i) != null) {
-                newListPath.add(listImage.get(i));
-            }
+        if (pathImageList.get(0) != null) {
+            File file = new File(pathImageList.get(0));
+            photoBody1 = multipartBoy(file);
+        } else {
+            photoBody1 = returnNull();
         }
-    }
 
+        if (pathImageList.get(1) != null) {
+            File file = new File(pathImageList.get(1));
+            photoBody2 = multipartBoy(file);
+        } else {
+            photoBody2 = returnNull();
+        }
 
-    private void updateProduct() {
+        if (pathImageList.get(2) != null) {
+            File file = new File(pathImageList.get(2));
+            photoBody3 = multipartBoy(file);
+        } else {
+            photoBody3 = returnNull();
+        }
+
+        if (pathImageList.get(3) != null) {
+            File file = new File(pathImageList.get(3));
+            photoBody4 = multipartBoy(file);
+        } else {
+            photoBody4 = returnNull();
+        }
+
+        if (pathImageList.get(4) != null) {
+            File file = new File(pathImageList.get(4));
+            photoBody5 = multipartBoy(file);
+        } else {
+            photoBody5 = returnNull();
+        }
+
+        dialog.show();
+        apiService = ServiceGenerator.createService(ApiService.class);
+        Call<ImagePostResponse> call = apiService.uploadImage(accessToken, photoBody1, photoBody2, photoBody3, photoBody4, photoBody5);
+        call.enqueue(new Callback<ImagePostResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ImagePostResponse> call, @NonNull Response<ImagePostResponse> response) {
+                if (response.isSuccessful()) {
+                    dialog.dismiss();
+                    Toast.makeText(EditProductActivity.this, "Upload image successfully!", Toast.LENGTH_SHORT).show();
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(EditProductActivity.this, "Updated failed!", Toast.LENGTH_SHORT).show();
+                    Log.e("pppp out", response.code() + " = " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ImagePostResponse> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                dialog.dismiss();
+                Toast.makeText(EditProductActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                //Log.e("pppp onFailure ", t.getMessage());
+            }
+        });
 
 
     }
@@ -110,81 +189,110 @@ public class EditProductActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10 && resultCode != RESULT_CANCELED) {
+            textCategory.setText(data.getStringExtra("CategoryName"));
+            selectCategoryId = data.getStringExtra("CategoryId");
+        }
+
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-            List<Image> photoList = ImagePicker.getImages(data);
-            int currentImageSize = photoList.size();
+            List<Image> pathList = ImagePicker.getImages(data);
 
-            if (listImage.size() == 0) {
-                for (int i = 0; i < photoList.size(); i++) {
-                    listImage.add(photoList.get(i).getPath());
-                }
-                for (int j = 0; j < photoList.size(); j++) {
-                    if (j == 0) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(0));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image1.setImageBitmap(bitmap);
-                    } else if (j == 1) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(1));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image2.setImageBitmap(bitmap);
-                    } else if (j == 2) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(2));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image3.setImageBitmap(bitmap);
-
-                    } else if (j == 3) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(3));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image4.setImageBitmap(bitmap);
-                    } else if (j == 4) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(4));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image5.setImageBitmap(bitmap);
-                    }
-                }
-            } else if (listImage.size() > 4) {
-                Toast.makeText(this, "Photo limit 5.", Toast.LENGTH_SHORT).show();
-            } else {
-                for (int i = 0; i < photoList.size(); i++) {
-                    listImage.add(currentImageSize, photoList.get(i).getPath());
-                }
-                for (int j = currentImageSize; j < listImage.size(); j++) {
-                    if (j == 0) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(0));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image1.setImageBitmap(bitmap);
-
-                    } else if (j == 1) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(1));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image2.setImageBitmap(bitmap);
-
-                    } else if (j == 2) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(2));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image3.setImageBitmap(bitmap);
-
-                    } else if (j == 3) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(3));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image4.setImageBitmap(bitmap);
-
-                    } else if (j == 4) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(4));
-                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
-                        image5.setImageBitmap(bitmap);
-                    }
-                }
-            }
-
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == 10 && resultCode == RESULT_OK) {
-                textCategory.setText(data.getStringExtra("CategoryName"));
-                selectCategoryId = data.getStringExtra("CategoryId");
+            switch (clickImage) {
+                case "image1":
+                    displayImage(pathList.get(0).getPath(), image1);
+                    break;
+                case "image2":
+                    displayImage(pathList.get(0).getPath(), image2);
+                    break;
+                case "image3":
+                    displayImage(pathList.get(0).getPath(), image3);
+                    break;
+                case "image4":
+                    displayImage(pathList.get(0).getPath(), image4);
+                    break;
+                case "image5":
+                    displayImage(pathList.get(0).getPath(), image5);
+                    break;
             }
         }
+
+
+////            int currentImageSize = photoList.size();
+////
+////            if (listImage.size() == 0) {
+////                for (int i = 0; i < photoList.size(); i++) {
+////                    listImage.add(photoList.get(i).getPath());
+////                }
+////                for (int j = 0; j < photoList.size(); j++) {
+////                    if (j == 0) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(0));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image1.setImageBitmap(bitmap);
+////                    } else if (j == 1) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(1));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image2.setImageBitmap(bitmap);
+////                    } else if (j == 2) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(2));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image3.setImageBitmap(bitmap);
+////
+////                    } else if (j == 3) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(3));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image4.setImageBitmap(bitmap);
+////                    } else if (j == 4) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(4));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image5.setImageBitmap(bitmap);
+////                    }
+////                }
+////            } else if (listImage.size() > 4) {
+////                Toast.makeText(this, "Photo limit 5.", Toast.LENGTH_SHORT).show();
+////            } else {
+////                for (int i = 0; i < photoList.size(); i++) {
+////                    listImage.add(currentImageSize, photoList.get(i).getPath());
+////                }
+////                for (int j = currentImageSize; j < listImage.size(); j++) {
+////                    if (j == 0) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(0));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image1.setImageBitmap(bitmap);
+////
+////                    } else if (j == 1) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(1));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image2.setImageBitmap(bitmap);
+////
+////                    } else if (j == 2) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(2));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image3.setImageBitmap(bitmap);
+////
+////                    } else if (j == 3) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(3));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image4.setImageBitmap(bitmap);
+////
+////                    } else if (j == 4) {
+////                        Bitmap bitmap = BitmapFactory.decodeFile(listImage.get(4));
+////                        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+////                        image5.setImageBitmap(bitmap);
+////                    }
+////                }
+//            }
+
     }
 
+
+    //display image after got from gallery and convert image bitmap.
+    private void displayImage(String path, ImageView imageView) {
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        bitmap = ConvertBitmap.getResizedBitmap(bitmap, 400);
+        imageView.setImageBitmap(bitmap);
+        pathImageList.add(path);
+    }
 
     private void browsePhoto() {
         ImagePicker.create(this)
@@ -194,7 +302,7 @@ public class EditProductActivity extends AppCompatActivity {
                 .toolbarArrowColor(Color.WHITE)
                 .single() // single mode
                 .multi() // multi mode (default mode)
-                .limit(5) // max images can be selected (99 by default)
+                .limit(1) // max images can be selected (99 by default)
                 .showCamera(true) // show camera or not (true by default)
                 .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
                 .enableLog(false) // disabling log
@@ -205,7 +313,7 @@ public class EditProductActivity extends AppCompatActivity {
         ProductResponse.Data productResponse = (ProductResponse.Data) getIntent().getSerializableExtra("ProductList");
         if (productResponse != null) {
             if (productResponse.getProductimages() != null) {
-                for (int i = 0; i < productResponse.getProductimages().size(); i++)
+                for (int i = 0; i < productResponse.getProductimages().size(); i++) {
                     if (productResponse.getProductimages().get(i) != null) {
                         if (i == 0) {
                             currentPathPhoto1 = productResponse.getProductimages().get(i).substring(36);
@@ -236,7 +344,6 @@ public class EditProductActivity extends AppCompatActivity {
                                     .error(R.drawable.ic_unavailable)
                                     .into(image4);
                         } else if (i == 4) {
-
                             currentPathPhoto5 = productResponse.getProductimages().get(i).substring(36);
                             Picasso.with(getApplicationContext())
                                     .load(productResponse.getProductimages().get(i))
@@ -245,7 +352,9 @@ public class EditProductActivity extends AppCompatActivity {
                                     .into(image5);
                         }
                     }
+                }
             }
+
 
             if (productResponse.getTitle() != null)
                 editTitle.setText(productResponse.getTitle());
@@ -287,6 +396,8 @@ public class EditProductActivity extends AppCompatActivity {
         image3 = findViewById(R.id.image_thumbnail_three);
         image4 = findViewById(R.id.image_thumbnail_four);
         image5 = findViewById(R.id.image_thumbnail_five);
+
+        buttonUpdate = findViewById(R.id.buttonUpload);
 
         editTitle = findViewById(R.id.editTitle);
         editDescription = findViewById(R.id.editDescription);

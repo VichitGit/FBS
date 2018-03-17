@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
     tools:context="vichitpov.com.fbs.ui.activities.DetailProductActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/buttonCall"
+        android:background="@color/colorWhite"
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
@@ -139,7 +139,6 @@
                     android:background="@color/colorHint" />
 
                 <TextView
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_8"
@@ -232,12 +231,33 @@
                     android:layout_height="300dp"
                     android:layout_marginTop="@dimen/dp_8"
                     android:background="@color/colorHint"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/linearContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:orientation="vertical">
 
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="@dimen/dp_4"
+                        android:text="People who contact this product"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_18"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8" />
                 </LinearLayout>
-
-
             </LinearLayout>
 
 

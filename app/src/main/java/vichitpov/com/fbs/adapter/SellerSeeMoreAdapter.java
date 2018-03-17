@@ -1,47 +1,34 @@
 package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.callback.OnClickDelete;
-import vichitpov.com.fbs.callback.OnClickSingle;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.preference.UserInformationManager;
-import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
-import vichitpov.com.fbs.retrofit.service.ApiService;
-import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
-import vichitpov.com.fbs.ui.activities.SellerSeeMoreActivity;
-import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -177,6 +164,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         productResponse = productList.get(position);
+
 
         if (holder instanceof ProductViewHolder) {
 

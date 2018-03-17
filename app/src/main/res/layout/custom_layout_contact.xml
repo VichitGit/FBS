@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginTop="@dimen/dp_5"
+    android:background="?selectableItemBackground"
+    app:cardElevation="@dimen/dp_20">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Vichit Pov"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+
+            android:id="@+id/textPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/textName"
+            android:layout_alignStart="@+id/textName"
+            android:layout_below="@+id/textName"
+            android:layout_marginTop="@dimen/dp_5"
+            android:gravity="start"
+            android:text="093795224"
+            android:textSize="@dimen/sp_12" />
+
+
+        <ImageView
+            android:id="@+id/imageCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:background="?selectableItemBackground"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/ic_contact"
+            android:tint="@color/colorRed" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

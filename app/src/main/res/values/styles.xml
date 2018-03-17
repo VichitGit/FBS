@@ -89,4 +89,7 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="popup_window_animation_phone">
+        <item name="android:windowEnterAnimation">@android:anim/decelerate_interpolator</item>
+    </style>
 </resources>

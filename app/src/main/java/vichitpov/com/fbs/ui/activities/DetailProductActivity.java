@@ -3,31 +3,23 @@ package vichitpov.com.fbs.ui.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ss.com.bannerslider.banners.Banner;
-import ss.com.bannerslider.banners.DrawableBanner;
 import ss.com.bannerslider.banners.RemoteBanner;
 import ss.com.bannerslider.views.BannerSlider;
-import technolifestyle.com.imageslider.FlipperLayout;
-import technolifestyle.com.imageslider.FlipperView;
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.Convert;
-import vichitpov.com.fbs.base.IntentData;
-import vichitpov.com.fbs.constant.Url;
+import vichitpov.com.fbs.adapter.ContactAdapter;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.fragment.ShowMapFragment;
 
@@ -38,7 +30,8 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private Button buttonCall;
     private TextView textTitle, textDescription, textPrice, textName, textPhone, textEmail, textAddress;
     private String getPhone;
-    private LinearLayout layoutShowMap;
+    private RecyclerView recyclerView;
+    private ContactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +39,9 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_detail_product);
 
         initView();
+        setUpRecycler();
         getIntentFromAnotherActivity();
+
 
         imageBack.setOnClickListener(this);
         buttonCall.setOnClickListener(view -> {
@@ -56,10 +51,21 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         });
     }
 
+    private void setUpRecycler() {
+        adapter = new ContactAdapter(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+
+    }
+
     @SuppressLint("SetTextI18n")
     private void getIntentFromAnotherActivity() {
         ProductResponse.Data productResponse = (ProductResponse.Data) getIntent().getSerializableExtra("productList");
         if (productResponse != null) {
+            adapter.addItem(productResponse.getContactme().getDatacontact());
+
             getPhone = productResponse.getContactphone();
 
             List<Banner> imageSliderList = new ArrayList<>();
@@ -112,7 +118,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         textAddress = findViewById(R.id.textAddress);
         bannerSlider = findViewById(R.id.bannerSlider);
         buttonCall = findViewById(R.id.buttonCall);
-        layoutShowMap = findViewById(R.id.layoutShowMap);
+        recyclerView = findViewById(R.id.recyclerView);
     }
 
 
