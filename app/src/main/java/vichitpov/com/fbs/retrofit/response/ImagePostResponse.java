@@ -39,4 +39,13 @@ public class ImagePostResponse {
     public void setStatus(int mStatus) {
         this.mStatus = mStatus;
     }
+
+    @Override
+    public String toString() {
+        return "ImagePostResponse{" +
+                "mDescription='" + mDescription + '\'' +
+                ", mTitle='" + mTitle + '\'' +
+                ", mStatus=" + mStatus +
+                '}';
+    }
 }

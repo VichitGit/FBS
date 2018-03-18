@@ -9,7 +9,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -108,6 +107,14 @@ public interface ApiService {
                                         @Part MultipartBody.Part image4,
                                         @Part MultipartBody.Part image5);
 
+    @Multipart
+    @POST("images/post")
+    Call<ImagePostResponse> uploadMultipartImage(@Header("access-token") String accessToken,
+                                                 @Part MultipartBody.Part[] filesImage);
+
+
+
+    @FormUrlEncoded
     @PUT("user/post/{product_id}")
     Call<ProductPostedResponse> updateProduct(@Path("product_id") int id,
                                               @Header("access-token") String accessToken,
