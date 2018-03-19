@@ -24,7 +24,6 @@ import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
 import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
-import vichitpov.com.fbs.constant.RequestCode;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;

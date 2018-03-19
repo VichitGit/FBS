@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,11 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jaredrummler.materialspinner.MaterialSpinner;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,14 +22,14 @@ import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.base.VailidationEmail;
-import vichitpov.com.fbs.constant.RequestCode;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
-import static vichitpov.com.fbs.constant.RequestCode.POST_TO_BUY;
+import static vichitpov.com.fbs.constant.AnyConstant.POST_TO_BUY;
 
 public class PostToBuyActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -75,8 +69,8 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         Log.e("pppp", "onActivityResult");
         if (requestCode == POST_TO_BUY && resultCode != RESULT_CANCELED) {
 
-            selectedCategory = Integer.parseInt(data.getStringExtra(RequestCode.CATEGORY_ID));
-            textCategory.setText(data.getStringExtra(RequestCode.CATEGORY_NAME));
+            selectedCategory = Integer.parseInt(data.getStringExtra(AnyConstant.CATEGORY_ID));
+            textCategory.setText(data.getStringExtra(AnyConstant.CATEGORY_NAME));
 
         }
     }

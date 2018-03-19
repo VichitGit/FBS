@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import vichitpov.com.fbs.constant.Url;
+import vichitpov.com.fbs.constant.AnyConstant;
 
 /**
  * Created by VichitPov on 2/25/18.
@@ -24,7 +24,7 @@ public class ServiceGenerator {
             .create();
 
     private static Retrofit.Builder builder = new Retrofit.Builder()
-            .baseUrl(Url.BASE_URL + "api/")
+            .baseUrl(AnyConstant.BASE_URL + "api/")
             .addConverterFactory(GsonConverterFactory.create(gson));
 
     public static <S> S createService(Class<S> serviceClass) {

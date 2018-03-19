@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +24,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.IntentData;
-import vichitpov.com.fbs.constant.RequestCode;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
-import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
@@ -157,17 +155,17 @@ public class ChooseCategoryActivity extends AppCompatActivity {
                     } else if (checkIntentPostToBuy()) {
                         Log.e("pppp", "checkIntentPostToBuy");
                         Intent data = new Intent();
-                        data.putExtra(RequestCode.CATEGORY_ID, categoryId);
-                        data.putExtra(RequestCode.CATEGORY_NAME, subTitle);
-                        setResult(RequestCode.POST_TO_BUY, data);
+                        data.putExtra(AnyConstant.CATEGORY_ID, categoryId);
+                        data.putExtra(AnyConstant.CATEGORY_NAME, subTitle);
+                        setResult(AnyConstant.POST_TO_BUY, data);
                         finish();
 
                     } else {
                         Log.e("pppp", "else");
                         Intent data = new Intent();
-                        data.putExtra(RequestCode.CATEGORY_ID, categoryId);
-                        data.putExtra(RequestCode.CATEGORY_NAME, subTitle);
-                        setResult(RequestCode.CHOOSE_CATEGORY, data);
+                        data.putExtra(AnyConstant.CATEGORY_ID, categoryId);
+                        data.putExtra(AnyConstant.CATEGORY_NAME, subTitle);
+                        setResult(AnyConstant.CHOOSE_CATEGORY, data);
                         finish();
                     }
                 }

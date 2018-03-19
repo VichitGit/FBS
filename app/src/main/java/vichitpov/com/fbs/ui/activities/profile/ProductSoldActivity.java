@@ -44,6 +44,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
     private ImageView imageBack;
     private int totalPage;
     private int page = 1;
+    private List<ProductResponse.Data> productList;
     private UserInformationManager userInformationManager;
     private NiftyDialogBuilder dialogBuilder;
 
@@ -131,7 +132,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
                         }
                     }
 
-                    List<ProductResponse.Data> productList = response.body().getData();
+                    productList = response.body().getData();
                     if (productList != null) {
                         adapter.addMoreItems(productList);
                     }
@@ -140,7 +141,6 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
                 } else {
                     Log.e("pppp else", response.code() + " = " + response.message());
                 }
-
             }
 
             @Override
@@ -170,4 +170,15 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null && productList != null) {
+
+//            overridePendingTransition(0, 0);
+//            startActivity(getIntent());
+//            finish();
+
+        }
+    }
 }

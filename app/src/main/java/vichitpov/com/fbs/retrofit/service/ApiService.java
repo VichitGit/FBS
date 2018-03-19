@@ -58,11 +58,14 @@ public interface ApiService {
     @GET("user/favorites/")
     Call<ProductResponse> getAllUserFavorite(@Header("access-token") String accessToken, @Query("page") int page);
 
-    @DELETE("user/favorites/{id}")
-    Call<String> removeFavorite(@Header("access-token") String accessToken, @Path("id") int productId);
+    @GET("search")
+    Call<ProductResponse> searchAll(@Query("s") String keyword, @Query("page") int page);
 
     @GET("view/{id}")
     Call<JSONObject> countView(@Header("access-Token") String accessToken, @Path("id") int productId);
+
+    @GET("user/favorites/{id}")
+    Call<FavoriteResponse> addFavorite(@Header("access-token") String accessToken, @Path("id") int productId);
 
     @PUT("user")
     @FormUrlEncoded
@@ -73,6 +76,12 @@ public interface ApiService {
 
     @DELETE("user/post/{id}")
     Call<String> deleteUserPost(@Header("access-token") String accessToken, @Path("id") int productId);
+
+    @DELETE("user/favorites/{id}")
+    Call<String> removeFavorite(@Header("access-token") String accessToken, @Path("id") int productId);
+
+    @DELETE("images/post/{imageUrl}")
+    Call<String> removeImageAfterUpdate(@Header("access-token") String accessToken, @Path("imageUrl") String ImageUrl);
 
     @POST("user/post")
     @FormUrlEncoded
@@ -90,8 +99,6 @@ public interface ApiService {
                                             @Field("contact_address") String contactAddress,
                                             @Field("contact_address_map_coordinate") String addressMap);
 
-    @GET("user/favorites/{id}")
-    Call<FavoriteResponse> addFavorite(@Header("access-token") String accessToken, @Path("id") int productId);
 
     @Multipart
     @POST("images/profile")
@@ -112,16 +119,14 @@ public interface ApiService {
     Call<ImagePostResponse> uploadMultipartImage(@Header("access-token") String accessToken,
                                                  @Part MultipartBody.Part[] filesImage);
 
-
-
     @FormUrlEncoded
     @PUT("user/post/{product_id}")
     Call<ProductPostedResponse> updateProduct(@Path("product_id") int id,
                                               @Header("access-token") String accessToken,
                                               @Field("title") String title,
                                               @Field("description") String description,
-                                              @Field("price_from") int priceStart,
-                                              @Field("price_to") int priceEnd,
+                                              @Field("price_from") double priceStart,
+                                              @Field("price_to") double priceEnd,
                                               @Field("post_type") String postType,
                                               @Field("category_id") int categoryId,
                                               @Field("product_image") String image,
@@ -130,10 +135,6 @@ public interface ApiService {
                                               @Field("contact_email") String contactEmail,
                                               @Field("contact_address") String contactAddress,
                                               @Field("contact_address_map_coordinate") String mapAddress);
-
-
-    @GET("search")
-    Call<ProductResponse> searchAll(@Query("s") String keyword, @Query("page") int page);
 
 
 }

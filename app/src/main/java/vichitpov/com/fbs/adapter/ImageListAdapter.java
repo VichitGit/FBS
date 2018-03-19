@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.BitmapTransform;
 import vichitpov.com.fbs.callback.OnClickDelete;
 import vichitpov.com.fbs.model.ImageModel;
 
@@ -32,66 +33,6 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Imag
         this.context = context;
         imageList = new ArrayList<>();
     }
-
-//    @Override
-//    public int getItemViewType(int position) {
-//        if (imageList.get(position) != null) {
-//            return IMAGE_TYPE;
-//        } else if (imageList.size() == 0 ) {
-//            return FOOTER_TYPE;
-//        }
-//    }
-//
-//    @NonNull
-//    @Override
-//    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view;
-////        if (viewType == IMAGE_TYPE) {
-////            Log.e("pppp", "IMAGE_TYPE");
-////            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_image_list, parent, false);
-////            return new ImageViewHolder(view);
-////        } else if (viewType == FOOTER_TYPE) {
-////            Log.e("pppp", "FOOTER_TYPE");
-////            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout_footer, parent, false);
-////            return new FooterViewHolder(view);
-////        } else {
-////            return null;
-////
-////        }
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        ImageModel imageModel = imageList.get(position);
-//        if (holder instanceof ImageViewHolder) {
-//            ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
-//            if (imageModel.getImagetype() == ImageModel.IMAGETYPE.URL) {
-//                Log.e("pppp", "URL: " + imageModel.getImagePath());
-//                Picasso.with(context)
-//                        .load(imageModel.getImagePath())
-//                        .into(imageViewHolder.thumbnail);
-//            } else if (imageModel.getImagetype() == ImageModel.IMAGETYPE.URI) {
-//                Log.e("pppp", "URI: " + imageModel.getImagePath());
-//                Picasso.with(context)
-//                        .load(new File(imageModel.getImagePath()))
-//                        .into(imageViewHolder.thumbnail);
-//            }
-//        } else if (holder instanceof FooterViewHolder) {
-//            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
-//            footerViewHolder.footer.setImageResource(R.drawable.ic_add);
-//
-//
-//        }
-//
-//
-//    }
-//
-//
-//    @Override
-//    public int getItemCount() {
-//
-//        return imageList.size() + 1;
-//    }
 
     public void addItem(List<ImageModel> imageList) {
         this.imageList = imageList;
@@ -111,12 +52,19 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Imag
         if (imageModel.getImageType().equals(ImageModel.URL)) {
             Picasso.with(context)
                     .load(imageModel.getImagePath())
+                    .transform(new BitmapTransform(BitmapTransform.MAX_WIDTH, BitmapTransform.MAX_HEIGHT))
+                    .resize(BitmapTransform.size, BitmapTransform.size)
+                    .centerCrop()
                     .error(R.drawable.ic_unavailable)
                     .into(holder.thumbnail);
 
         } else if (imageModel.getImageType().equals(ImageModel.URI)) {
             Picasso.with(context)
                     .load(new File(imageModel.getImagePath()))
+                    .transform(new BitmapTransform(BitmapTransform.MAX_WIDTH, BitmapTransform.MAX_HEIGHT))
+                    .resize(BitmapTransform.size, BitmapTransform.size)
+                    .centerCrop()
+                    .error(R.drawable.ic_unavailable)
                     .into(holder.thumbnail);
         }
     }

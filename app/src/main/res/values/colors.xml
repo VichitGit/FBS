@@ -13,5 +13,6 @@
     <color name="colorRed">#ff5252</color>
     <color name="colorWhite">#ffffff</color>
     <color name="background_for_title_transparent">#40000000</color>
+    <color name="colorBlue">#0044ff</color>
 
 </resources>

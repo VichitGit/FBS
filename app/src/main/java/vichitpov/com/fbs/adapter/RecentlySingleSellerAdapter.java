@@ -17,10 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.MyOnClickListener;
-import vichitpov.com.fbs.constant.Url;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;

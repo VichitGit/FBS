@@ -33,7 +33,7 @@ import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.ConvertBitmap;
 import vichitpov.com.fbs.base.VailidationEmail;
-import vichitpov.com.fbs.constant.RequestCode;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ImagePostResponse;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
@@ -97,9 +97,9 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestCode.CHOOSE_CATEGORY && resultCode != RESULT_CANCELED) {
-            String selectedCategoryName = data.getStringExtra(RequestCode.CATEGORY_NAME);
-            selectedCategoryId = data.getStringExtra(RequestCode.CATEGORY_ID);
+        if (requestCode == AnyConstant.CHOOSE_CATEGORY && resultCode != RESULT_CANCELED) {
+            String selectedCategoryName = data.getStringExtra(AnyConstant.CATEGORY_NAME);
+            selectedCategoryId = data.getStringExtra(AnyConstant.CATEGORY_ID);
             textCategory.setText(selectedCategoryName);
 
         }
@@ -153,7 +153,7 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
             validator.validate();
         } else if (id == R.id.textCategory) {
             startActivityForResult(new Intent(getApplicationContext(),
-                    ChooseCategoryActivity.class), RequestCode.CHOOSE_CATEGORY);
+                    ChooseCategoryActivity.class), AnyConstant.CHOOSE_CATEGORY);
         }
     }
 
