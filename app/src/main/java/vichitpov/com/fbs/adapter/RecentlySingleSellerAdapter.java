@@ -17,13 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.Retrofit;
-import vichitpov.com.fbs.callback.MyOnClickListener;
-import vichitpov.com.fbs.preference.UserInformationManager;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
 
-import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
@@ -34,7 +31,6 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
 
     private Context context;
     private List<ProductResponse.Data> productList;
-    private MyOnClickListener myOnClickListener;
 
     public RecentlySingleSellerAdapter(Context context) {
         this.context = context;
@@ -89,13 +85,6 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
         return 0;
     }
 
-
-//    public void setOnCLickListener(MyOnClickListener myOnClickListener) {
-//        if (productList != null) {
-//            this.myOnClickListener = myOnClickListener;
-//        }
-//    }
-
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, price, address;
@@ -111,14 +100,9 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, DetailProductActivity.class);
-                intent.putExtra("productList", productList.get(getAdapterPosition()));
+                intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-
-                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
-                }
             });
         }
     }

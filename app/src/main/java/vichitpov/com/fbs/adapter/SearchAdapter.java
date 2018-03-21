@@ -2,16 +2,12 @@ package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,15 +20,8 @@ import java.util.List;
 
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
-import vichitpov.com.fbs.base.IntentData;
-import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.OnLoadMore;
-import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
-import vichitpov.com.fbs.ui.activities.DetailProductActivity;
-
-import static android.content.Context.MODE_PRIVATE;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by VichitPov on 3/7/18.
@@ -191,17 +180,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             more.setVisibility(View.GONE);
 
             itemView.setOnClickListener(view -> {
-
-                Toast.makeText(context, "Waiting fix error!", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(context, DetailProductActivity.class);
-//                intent.putExtra("productList", productList.get(getAdapterPosition()));
-//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-//                context.startActivity(intent);
-//
-//                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-//                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-//                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
-//                }
+                Toast.makeText(context, "Waiting fix api!", Toast.LENGTH_SHORT).show();
             });
 
         }

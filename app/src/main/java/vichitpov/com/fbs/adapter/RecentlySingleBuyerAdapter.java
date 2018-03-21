@@ -10,19 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.Retrofit;
-import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
 
-import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
@@ -99,10 +95,6 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 
-            UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-            if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-                Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
-            }
         }
     }
 }

@@ -27,16 +27,19 @@ import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.OnClickDelete;
+import vichitpov.com.fbs.callback.OnClickEdit;
 import vichitpov.com.fbs.callback.OnLoadMore;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activities.EditProductActivity;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.gridLayoutManager;
 
-public class ProductSoldActivity extends AppCompatActivity implements View.OnClickListener, OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickDelete {
+public class ProductSoldActivity extends AppCompatActivity implements View.OnClickListener, OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickDelete, OnClickEdit {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -47,6 +50,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
     private List<ProductResponse.Data> productList;
     private UserInformationManager userInformationManager;
     private NiftyDialogBuilder dialogBuilder;
+    private int selectedPositionItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +67,22 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
         imageBack.setOnClickListener(this);
         adapter.onLoadMore(this);
         adapter.setOnDeleteClickListener(this);
+        adapter.setOnEditListener(this);
         refreshLayout.setOnRefreshListener(this);
-
-
     }
 
+    //click edit
+    @Override
+    public void setOnClickEdit(int position, ProductResponse.Data productResponse) {
+        selectedPositionItem = position;
+        Intent intent = new Intent(this, EditProductActivity.class);
+        intent.putExtra(AnyConstant.PRODUCT_LIST, productResponse);
+        startActivityForResult(intent, AnyConstant.EDIT_RESULT);
+        Log.e("pppp", "setOnClickEdit: " + selectedPositionItem);
+    }
+
+    //click on item go to seeMoreAdapter
+    //click delete
     @Override
     public void setOnClick(int id, int position) {
         if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
@@ -156,6 +171,14 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AnyConstant.EDIT_RESULT && resultCode != RESULT_CANCELED) {
+            adapter.updatedItem(selectedPositionItem,(ProductResponse.Data) data.getSerializableExtra(AnyConstant.RETURN_RESULT));
+
+        }
+    }
 
     @Override
     public void onClick(View view) {
@@ -168,7 +191,6 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
         progressBar = findViewById(R.id.progress);
         refreshLayout = findViewById(R.id.swipeRefresh);
     }
-
 
     @Override
     protected void onResume() {

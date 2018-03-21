@@ -10,6 +10,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr", "pt-rBR"
+
+        manifestPlaceholders = [onesignal_app_id               : "890552b1-50fe-418e-af8b-7ebe6fbf947f",
+                                onesignal_google_project_number: "REMOTE"]
     }
 
 
@@ -27,6 +30,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -46,6 +50,7 @@ dependencies {
     compile 'com.ss.bannerslider:bannerslider:1.8.0'
 
     //google map
+    //noinspection GradleCompatible
     implementation 'com.google.android.gms:play-services-places:11.8.0'
     implementation 'com.google.android.gms:play-services-base:11.8.0'
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
@@ -84,7 +89,8 @@ dependencies {
         annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
     }
 
-
+    //onesignal
+    compile 'com.onesignal:OneSignal:3.7.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

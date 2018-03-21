@@ -21,44 +21,21 @@
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.NoActionBar">
 
-            <RelativeLayout
+
+            <TextView
+                android:id="@+id/textSearch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:id="@+id/textSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/dp_5"
-                    android:layout_toStartOf="@id/textUpload"
-                    android:background="@drawable/background_search"
-                    android:drawablePadding="@dimen/dp_15"
-                    android:drawableStart="@drawable/ic_search_hint"
-                    android:drawableTint="@color/colorBlack"
-                    android:gravity="center_vertical"
-                    android:hint="Search product"
-                    android:paddingStart="@dimen/dp_10"
-                    android:textColorHint="@color/colorHint"
-                    android:textSize="@dimen/sp_15"
-                    tools:targetApi="m" />
-
-                <TextView
-                    android:id="@+id/textUpload"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:background="?selectableItemBackground"
-                    android:drawablePadding="-5dp"
-                    android:drawableTop="@drawable/ic_upload"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_5"
-                    android:text="Upload"
-                    android:textColor="@color/colorWhite" />
-
-
-            </RelativeLayout>
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp_5"
+                android:background="@drawable/background_search"
+                android:drawablePadding="@dimen/dp_5"
+                android:drawableStart="@drawable/ic_search_hint"
+                android:drawableTint="@color/colorBlack"
+                android:gravity="center_vertical"
+                android:hint="Search product..."
+                android:paddingStart="@dimen/dp_5"
+                tools:ignore="RtlSymmetry"
+                tools:targetApi="m" />
 
 
         </android.support.v7.widget.Toolbar>
@@ -85,7 +62,7 @@
                         android:layout_height="180dp"
                         android:layout_marginBottom="@dimen/dp_10"
                         app:animateIndicators="true"
-                        app:defaultIndicators="square"
+                        app:defaultIndicators="circle"
                         app:interval="3000"
                         app:loopSlides="true" />
 
@@ -240,12 +217,54 @@
 
                     </RelativeLayout>
 
+                    <!--Layout Top Seller-->
+                    <RelativeLayout
+                        android:id="@+id/relativeTopSell"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerTopSell"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/linearTopSell"
+                            android:nestedScrollingEnabled="false"
+                            tools:targetApi="lollipop" />
+
+                        <LinearLayout
+                            android:id="@+id/linearTopSell"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:padding="@dimen/dp_5">
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="@dimen/dp_8"
+                                android:background="#ff00d5" />
+
+
+                            <TextView
+                                android:id="@+id/textTopSell"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TOP SELLER"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/sp_18" />
+
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
                     <!--Layout Recently Seller-->
                     <RelativeLayout
                         android:id="@+id/relativeRecentlySeller"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp_10">
+                        android:layout_height="wrap_content">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/recyclerRecentlySeller"
@@ -305,7 +324,6 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/linearTab"
         android:layout_width="match_parent"
@@ -322,41 +340,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#0088ff"
             android:padding="@dimen/dp_5"
-            android:weightSum="7">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageHome"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_home_background"
-                app:civ_border_width="0dp" />
+            android:weightSum="8">
 
             <TextView
-                android:id="@+id/textFavorite"
+                android:id="@+id/textHome"
                 style="@style/Tab"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:drawableTint="@color/colorHint"
-                android:drawableTop="@drawable/ic_favorite"
-                android:text="Favorite"
-                android:textColor="@color/colorHint"
+                android:drawableTint="@color/colorWhite"
+                android:drawableTop="@drawable/ic_home"
+                android:text="Home"
+                android:textColor="@color/colorWhite"
                 tools:targetApi="m" />
 
+            <TextView
+                android:id="@+id/textUpload"
+                style="@style/Tab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:drawableTint="@color/colorWhite"
+                android:drawableTop="@drawable/ic_upload"
+                android:text="Upload"
+                android:textColor="@color/colorWhite"
+                tools:targetApi="m" />
 
             <TextView
                 android:id="@+id/textNotification"
                 style="@style/Tab"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2.5"
-                android:drawableTint="@color/colorHint"
+                android:layout_weight="2"
+                android:drawableTint="@color/colorWhite"
                 android:drawableTop="@drawable/ic_notification"
                 android:text="Notification"
-                android:textColor="@color/colorHint"
+                android:textColor="@color/colorWhite"
                 tools:targetApi="m" />
 
             <TextView
@@ -364,22 +385,21 @@
                 style="@style/Tab"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                android:drawableTint="@color/colorHint"
+                android:layout_weight="2"
+                android:drawableTint="@color/colorWhite"
                 android:drawableTop="@drawable/ic_edit_profile"
                 android:text="Profile"
-                android:textColor="@color/colorHint"
+                android:textColor="@color/colorWhite"
                 tools:targetApi="m" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerInParent="true" />
 
     <android.support.design.widget.FloatingActionButton

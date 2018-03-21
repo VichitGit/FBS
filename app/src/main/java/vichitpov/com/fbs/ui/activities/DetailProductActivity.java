@@ -20,6 +20,8 @@ import ss.com.bannerslider.banners.RemoteBanner;
 import ss.com.bannerslider.views.BannerSlider;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.ContactAdapter;
+import vichitpov.com.fbs.base.Retrofit;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.fragment.ShowMapFragment;
 
@@ -64,8 +66,9 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private void getIntentFromAnotherActivity() {
         ProductResponse.Data productResponse = (ProductResponse.Data) getIntent().getSerializableExtra("productList");
         if (productResponse != null) {
-            adapter.addItem(productResponse.getContactme().getDatacontact());
+            countView(productResponse.getId());
 
+            adapter.addItem(productResponse.getContactme().getDatacontact());
             getPhone = productResponse.getContactphone();
 
             List<Banner> imageSliderList = new ArrayList<>();
@@ -104,6 +107,13 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                         .commit();
             }
 
+        }
+    }
+
+    private void countView(int id) {
+        UserInformationManager userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            Retrofit.countView(userInformationManager.getUser().getAccessToken(), id);
         }
     }
 

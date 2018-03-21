@@ -23,7 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -53,9 +52,9 @@ public class ChooseCategoryActivity extends AppCompatActivity {
     }
 
     private boolean checkIntentMainActivity() {
-        String intentMainActivity = getIntent().getStringExtra(IntentData.SEND_FROM_MAIN_ACTIVITY);
+        String intentMainActivity = getIntent().getStringExtra(AnyConstant.SEND_FROM_MAIN_ACTIVITY);
         if (intentMainActivity != null) {
-            if (intentMainActivity.equals(IntentData.SEND_FROM_MAIN_ACTIVITY)) {
+            if (intentMainActivity.equals(AnyConstant.SEND_FROM_MAIN_ACTIVITY)) {
                 return true;
             } else {
                 return false;
@@ -65,9 +64,9 @@ public class ChooseCategoryActivity extends AppCompatActivity {
     }
 
     private boolean checkIntentPostToBuy() {
-        String intentPostToBuy = getIntent().getStringExtra(IntentData.POST_TO_BUY);
+        String intentPostToBuy = getIntent().getStringExtra(AnyConstant.POST_TO_BUY_TEXT);
         if (intentPostToBuy != null) {
-            if (intentPostToBuy.equals(IntentData.POST_TO_BUY)) {
+            if (intentPostToBuy.equals(AnyConstant.POST_TO_BUY_TEXT)) {
                 return true;
             } else {
                 return false;
@@ -157,7 +156,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
                         Intent data = new Intent();
                         data.putExtra(AnyConstant.CATEGORY_ID, categoryId);
                         data.putExtra(AnyConstant.CATEGORY_NAME, subTitle);
-                        setResult(AnyConstant.POST_TO_BUY, data);
+                        setResult(AnyConstant.POST_TO_BUY_RESULT_CODE, data);
                         finish();
 
                     } else {

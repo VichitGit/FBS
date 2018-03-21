@@ -22,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
-import vichitpov.com.fbs.callback.MyOnClickListener;
+import vichitpov.com.fbs.callback.OnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
@@ -33,7 +33,7 @@ import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.linearLayoutManager;
 
-public class ProductSellerCategoryActivity extends AppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener, MyOnClickListener {
+public class ProductSellerCategoryActivity extends AppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickListener {
     private String categoryId;
     private TextView textToolbar;
 
@@ -72,16 +72,6 @@ public class ProductSellerCategoryActivity extends AppCompatActivity implements 
         refreshLayout.setOnRefreshListener(this);
         imageBack.setOnClickListener(view -> finish());
 
-
-    }
-
-    //click on Item
-    @Override
-    public void setOnItemClick(int position, ProductResponse.Data productResponse) {
-
-        Intent intent = new Intent(this, DetailProductActivity.class);
-        intent.putExtra("productList", productResponse);
-        startActivity(intent);
 
     }
 

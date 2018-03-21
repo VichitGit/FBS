@@ -72,7 +72,9 @@ public class EditProductActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ImageListAdapter adapter;
+    private ProductPostedResponse.Data updatedProduct;
 
+    private ProductResponse.Data productResponse;
     private List<ImageModel> imageList = new ArrayList<>();
     private List<String> newImageList = new ArrayList<>();
     private List<String> currentImageList = new ArrayList<>();
@@ -86,8 +88,8 @@ public class EditProductActivity extends AppCompatActivity {
         initView();
 
         Validator validator = new Validator(this);
-        apiService = ServiceGenerator.createService(ApiService.class);
         UserInformationManager userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+        apiService = ServiceGenerator.createService(ApiService.class);
         accessToken = userInformationManager.getUser().getAccessToken();
         dialog = new SpotsDialog(this, "Updating...");
 
@@ -252,7 +254,9 @@ public class EditProductActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     removeOldImage();
                     dialog.dismiss();
-                    finish();
+                    //return result after update success
+                    updatedProduct = response.body().getData();
+                    backResultCodeToRefreshItemUpdated();
                     Toast.makeText(EditProductActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -338,7 +342,25 @@ public class EditProductActivity extends AppCompatActivity {
         }
     }
 
+    private void backResultCodeToRefreshItemUpdated() {
 
+        productResponse.setTitle(updatedProduct.getTitle());
+        productResponse.getCategory().setId(updatedProduct.getCategory().getId());
+        productResponse.setDescription(updatedProduct.getDescription());
+        productResponse.getPrice().get(0).setMin(String.valueOf(updatedProduct.getPrice().get(0).getMin()));
+        productResponse.getPrice().get(0).setMax(String.valueOf(updatedProduct.getPrice().get(0).getMax()));
+        productResponse.setContactphone(updatedProduct.getContactphone());
+        productResponse.setContactemail(email); //validation email above
+        productResponse.setContactaddress(updatedProduct.getContactaddress());
+        productResponse.setProductimages(updatedProduct.getProductimages());
+
+        Intent returnResult = new Intent();
+        returnResult.putExtra(AnyConstant.RETURN_RESULT, productResponse);
+        setResult(AnyConstant.EDIT_RESULT, returnResult);
+        finish();
+    }
+
+    //browse to gallery
     private void browsePhoto() {
         ImagePicker.create(this)
                 .folderMode(true) // folder mode (false by default)
@@ -354,11 +376,13 @@ public class EditProductActivity extends AppCompatActivity {
                 .start(); // start image picker activity with request code
     }
 
+    //check intent
     private void checkIntent() {
-        ProductResponse.Data productResponse = (ProductResponse.Data) getIntent().getSerializableExtra("ProductList");
+        productResponse = (ProductResponse.Data) getIntent().getSerializableExtra(AnyConstant.PRODUCT_LIST);
         if (productResponse != null) {
             productId = productResponse.getId();
 
+            //set current image to list
             if (productResponse.getProductimages() != null) {
                 for (int i = 0; i < productResponse.getProductimages().size(); i++) {
                     if (productResponse.getProductimages().get(i) != null) {

@@ -26,6 +26,7 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
 public class Retrofit {
 
+    //add favorite to user's list
     public static void addFavorite(Context context, String accessToken, int id) {
         SpotsDialog dialog = new SpotsDialog(context, "Adding favorite!");
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
@@ -35,13 +36,13 @@ public class Retrofit {
             @Override
             public void onResponse(@NonNull Call<FavoriteResponse> call, @NonNull Response<FavoriteResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.e("pppp success", response.body().getData().toString());
+                    //Log.e("pppp success", response.body().getData().toString());
                     Toast.makeText(context, "Added favorite", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
                     dialog.dismiss();
                     Toast.makeText(context, "Error connection. please try again", Toast.LENGTH_SHORT).show();
-                    Log.e("pppp else", response.code() + " = " + response.message());
+                    //Log.e("pppp else", response.code() + " = " + response.message());
                 }
             }
 
@@ -50,11 +51,12 @@ public class Retrofit {
                 t.printStackTrace();
                 dialog.dismiss();
                 Toast.makeText(context, "Server problem!", Toast.LENGTH_SHORT).show();
-                Log.e("pppp", "onFailure: " + t.getMessage());
+                //Log.e("pppp", "onFailure: " + t.getMessage());
             }
         });
     }
 
+    //remove user's favorite
     public static void removeFavorite(Context context, String accessToken, int id) {
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
         SpotsDialog dialog = new SpotsDialog(context, "Removing favorite!");
@@ -71,7 +73,7 @@ public class Retrofit {
                 } else {
                     dialog.dismiss();
                     Toast.makeText(context, "Error connection. please try again", Toast.LENGTH_SHORT).show();
-                    Log.e("pppp", "Remove Else: " + response.code() + " = " + response.message());
+                    //Log.e("pppp", "Remove Else: " + response.code() + " = " + response.message());
                 }
 
             }
@@ -81,12 +83,13 @@ public class Retrofit {
                 t.printStackTrace();
                 dialog.dismiss();
                 Toast.makeText(context, "Server problem!", Toast.LENGTH_SHORT).show();
-                Log.e("pppp", "onFailure: " + t.getMessage());
+                //Log.e("pppp", "onFailure: " + t.getMessage());
 
             }
         });
     }
 
+    //count click item product
     public static void countView(String accessToken, int id) {
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
         Call<JSONObject> call = apiService.countView(accessToken, id);
@@ -110,6 +113,7 @@ public class Retrofit {
         });
     }
 
+    //delete user's product posted
     public static void deleteUserPost(Context context, String accessToken, int id) {
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
         SpotsDialog dialog = new SpotsDialog(context, "Deleting...");
@@ -128,7 +132,7 @@ public class Retrofit {
                     }
                 } else {
                     dialog.dismiss();
-                    Log.e("pppp", "else: " + response.code() + " = " + response.message());
+                    //Log.e("pppp", "else: " + response.code() + " = " + response.message());
                 }
             }
 
@@ -136,7 +140,7 @@ public class Retrofit {
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 dialog.dismiss();
-                Log.e("pppp", "onFailure: " + t.getMessage());
+                //Log.e("pppp", "onFailure: " + t.getMessage());
             }
         });
 

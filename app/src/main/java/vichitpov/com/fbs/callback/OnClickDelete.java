@@ -1,7 +1,7 @@
 package vichitpov.com.fbs.callback;
 
 /**
- * Created by VichitDeveloper on 3/15/18.
+ * Created by VichitPov on 3/15/18.
  */
 
 public interface OnClickDelete {

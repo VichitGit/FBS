@@ -25,7 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
-import vichitpov.com.fbs.callback.MyOnClickListener;
+import vichitpov.com.fbs.callback.OnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
@@ -35,7 +35,7 @@ import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.linearLayoutManager;
 
-public class FavoriteActivity extends AppCompatActivity implements OnLoadMore, MyOnClickListener {
+public class FavoriteActivity extends AppCompatActivity implements OnLoadMore, OnClickListener {
     private UserInformationManager userInformationManager;
     private SwipeRefreshLayout refreshLayout;
     private SellerSeeMoreAdapter adapter;
@@ -68,11 +68,6 @@ public class FavoriteActivity extends AppCompatActivity implements OnLoadMore, M
         adapter.mySetOnClick(this);
         imageBack.setOnClickListener(view -> finish());
         refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
-
-    }
-
-    @Override
-    public void setOnItemClick(int position, ProductResponse.Data productResponse) {
 
     }
 

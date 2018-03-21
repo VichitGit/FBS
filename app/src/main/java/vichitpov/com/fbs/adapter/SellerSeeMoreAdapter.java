@@ -21,16 +21,15 @@ import java.util.List;
 
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
-import vichitpov.com.fbs.base.IntentData;
-import vichitpov.com.fbs.base.Retrofit;
-import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.callback.OnClickDelete;
+import vichitpov.com.fbs.callback.OnClickEdit;
+import vichitpov.com.fbs.callback.OnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
-import vichitpov.com.fbs.preference.UserInformationManager;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
 
-import static android.content.Context.MODE_PRIVATE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by VichitPov on 2/27/18.
@@ -47,12 +46,13 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
     private ProductResponse.Data productResponse;
     private Context context;
     private OnLoadMore onLoadMore;
-    private MyOnClickListener myOnClickListener;
     private int checkLayoutManager;
 
     private int visibleThreshold = 3;
     private boolean loading = false;
     private OnClickDelete onClickDelete;
+    private OnClickListener OnClickListener;
+    private OnClickEdit onClickEdit;
 
     public SellerSeeMoreAdapter(Context context, RecyclerView recyclerView, int checkLayoutCheck) {
         this.productList = new ArrayList<>();
@@ -111,7 +111,6 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyItemInserted(productList.size() - 1);
     }
 
-
     public void onLoadMore(OnLoadMore onLoadMore) {
         this.onLoadMore = onLoadMore;
     }
@@ -122,13 +121,14 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyItemRemoved(productList.size() - 1);
     }
 
+    public void updatedItem(int position, ProductResponse.Data productResponse) {
+        this.productList.set(position, productResponse);
+        notifyItemChanged(position);
+    }
 
     public void addMoreItems(List<ProductResponse.Data> productList) {
         this.productList.addAll(productList);
         notifyDataSetChanged();
-    }
-
-    public void notifyItem(){
     }
 
     public void refreshData(int position) {
@@ -175,9 +175,20 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             ProductViewHolder productViewHolder = (ProductViewHolder) holder;
             productViewHolder.title.setText(productResponse.getTitle());
 
-            String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
-            String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+            String priceFrom = productResponse.getPrice().get(0).getMin();
+            String priceTo = productResponse.getPrice().get(0).getMax();
 
+            int priceSubFrom = Integer.parseInt(priceFrom.substring(priceFrom.lastIndexOf(".") + 1));
+            int priceSubTo = Integer.parseInt(priceTo.substring(priceTo.lastIndexOf(".") + 1));
+
+            if (priceSubFrom == 0) {
+                priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+            }
+
+            if (priceSubTo == 0) {
+                priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
+
+            }
             productViewHolder.price.setText(priceFrom + "$" + " - " + priceTo + "$");
 
             if (productResponse.getCreateddate() != null) {
@@ -203,8 +214,20 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else if (holder instanceof ProductGridViewHolder) {
             ProductGridViewHolder productGridViewHolder = (ProductGridViewHolder) holder;
 
-            String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
-            String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+            String priceFrom = productResponse.getPrice().get(0).getMin();
+            String priceTo = productResponse.getPrice().get(0).getMax();
+
+            int priceSubFrom = Integer.parseInt(priceFrom.substring(priceFrom.lastIndexOf(".") + 1));
+            int priceSubTo = Integer.parseInt(priceTo.substring(priceTo.lastIndexOf(".") + 1));
+
+            if (priceSubFrom == 0) {
+                priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+            }
+
+            if (priceSubTo == 0) {
+                priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
+
+            }
 
             productGridViewHolder.textTitle.setText(productResponse.getTitle());
             productGridViewHolder.textPrice.setText(priceFrom + "$" + " - " + priceTo + "$");
@@ -235,10 +258,19 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         return 0;
     }
 
-    public void mySetOnClick(MyOnClickListener myOnClickListener) {
-        this.myOnClickListener = myOnClickListener;
+    public void mySetOnClick(OnClickListener myOnClickListener) {
+        this.OnClickListener = myOnClickListener;
 
     }
+
+    public void setOnEditListener(OnClickEdit onEditListener) {
+        this.onClickEdit = onEditListener;
+    }
+
+    public void setOnDeleteClickListener(OnClickDelete onClickDelete) {
+        this.onClickDelete = onClickDelete;
+    }
+
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
@@ -256,30 +288,19 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             more = itemView.findViewById(R.id.imageMore);
 
             itemView.setOnClickListener(view -> {
-
                 Intent intent = new Intent(context, DetailProductActivity.class);
-                intent.putExtra("productList", productResponse);
+                intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
                 context.startActivity(intent);
-
-                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
-                }
 
             });
 
             more.setOnClickListener(view -> {
-                myOnClickListener.setOnViewClick(getAdapterPosition(), productList.get(getAdapterPosition()).getId(), view);
+                OnClickListener.setOnViewClick(getAdapterPosition(), productList.get(getAdapterPosition()).getId(), view);
 
 
             });
         }
     }
-
-    public void setOnDeleteClickListener(OnClickDelete onClickDelete) {
-        this.onClickDelete = onClickDelete;
-    }
-
 
     class ProductGridViewHolder extends RecyclerView.ViewHolder {
 
@@ -297,8 +318,18 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             textStatus = itemView.findViewById(R.id.textStatus);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
 
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailProductActivity.class);
+                intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
+                //Log.e("pppp", "position: " + productList.get(getAdapterPosition()));
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            });
+
             textEdit.setOnClickListener(view -> {
-                IntentData.sendProduct(context, productList.get(getAdapterPosition()));
+
+                onClickEdit.setOnClickEdit(getAdapterPosition(), productList.get(getAdapterPosition()));
+
             });
 
             textDelete.setOnClickListener(view ->

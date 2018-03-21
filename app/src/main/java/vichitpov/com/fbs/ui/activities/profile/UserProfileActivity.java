@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.ConvertBitmap;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -40,7 +40,15 @@ import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView textName, textCountSell, textCountBuy, textEmail, textAddress, textPhone, textSaveProfile, textDescription;
+    private TextView textName;
+    private TextView textCountSell;
+    private TextView textCountBuy;
+    private TextView textEmail;
+    private TextView textAddress;
+    private TextView textPhone;
+    private TextView textSaveProfile;
+    private TextView textDescription;
+
     private UserInformationManager userInformationManager;
     private ImageView imageProfile, imageSetting;
     private String selectedImagePath = "null";
@@ -58,17 +66,9 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         LinearLayout linearSold = findViewById(R.id.linear_sold);
         LinearLayout linearBought = findViewById(R.id.linear_bought);
         LinearLayout linearRePost = findViewById(R.id.linear_reload);
+        TextView textEditDesc = findViewById(R.id.textEditDescription);
 
-        imageSetting = findViewById(R.id.image_setting);
-        imageProfile = findViewById(R.id.imageProfile);
-        textName = findViewById(R.id.textName);
-        textCountSell = findViewById(R.id.textSold);
-        textCountBuy = findViewById(R.id.textBought);
-        textEmail = findViewById(R.id.textEmail);
-        textAddress = findViewById(R.id.textAddress);
-        textPhone = findViewById(R.id.textPhone);
-        textSaveProfile = findViewById(R.id.textSaveProfile);
-        textDescription = findViewById(R.id.textDescription);
+        initView();
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         dialog = new SpotsDialog(this, "Changing...");
@@ -81,6 +81,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         linearBought.setOnClickListener(this);
         linearRePost.setOnClickListener(this);
         imageChangeProfile.setOnClickListener(this);
+        textEditDesc.setOnClickListener(this);
         imageSetting.setOnClickListener(this);
         textSaveProfile.setOnClickListener(this);
 
@@ -149,84 +150,49 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.image_back)
+        if (id == R.id.image_back) {
             finish();
-        else if (id == R.id.linear_edit_profile) {
+
+        } else if (id == R.id.linear_edit_profile) {
             Intent intent = new Intent(getApplicationContext(), EditUserProfileActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.image_setting)
+            startActivityForResult(intent, AnyConstant.EDIT_PROFILE_CODE);
+
+        } else if (id == R.id.image_setting) {
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-        else if (id == R.id.linear_sold)
+
+        } else if (id == R.id.linear_sold) {
             startActivity(new Intent(getApplicationContext(), ProductSoldActivity.class));
-        else if (id == R.id.linear_bought)
+
+        } else if (id == R.id.linear_bought) {
             startActivity(new Intent(getApplicationContext(), ProductBoughtActivity.class));
-        else if (id == R.id.linear_reload)
+
+        } else if (id == R.id.linear_reload) {
             dialogBottom();
-        else if (id == R.id.imageChangeProfile) {
-            ImagePicker.create(this)
-                    .folderMode(true) // folder mode (false by default)
-                    .toolbarFolderTitle("Norton E-Commerce") // folder selection title
-                    .toolbarImageTitle("Select Photo") // image selection title
-                    .toolbarArrowColor(Color.WHITE)
-                    .single() // single mode
-                    .multi() // multi mode (default mode)
-                    .limit(1) // max images can be selected (99 by default)
-                    .showCamera(true) // show camera or not (true by default)
-                    .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
-                    .enableLog(false) // disabling log
-                    .start(); // start image picker activity with request code
+
+        } else if (id == R.id.imageChangeProfile) {
+            openGallery();
+
         } else if (id == R.id.textSaveProfile) {
-            if (!selectedImagePath.equals("null")) {
-                ApiService apiService = ServiceGenerator.createService(ApiService.class);
-                String accessToken = userInformationManager.getUser().getAccessToken();
-                File fileImage = new File(selectedImagePath);
+            updatePhotoProfile();
 
-                if (!accessToken.equals("N/A")) {
-                    dialog.show();
-                    RequestBody requestBodyImage = RequestBody.create(MediaType.parse("multipart/form-data"), fileImage);
-                    MultipartBody.Part profileBody = MultipartBody.Part.createFormData("image_file", fileImage.getName(), requestBodyImage);
-
-                    Call<UserInformationResponse> call = apiService.updateUserImageProfile(accessToken, profileBody);
-                    call.enqueue(new Callback<UserInformationResponse>() {
-                        @Override
-                        public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
-                            if (response.isSuccessful()) {
-                                dialog.dismiss();
-                                userInformationManager.saveImageProfile(response.body().getData().getProfilepicture());
-                                startActivity(getIntent());
-                                finish();
-                                overridePendingTransition(0, 0);
-
-                            } else if (response.code() == 401) {
-                                dialog.dismiss();
-                                startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
-
-                            } else {
-                                dialog.dismiss();
-                                Log.e("pppp else", response.message() + " = " + response.code());
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
-                            t.printStackTrace();
-                            Log.e("pppp onFailure", t.getMessage());
-                            dialog.dismiss();
-                        }
-                    });
-
-                }
-            }
-
+        } else if (id == R.id.textEditDescription) {
+            Intent intent = new Intent(getApplicationContext(), EditDescriptionActivity.class);
+            startActivityForResult(intent, AnyConstant.EDIT_DESCRIPTION_CODE);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
-        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AnyConstant.EDIT_DESCRIPTION_CODE && resultCode != RESULT_CANCELED) {
+            if (!userInformationManager.getUser().getDescription().equals("N/A")) {
+                textDescription.setText(userInformationManager.getUser().getDescription());
+            }
+        } else if (requestCode == AnyConstant.EDIT_PROFILE_CODE && resultCode != RESULT_CANCELED) {
+            checkPreference();
+        }
 
+        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             textSaveProfile.setVisibility(View.VISIBLE);
             imageSetting.setVisibility(View.GONE);
             Image image = ImagePicker.getFirstImageOrNull(data);
@@ -237,9 +203,55 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         }
 
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
+
+    //update profile photo
+    private void updatePhotoProfile() {
+        if (!selectedImagePath.equals("null")) {
+            ApiService apiService = ServiceGenerator.createService(ApiService.class);
+            String accessToken = userInformationManager.getUser().getAccessToken();
+            File fileImage = new File(selectedImagePath);
+
+            if (!accessToken.equals("N/A")) {
+                dialog.show();
+                RequestBody requestBodyImage = RequestBody.create(MediaType.parse("multipart/form-data"), fileImage);
+                MultipartBody.Part profileBody = MultipartBody.Part.createFormData("image_file", fileImage.getName(), requestBodyImage);
+
+                Call<UserInformationResponse> call = apiService.updateUserImageProfile(accessToken, profileBody);
+                call.enqueue(new Callback<UserInformationResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
+                        if (response.isSuccessful()) {
+                            dialog.dismiss();
+                            userInformationManager.saveImageProfile(response.body().getData().getProfilepicture());
+                            startActivity(getIntent());
+                            finish();
+                            overridePendingTransition(0, 0);
+
+                        } else if (response.code() == 401) {
+                            dialog.dismiss();
+                            startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+
+                        } else {
+                            dialog.dismiss();
+                            //Log.e("pppp else", response.message() + " = " + response.code());
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
+                        t.printStackTrace();
+                        //Log.e("pppp onFailure", t.getMessage());
+                        dialog.dismiss();
+                    }
+                });
+
+            }
+        }
+    }
 
     private void dialogBottom() {
         BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
@@ -257,6 +269,56 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 .createDialog();
 
         dialog.show();
+    }
+
+    private void openGallery() {
+        ImagePicker.create(this)
+                .folderMode(true) // folder mode (false by default)
+                .toolbarFolderTitle("Norton E-Commerce") // folder selection title
+                .toolbarImageTitle("Select Photo") // image selection title
+                .toolbarArrowColor(Color.WHITE)
+                .single() // single mode
+                .multi() // multi mode (default mode)
+                .limit(1) // max images can be selected (99 by default)
+                .showCamera(true) // show camera or not (true by default)
+                .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
+                .enableLog(false) // disabling log
+                .start(); // start image picker activity with request code
+    }
+
+    private void initView() {
+        imageSetting = findViewById(R.id.image_setting);
+        imageProfile = findViewById(R.id.imageProfile);
+        textName = findViewById(R.id.textName);
+        textCountSell = findViewById(R.id.textSold);
+        textCountBuy = findViewById(R.id.textBought);
+        textEmail = findViewById(R.id.textEmail);
+        textAddress = findViewById(R.id.textAddress);
+        textPhone = findViewById(R.id.textPhone);
+        textSaveProfile = findViewById(R.id.textSaveProfile);
+        textDescription = findViewById(R.id.textDescription);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }
 

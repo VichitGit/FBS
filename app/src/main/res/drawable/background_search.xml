@@ -6,4 +6,6 @@
         android:endColor="@color/colorWhite"
         android:startColor="@color/colorWhite"
         android:type="linear" />
+
+    <corners android:radius="3dp"/>
 </shape>

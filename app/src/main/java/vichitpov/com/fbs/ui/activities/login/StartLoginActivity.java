@@ -33,7 +33,7 @@ import ss.com.bannerslider.banners.Banner;
 import ss.com.bannerslider.banners.DrawableBanner;
 import ss.com.bannerslider.views.BannerSlider;
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.IntentData;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -106,8 +106,8 @@ public class StartLoginActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 if (response.body().getData().getStatus().contains("new")) {
                                     Intent intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
-                                    intent.putExtra(IntentData.ACCESS_TOKEN, accessToken);
-                                    intent.putExtra(IntentData.PHONE, response.body().getData().getPhone());
+                                    intent.putExtra(AnyConstant.ACCESS_TOKEN, accessToken);
+                                    intent.putExtra(AnyConstant.PHONE, response.body().getData().getPhone());
                                     progressBar.setVisibility(View.GONE);
                                     startActivity(intent);
                                 } else if (response.body().getData().getStatus().contains("old")) {
@@ -158,17 +158,14 @@ public class StartLoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         new Handler().postDelayed(() -> progressBar.setVisibility(View.GONE), 1500);
 
-
         textLogin.setOnClickListener(view -> {
             if (checkingPermissionIsEnabledOrNot()) {
                 phoneLogin(view);
             } else {
                 requestMultiplePermission();
             }
-
         });
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

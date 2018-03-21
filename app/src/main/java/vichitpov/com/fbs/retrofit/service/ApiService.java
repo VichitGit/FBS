@@ -67,11 +67,18 @@ public interface ApiService {
     @GET("user/favorites/{id}")
     Call<FavoriteResponse> addFavorite(@Header("access-token") String accessToken, @Path("id") int productId);
 
+    @GET("{type}/topview")
+    Call<ProductResponse> topSellList(@Path("type") String type);
+
     @PUT("user")
     @FormUrlEncoded
     Call<UserInformationResponse> updateUser(@Header("access-token") String accessToken, @Field("first_name") String firstName,
                                              @Field("last_name") String lastName, @Field("gender") String gender,
-                                             @Field("address") String address, @Field("city") String city);
+                                             @Field("address") String address, @Field("city") String city, @Field("description") String description);
+
+    @PUT("user")
+    @FormUrlEncoded
+    Call<UserInformationResponse> updateOnlyDescription(@Header("access-token") String accessToken, @Field("description") String description);
 
 
     @DELETE("user/post/{id}")

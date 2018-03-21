@@ -19,7 +19,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.base.VailidationEmail;
 import vichitpov.com.fbs.constant.AnyConstant;
@@ -29,7 +28,7 @@ import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
-import static vichitpov.com.fbs.constant.AnyConstant.POST_TO_BUY;
+import static vichitpov.com.fbs.constant.AnyConstant.POST_TO_BUY_RESULT_CODE;
 
 public class PostToBuyActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -67,7 +66,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("pppp", "onActivityResult");
-        if (requestCode == POST_TO_BUY && resultCode != RESULT_CANCELED) {
+        if (requestCode == POST_TO_BUY_RESULT_CODE && resultCode != RESULT_CANCELED) {
 
             selectedCategory = Integer.parseInt(data.getStringExtra(AnyConstant.CATEGORY_ID));
             textCategory.setText(data.getStringExtra(AnyConstant.CATEGORY_NAME));
@@ -89,8 +88,8 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
             }
         } else if (id == R.id.textCategory) {
             Intent intent = new Intent(getApplicationContext(), ChooseCategoryActivity.class);
-            intent.putExtra(IntentData.POST_TO_BUY, IntentData.POST_TO_BUY);
-            startActivityForResult(intent, POST_TO_BUY);
+            intent.putExtra(AnyConstant.POST_TO_BUY_TEXT, AnyConstant.POST_TO_BUY_RESULT_CODE);
+            startActivityForResult(intent, POST_TO_BUY_RESULT_CODE);
         }
     }
 

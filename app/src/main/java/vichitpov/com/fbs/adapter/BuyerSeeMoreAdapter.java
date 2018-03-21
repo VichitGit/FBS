@@ -17,14 +17,11 @@ import java.util.List;
 
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
-import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.OnClickDelete;
 import vichitpov.com.fbs.callback.OnLoadMore;
-import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
 
-import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
@@ -232,10 +229,6 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 
-                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), productList.get(getAdapterPosition()).getId());
-                }
             });
 
         }

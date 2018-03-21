@@ -62,7 +62,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         return 0;
     }
 
-
     class ContactViewHolder extends RecyclerView.ViewHolder {
         private TextView name, phone;
         private ImageView call;
@@ -95,29 +94,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
                             dataContactsList.get(getAdapterPosition()).getPhone(), null)));
                     dialog.dismiss();
                 });
-
-
-                //
-//                View popupContentView = LayoutInflater.from(context).inflate(R.layout.layout_pop_up_phone, null);
-//                PopupWindow popupWindow = new PopupWindow(context);
-//                popupWindow.setContentView(popupContentView);
-//                popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-//                popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-//                // popupWindow.setAnimationStyle(R.style.popup_window_animation_phone);
-//
-//                TextView textCall = popupContentView.findViewById(R.id.textCall);
-//                TextView textSms = popupContentView.findViewById(R.id.textSms);
-//
-//                textCall.setOnClickListener(view1 -> {
-//                    Intent intent = new Intent(Intent.ACTION_DIAL);
-//                    intent.setData(Uri.parse("tel:" + dataContactsList.get(getAdapterPosition()).getPhone()));
-//                    context.startActivity(intent);
-//                });
-//
-//                textSms.setOnClickListener(view12 ->
-//                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms",
-//                                dataContactsList.get(getAdapterPosition()).getPhone(), null))));
-//
             });
         }
     }

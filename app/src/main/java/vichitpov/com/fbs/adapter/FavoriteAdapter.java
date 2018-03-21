@@ -4,14 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,14 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.Retrofit;
-import vichitpov.com.fbs.preference.UserInformationManager;
-import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
-import vichitpov.com.fbs.ui.activities.MainActivity;
 
-import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
@@ -102,32 +96,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, DetailProductActivity.class);
-                intent.putExtra("productList", favoritesList.get(getAdapterPosition()));
+                intent.putExtra(AnyConstant.PRODUCT_LIST, favoritesList.get(getAdapterPosition()));
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 
-                UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-                if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-                    Retrofit.countView(userInformationManager.getUser().getAccessToken(), favoritesList.get(getAdapterPosition()).getId());
-                }
-
             });
-
-//            more.setOnClickListener(view -> {
-//                PopupMenu popup = new PopupMenu(context, view);
-//                popup.inflate(R.menu.menu_popup_menu);
-//                popup.show();
-//                popup.setOnMenuItemClickListener(item -> {
-//                    if (item.getItemId() == R.id.popFavorite) {
-//                        Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show();
-//                    } else if (item.getItemId() == R.id.popNotification) {
-//                        Toast.makeText(context, "Send notification", Toast.LENGTH_SHORT).show();
-//                    }
-//                    return false;
-//                });
-//            });
-
-
         }
     }
 }

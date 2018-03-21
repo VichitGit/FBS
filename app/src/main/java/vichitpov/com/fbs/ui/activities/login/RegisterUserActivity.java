@@ -20,8 +20,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -48,7 +48,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         init();
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-        userAccessToken = getIntent().getStringExtra(IntentData.ACCESS_TOKEN);
+        userAccessToken = getIntent().getStringExtra(AnyConstant.ACCESS_TOKEN);
 
         setUpSpinnerGender();
         listener();
@@ -153,7 +153,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
     private void uploadInformation(String accessToken, String firstName, String lastName, String gender, String address, String city) {
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
-        Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, address, city);
+        Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, address, city,"Introduction yourself");
         call.enqueue(new Callback<UserInformationResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {

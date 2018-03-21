@@ -2,7 +2,6 @@ package vichitpov.com.fbs.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,11 +10,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -26,11 +23,8 @@ import android.widget.Toast;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
@@ -39,22 +33,17 @@ import retrofit2.Response;
 import ss.com.bannerslider.banners.Banner;
 import ss.com.bannerslider.banners.RemoteBanner;
 import ss.com.bannerslider.views.BannerSlider;
-import technolifestyle.com.imageslider.FlipperLayout;
-import technolifestyle.com.imageslider.FlipperView;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.CategoryHeaderAdapter;
 import vichitpov.com.fbs.adapter.FavoriteAdapter;
 import vichitpov.com.fbs.adapter.RecentlySingleBuyerAdapter;
 import vichitpov.com.fbs.adapter.RecentlySingleSellerAdapter;
 import vichitpov.com.fbs.base.BaseAppCompatActivity;
-import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.base.InternetConnection;
-import vichitpov.com.fbs.callback.MyOnClickListener;
 import vichitpov.com.fbs.callback.OnClickSingle;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
 import vichitpov.com.fbs.preference.UserInformationManager;
-import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
-import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -65,19 +54,19 @@ import vichitpov.com.fbs.ui.activities.profile.UserProfileActivity;
 
 public class MainActivity extends BaseAppCompatActivity implements OnClickSingle {
 
-    private RecyclerView recyclerCategoryHeader, recyclerRecentlyBuyer, recyclerRecentSeller, recyclerFavorite;
+    private RecyclerView recyclerCategoryHeader, recyclerRecentlyBuyer, recyclerRecentSeller, recyclerFavorite, recyclerTopSell;
     private RecyclerView.LayoutManager layoutManager;
     private ApiService apiService;
     private SwipeRefreshLayout refreshLayout;
-    private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer, textUpload, textFavorite, textMoreFavorite;
+    private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer, textUpload, textMoreFavorite;
     private FloatingActionButton floatingScroll;
     private ScrollView scrollView;
-    private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer, relativeFavorite;
+    private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer, relativeFavorite, relativeTopSell;
     private ProgressBar progressBar;
     private LinearLayout linearInternetUnavailable;
     private RecentlySingleBuyerAdapter adapterBuyer;
     private RecentlySingleSellerAdapter adapterSeller;
-    private FavoriteAdapter favoriteAdapter;
+    private FavoriteAdapter favoriteAdapter, adapterTopSell;
     private UserInformationManager userInformationManager;
     private boolean isInformationLoadSuccess;
     private SpotsDialog dialog;
@@ -106,6 +95,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
             linearInternetUnavailable.setVisibility(View.GONE);
             setFavorite();
             setUpRecentlyBuyer();
+            setUpTopSeller();
             setUpRecentlySeller();
             getInformationUser();
         } else {
@@ -168,7 +158,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     @Override
     public void setOnClick() {
         Intent intent = new Intent(this, ChooseCategoryActivity.class);
-        intent.putExtra(IntentData.SEND_FROM_MAIN_ACTIVITY, IntentData.SEND_FROM_MAIN_ACTIVITY);
+        intent.putExtra(AnyConstant.SEND_FROM_MAIN_ACTIVITY, AnyConstant.SEND_FROM_MAIN_ACTIVITY);
         startActivity(intent);
 
     }
@@ -213,17 +203,27 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         });
 //        scrollView.setOnScrollChangeListener((view, i, i1, i2, i3) -> floatingScroll.setVisibility(View.VISIBLE));
 
+        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+//                if (view.getTop() == i1) {
+//                    Log.d("pppp", "MyScrollView: getTop");
+//                }
+
+                int diff = (view.getBottom() - (view.getHeight() + view.getScrollY() + view.getTop()));
+
+                if (diff <= 0) {
+                    Log.d("pppp", "MyScrollView: Bottom has been reached");
+                }else{
+                    Log.d("pppp", "MyScrollView: else");
+                }
+            }
+        });
+
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
         seeMoreBuyer.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), BuyerSeeMoreActivity.class)));
         seeMoreSeller.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SellerSeeMoreActivity.class)));
         refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
-        textFavorite.setOnClickListener(view -> {
-            if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
-                startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
-            } else {
-                startActivity(new Intent(getApplicationContext(), FavoriteActivity.class));
-            }
-        });
     }
 
     private boolean isAccessTokenAvailable() {
@@ -236,6 +236,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         }
     }
 
+    //set choose type
     private void setUpCategoryHeader() {
         layoutManager = new GridLayoutManager(MainActivity.this, 3);
         recyclerCategoryHeader.setLayoutManager(layoutManager);
@@ -251,6 +252,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
 
     }
 
+    //create data with recently 14 item buy
     private void setUpRecentlyBuyer() {
         layoutManager = new GridLayoutManager(this, 1, LinearLayoutManager.HORIZONTAL, false);
         recyclerRecentlyBuyer.setLayoutManager(layoutManager);
@@ -290,6 +292,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
 
     }
 
+    //create data with recently 14 item sell
     private void setUpRecentlySeller() {
 
         layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
@@ -327,6 +330,40 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         });
     }
 
+    //create sell top data, validate by count view
+    private void setUpTopSeller() {
+        layoutManager = new GridLayoutManager(this, 1, LinearLayoutManager.HORIZONTAL, false);
+        recyclerTopSell.setLayoutManager(layoutManager);
+        adapterTopSell = new FavoriteAdapter(this);
+        recyclerTopSell.setAdapter(adapterTopSell);
+        relativeTopSell.setVisibility(View.GONE);
+
+        Call<ProductResponse> call = apiService.topSellList("sells");
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
+                if (response.isSuccessful()) {
+                    adapterTopSell.addItem(response.body().getData());
+                    relativeTopSell.setVisibility(View.VISIBLE);
+                } else {
+                    relativeTopSell.setVisibility(View.GONE);
+                    Log.e("pppp", "top: " + response.code() + " = " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                relativeTopSell.setVisibility(View.GONE);
+                Log.e("pppp", "onFailure: " + t.getMessage());
+
+            }
+        });
+
+
+    }
+
+    //create user favorite, if user logged
     private void setFavorite() {
         if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
             GridLayoutManager layoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
@@ -391,6 +428,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
 //
 //    }
 
+    //dialog bottom
     private void dialogBottom() {
         @SuppressLint("ResourceAsColor") BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
                 .setMode(BottomSheetBuilder.MODE_LIST)
@@ -415,6 +453,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         recyclerRecentlyBuyer = findViewById(R.id.recyclerRecentlyBuyer);
         recyclerRecentSeller = findViewById(R.id.recyclerRecentlySeller);
         recyclerFavorite = findViewById(R.id.recyclerFavorite);
+        recyclerTopSell = findViewById(R.id.recyclerTopSell);
         linearInternetUnavailable = findViewById(R.id.linearInternetUnavailable);
         refreshLayout = findViewById(R.id.swipeRefresh);
 
@@ -423,7 +462,6 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         seeMoreBuyer = findViewById(R.id.textSeeMoreBuyer);
         seeMoreSeller = findViewById(R.id.textSeeMoreSeller);
         textUpload = findViewById(R.id.textUpload);
-        textFavorite = findViewById(R.id.textFavorite);
         textMoreFavorite = findViewById(R.id.textSeeMoreFavorite);
 
         floatingScroll = findViewById(R.id.floatingScroll);
@@ -433,6 +471,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         relativeRecentlySeller = findViewById(R.id.relativeRecentlySeller);
         relativeRecentlyBuyer = findViewById(R.id.relativeRecentlyBuyer);
         relativeFavorite = findViewById(R.id.relativeFavorite);
+        relativeTopSell = findViewById(R.id.relativeTopSell);
         bannerSlider = findViewById(R.id.bannerSlider);
 
         progressBar.setVisibility(View.GONE);

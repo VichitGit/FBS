@@ -13,10 +13,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
-import vichitpov.com.fbs.base.IntentData;
 import vichitpov.com.fbs.callback.OnClickSingle;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
-import vichitpov.com.fbs.ui.activities.ChooseCategoryActivity;
+import vichitpov.com.fbs.preference.UserInformationManager;
+import vichitpov.com.fbs.ui.activities.SettingsActivity;
+import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
+import vichitpov.com.fbs.ui.activities.profile.FavoriteActivity;
+
+import static android.content.Context.MODE_PRIVATE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by VichitPov on 2/25/18.
@@ -76,6 +81,23 @@ public class CategoryHeaderAdapter extends RecyclerView.Adapter<CategoryHeaderAd
             itemView.setOnClickListener(view -> {
                 if (getAdapterPosition() == 2) {
                     onClickSingle.setOnClick();
+                } else if (getAdapterPosition() == 1) {
+                    UserInformationManager userInformationManager = UserInformationManager.getInstance(context.getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+
+                    if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
+                        Intent intent = new Intent(context, StartLoginActivity.class);
+                        intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(context, FavoriteActivity.class);
+                        intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                } else if (getAdapterPosition() == 0) {
+                    Intent intent = new Intent(context, SettingsActivity.class);
+                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+
                 }
             });
 
