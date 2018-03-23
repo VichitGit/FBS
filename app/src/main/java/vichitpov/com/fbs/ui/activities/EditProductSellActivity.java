@@ -45,7 +45,7 @@ import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
-public class EditProductActivity extends AppCompatActivity {
+public class EditProductSellActivity extends AppCompatActivity {
 
     @NotEmpty(message = "Required title")
     private EditText editTitle;
@@ -84,7 +84,7 @@ public class EditProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_product);
+        setContentView(R.layout.activity_edit_product_sell);
         initView();
 
         Validator validator = new Validator(this);
@@ -257,18 +257,18 @@ public class EditProductActivity extends AppCompatActivity {
                     //return result after update success
                     updatedProduct = response.body().getData();
                     backResultCodeToRefreshItemUpdated();
-                    Toast.makeText(EditProductActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProductSellActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
 
                 } else {
                     dialog.dismiss();
-                    Toast.makeText(EditProductActivity.this, "Update failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProductSellActivity.this, "Update failed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ProductPostedResponse> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(EditProductActivity.this, "Server Problem", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProductSellActivity.this, "Server Problem", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });

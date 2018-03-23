@@ -85,7 +85,6 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
 
             itemView.setOnClickListener(this);
-
         }
 
         @Override

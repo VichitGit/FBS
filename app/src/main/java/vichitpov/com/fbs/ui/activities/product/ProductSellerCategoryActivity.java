@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activities;
+package vichitpov.com.fbs.ui.activities.product;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;

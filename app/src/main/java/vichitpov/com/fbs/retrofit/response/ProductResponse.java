@@ -38,6 +38,7 @@ public class ProductResponse implements Serializable {
         return mData;
     }
 
+
     public void setData(List<Data> mData) {
         this.mData = mData;
     }
@@ -661,6 +662,38 @@ public class ProductResponse implements Serializable {
         public void setType(String mType) {
             this.mType = mType;
         }
+
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "mUpdateddate=" + mUpdateddate +
+                    ", mCreateddate=" + mCreateddate +
+                    ", mStatus='" + mStatus + '\'' +
+                    ", mContactme=" + mContactme +
+                    ", mViewcount=" + mViewcount +
+                    ", mFavoritecount=" + mFavoritecount +
+                    ", mContactmapcoordinate='" + mContactmapcoordinate + '\'' +
+                    ", mContactaddress='" + mContactaddress + '\'' +
+                    ", mContactemail='" + mContactemail + '\'' +
+                    ", mContactphone='" + mContactphone + '\'' +
+                    ", mContactname='" + mContactname + '\'' +
+                    ", mProductimages=" + mProductimages +
+                    ", mCategory=" + mCategory +
+                    ", mPrice=" + mPrice +
+                    ", mDescription='" + mDescription + '\'' +
+                    ", mTitle='" + mTitle + '\'' +
+                    ", mId=" + mId +
+                    ", mType='" + mType + '\'' +
+                    '}';
+        }
     }
 
+    @Override
+    public String toString() {
+        return "ProductResponse{" +
+                "mMeta=" + mMeta +
+                ", mLinks=" + mLinks +
+                ", mData=" + mData +
+                '}';
+    }
 }

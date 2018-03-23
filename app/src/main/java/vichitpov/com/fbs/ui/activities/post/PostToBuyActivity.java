@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activities;
+package vichitpov.com.fbs.ui.activities.post;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,6 +26,7 @@ import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activities.ChooseCategoryActivity;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.constant.AnyConstant.POST_TO_BUY_RESULT_CODE;

@@ -23,7 +23,6 @@ import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.callback.OnClickDelete;
 import vichitpov.com.fbs.callback.OnClickEdit;
-import vichitpov.com.fbs.callback.OnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
@@ -51,7 +50,6 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
     private int visibleThreshold = 3;
     private boolean loading = false;
     private OnClickDelete onClickDelete;
-    private OnClickListener OnClickListener;
     private OnClickEdit onClickEdit;
 
     public SellerSeeMoreAdapter(Context context, RecyclerView recyclerView, int checkLayoutCheck) {
@@ -258,11 +256,6 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         return 0;
     }
 
-    public void mySetOnClick(OnClickListener myOnClickListener) {
-        this.OnClickListener = myOnClickListener;
-
-    }
-
     public void setOnEditListener(OnClickEdit onEditListener) {
         this.onClickEdit = onEditListener;
     }
@@ -275,7 +268,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
-        private ImageView more, thumbnail;
+        private ImageView  thumbnail;
 
         ProductViewHolder(View itemView) {
             super(itemView);
@@ -285,18 +278,11 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            more = itemView.findViewById(R.id.imageMore);
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, DetailProductActivity.class);
                 intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
                 context.startActivity(intent);
-
-            });
-
-            more.setOnClickListener(view -> {
-                OnClickListener.setOnViewClick(getAdapterPosition(), productList.get(getAdapterPosition()).getId(), view);
-
 
             });
         }
@@ -321,7 +307,6 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, DetailProductActivity.class);
                 intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
-                //Log.e("pppp", "position: " + productList.get(getAdapterPosition()));
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             });

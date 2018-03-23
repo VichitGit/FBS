@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activities.profile;
+package vichitpov.com.fbs.ui.activities.product;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,7 +34,7 @@ import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activities.EditProductActivity;
+import vichitpov.com.fbs.ui.activities.EditProductSellActivity;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.gridLayoutManager;
@@ -75,7 +75,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void setOnClickEdit(int position, ProductResponse.Data productResponse) {
         selectedPositionItem = position;
-        Intent intent = new Intent(this, EditProductActivity.class);
+        Intent intent = new Intent(this, EditProductSellActivity.class);
         intent.putExtra(AnyConstant.PRODUCT_LIST, productResponse);
         startActivityForResult(intent, AnyConstant.EDIT_RESULT);
         Log.e("pppp", "setOnClickEdit: " + selectedPositionItem);

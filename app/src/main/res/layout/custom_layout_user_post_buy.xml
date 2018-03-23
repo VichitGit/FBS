@@ -95,6 +95,7 @@
             android:background="@color/colorHint" />
 
         <RelativeLayout
+            android:id="@+id/relativeAction"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/dp_5"

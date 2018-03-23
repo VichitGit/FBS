@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
-import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
-import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -37,6 +35,9 @@ import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.SettingsActivity;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
+import vichitpov.com.fbs.ui.activities.post.ExpiredProductActivity;
+import vichitpov.com.fbs.ui.activities.product.ProductBoughtActivity;
+import vichitpov.com.fbs.ui.activities.product.ProductSoldActivity;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -167,7 +168,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             startActivity(new Intent(getApplicationContext(), ProductBoughtActivity.class));
 
         } else if (id == R.id.linear_reload) {
-            dialogBottom();
+            startActivity(new Intent(this, ExpiredProductActivity.class));
 
         } else if (id == R.id.imageChangeProfile) {
             openGallery();
@@ -251,24 +252,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
             }
         }
-    }
-
-    private void dialogBottom() {
-        BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
-                .setMode(BottomSheetBuilder.MODE_LIST)
-                .setIconTintColorResource(R.color.colorHint)
-                .setMenu(R.menu.menu_dialog_bottom_sheet)
-                .setItemClickListener(item -> {
-                    if (item.getItemId() == R.id.dialog_bottom_re_post_buy) {
-                        startActivity(new Intent(getApplicationContext(), RePostToBuyActivity.class));
-                    } else if (item.getItemId() == R.id.dialog_bottom_re_post_sell) {
-                        startActivity(new Intent(getApplicationContext(), RePostToSellActivity.class));
-                    }
-
-                })
-                .createDialog();
-
-        dialog.show();
     }
 
     private void openGallery() {

@@ -14,12 +14,12 @@ public class AnyConstant {
     public static final int EDIT_RESULT = 11;
     public static final int EDIT_DESCRIPTION_CODE = 22;
     public static final int EDIT_PROFILE_CODE = 23;
+    public static final int EDIT_PRODUCT_BUY_CODE = 24;
 
     public static final String RETURN_RESULT = "return_result_after_work";
     public static final String CATEGORY_ID = "CategoryId";
     public static final String CATEGORY_NAME = "CategoryName";
     public static final String PRODUCT_LIST = "productList";
-
     public static final String EMPTY_EMAIL = "norton@null.com";
 
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";

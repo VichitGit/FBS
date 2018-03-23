@@ -80,7 +80,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                             } else {
                                 dialog.dismiss();
-                                Log.e("pppp else", response.code() + " = " + response.message());
+                                //Log.e("pppp else", response.code() + " = " + response.message());
                             }
                         }
 

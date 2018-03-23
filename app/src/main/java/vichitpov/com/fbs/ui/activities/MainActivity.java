@@ -49,6 +49,8 @@ import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
+import vichitpov.com.fbs.ui.activities.post.PostToBuyActivity;
+import vichitpov.com.fbs.ui.activities.post.PostToSellActivity;
 import vichitpov.com.fbs.ui.activities.profile.FavoriteActivity;
 import vichitpov.com.fbs.ui.activities.profile.UserProfileActivity;
 
@@ -309,12 +311,9 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                     recyclerRecentSeller.setAdapter(adapterSeller);
                     relativeRecentlySeller.setVisibility(View.VISIBLE);
 
-
                 } else {
-
                     relativeRecentlySeller.setVisibility(View.GONE);
-                    Log.e("pppp", response.code() + " = " + response.message());
-
+                    //Log.e("pppp", response.code() + " = " + response.message());
                 }
             }
 
@@ -322,7 +321,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
             public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
 
                 t.printStackTrace();
-                Log.e("pppp", t.getMessage());
+                //Log.e("pppp", t.getMessage());
 
                 relativeRecentlySeller.setVisibility(View.GONE);
 

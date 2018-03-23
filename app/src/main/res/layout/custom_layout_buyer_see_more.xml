@@ -97,7 +97,7 @@
                     android:layout_gravity="end"
                     android:layout_weight="1"
                     android:padding="@dimen/dp_5"
-                    android:src="@drawable/ic_favorite"
+                    android:src="@drawable/ic_favorite_selected"
                     android:tint="@color/colorHint" />
 
                 <ImageView

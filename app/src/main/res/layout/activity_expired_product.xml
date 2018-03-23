@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context=".ui.activities.profile.RePostToBuyActivity">
+    android:orientation="vertical"
+    tools:context="vichitpov.com.fbs.ui.activities.post.ExpiredProductActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
@@ -28,19 +28,21 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/image_back"
+                    android:id="@+id/imageBack"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/dp_10"
+                    android:background="?selectableItemBackground"
+                    android:padding="@dimen/dp_15"
                     android:src="@drawable/ic_back" />
 
                 <TextView
                     android:id="@+id/text_toolbar"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/image_back"
-                    android:text="@string/text_re_post_to_buy"
+                    android:layout_toEndOf="@+id/imageBack"
+                    android:gravity="center"
+                    android:text="Expired Product"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/sp_20" />
 
@@ -49,24 +51,26 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center" />
+    <TextView
+        android:id="@+id/textNotFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Not Found"
+        android:textSize="@dimen/sp_18" />
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+
+</RelativeLayout>

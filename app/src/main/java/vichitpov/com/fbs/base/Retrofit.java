@@ -3,6 +3,7 @@ package vichitpov.com.fbs.base;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
@@ -27,7 +29,7 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 public class Retrofit {
 
     //add favorite to user's list
-    public static void addFavorite(Context context, String accessToken, int id) {
+    public static void addFavorite(Context context, String accessToken, int id, ImageView imageView) {
         SpotsDialog dialog = new SpotsDialog(context, "Adding favorite!");
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
         Call<FavoriteResponse> call = apiService.addFavorite(accessToken, id);
@@ -36,55 +38,24 @@ public class Retrofit {
             @Override
             public void onResponse(@NonNull Call<FavoriteResponse> call, @NonNull Response<FavoriteResponse> response) {
                 if (response.isSuccessful()) {
-                    //Log.e("pppp success", response.body().getData().toString());
+                    imageView.setImageResource(R.drawable.ic_favorite_selected);
                     Toast.makeText(context, "Added favorite", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
+
                 } else {
+                    imageView.setImageResource(R.drawable.ic_favorite_un_select);
                     dialog.dismiss();
                     Toast.makeText(context, "Error connection. please try again", Toast.LENGTH_SHORT).show();
-                    //Log.e("pppp else", response.code() + " = " + response.message());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<FavoriteResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
+                imageView.setImageResource(R.drawable.ic_favorite_un_select);
                 dialog.dismiss();
                 Toast.makeText(context, "Server problem!", Toast.LENGTH_SHORT).show();
                 //Log.e("pppp", "onFailure: " + t.getMessage());
-            }
-        });
-    }
-
-    //remove user's favorite
-    public static void removeFavorite(Context context, String accessToken, int id) {
-        ApiService apiService = ServiceGenerator.createService(ApiService.class);
-        SpotsDialog dialog = new SpotsDialog(context, "Removing favorite!");
-        dialog.show();
-        Call<String> call = apiService.removeFavorite(accessToken, id);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                if (response.isSuccessful()) {
-                    if (response.code() == 204) {
-                        dialog.dismiss();
-                        Toast.makeText(context, "Removed favorite", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    dialog.dismiss();
-                    Toast.makeText(context, "Error connection. please try again", Toast.LENGTH_SHORT).show();
-                    //Log.e("pppp", "Remove Else: " + response.code() + " = " + response.message());
-                }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                t.printStackTrace();
-                dialog.dismiss();
-                Toast.makeText(context, "Server problem!", Toast.LENGTH_SHORT).show();
-                //Log.e("pppp", "onFailure: " + t.getMessage());
-
             }
         });
     }

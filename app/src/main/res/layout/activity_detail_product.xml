@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:padding="@dimen/dp_10"
+                    android:padding="@dimen/dp_15"
                     android:src="@drawable/ic_back" />
 
                 <TextView
@@ -48,14 +48,6 @@
                     android:text="@string/text_product"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/sp_20" />
-
-
-                <ImageView
-                    android:id="@+id/image_favorite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/dp_10"
-                    android:src="@drawable/ic_favorite" />
 
 
             </LinearLayout>
@@ -72,15 +64,46 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ss.com.bannerslider.views.BannerSlider
-                    android:id="@+id/bannerSlider"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    app:animateIndicators="true"
-                    app:defaultIndicators="square"
-                    app:interval="2000"
-                    app:loopSlides="true" />
+                    android:layout_height="210dp"
+                    android:layout_marginBottom="@dimen/dp_10">
+
+                    <ss.com.bannerslider.views.BannerSlider
+                        android:id="@+id/bannerSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlue"
+                        app:animateIndicators="true"
+                        app:defaultIndicators="square"
+                        app:interval="2000"
+                        app:loopSlides="true" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:background="#80b4b4b4">
+
+                        <ImageView
+                            android:id="@+id/image_favorite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:padding="@dimen/dp_10"
+                            android:src="@drawable/ic_favorite_un_select"
+                            android:tint="@color/colorWhite" />
+
+                        <ImageView
+                            android:id="@+id/image_contact"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_10"
+                            android:src="@drawable/ic_notification"
+                            android:tint="@color/colorWhite" />
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/textTitle"
@@ -104,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_8"
-                    android:layout_marginTop="@dimen/dp_8"
+
                     android:orientation="horizontal">
 
                     <TextView
@@ -143,7 +166,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_8"
                     android:layout_marginStart="@dimen/dp_8"
-                    android:layout_marginTop="@dimen/dp_8"
                     android:lineSpacingExtra="@dimen/dp_4"
                     android:text="Description"
                     android:textColor="@color/colorBlack"

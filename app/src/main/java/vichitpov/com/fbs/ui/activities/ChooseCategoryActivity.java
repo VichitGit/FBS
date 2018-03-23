@@ -27,6 +27,7 @@ import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activities.product.ProductSellerCategoryActivity;
 
 public class ChooseCategoryActivity extends AppCompatActivity {
     private ExpandingList mExpandingList;

@@ -1,4 +1,4 @@
-package vichitpov.com.fbs.ui.activities;
+package vichitpov.com.fbs.ui.activities.post;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -39,6 +39,7 @@ import vichitpov.com.fbs.retrofit.response.ImagePostResponse;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activities.ChooseCategoryActivity;
 
 public class PostToSellActivity extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
     @NotEmpty(message = "Please select category")

@@ -176,8 +176,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            more = itemView.findViewById(R.id.imageMore);
-            more.setVisibility(View.GONE);
+            //more = itemView.findViewById(R.id.imageMore);
 
             itemView.setOnClickListener(view -> {
                 Toast.makeText(context, "Waiting fix api!", Toast.LENGTH_SHORT).show();

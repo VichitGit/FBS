@@ -70,6 +70,9 @@ public interface ApiService {
     @GET("{type}/topview")
     Call<ProductResponse> topSellList(@Path("type") String type);
 
+    @GET("user/post/expire")
+    Call<ProductResponse> getAllExpiredProduct(@Header("access-token") String accessToken);
+
     @PUT("user")
     @FormUrlEncoded
     Call<UserInformationResponse> updateUser(@Header("access-token") String accessToken, @Field("first_name") String firstName,

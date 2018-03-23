@@ -31,9 +31,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.login.StartLoginActivity" />
-        <activity android:name=".ui.activities.PostToSellActivity" />
+        <activity android:name=".ui.activities.post.PostToSellActivity" />
         <activity android:name=".ui.activities.profile.UserProfileActivity" />
-        <activity android:name=".ui.activities.PostToBuyActivity" />
+        <activity android:name=".ui.activities.post.PostToBuyActivity" />
         <activity android:name=".ui.activities.BookmarkCategoriesActivity" />
         <activity android:name=".ui.activities.DetailProductActivity" />
         <activity android:name=".ui.activities.SearchProductActivity" />
@@ -49,10 +49,8 @@
             android:value="@string/google_maps_key" />
         <!-- Close Google Map -->
 
-        <activity android:name=".ui.activities.profile.ProductSoldActivity" />
-        <activity android:name=".ui.activities.profile.ProductBoughtActivity" />
-        <activity android:name=".ui.activities.profile.RePostToSellActivity" />
-        <activity android:name=".ui.activities.profile.RePostToBuyActivity" />
+        <activity android:name=".ui.activities.product.ProductSoldActivity" />
+        <activity android:name=".ui.activities.product.ProductBoughtActivity" />
         <activity android:name=".ui.activities.login.RegisterUserActivity" />
 
         <!-- account kit -->
@@ -91,10 +89,12 @@
             android:value="DISABLE" />
         <!--  -->
 
-        <activity android:name=".ui.activities.EditProductActivity" />
-        <activity android:name=".ui.activities.ProductSellerCategoryActivity" />
+        <activity android:name=".ui.activities.EditProductSellActivity" />
+        <activity android:name=".ui.activities.product.ProductSellerCategoryActivity" />
         <activity android:name=".ui.activities.profile.FavoriteActivity" />
-        <activity android:name=".ui.activities.profile.EditDescriptionActivity"></activity>
+        <activity android:name=".ui.activities.profile.EditDescriptionActivity" />
+        <activity android:name=".ui.activities.EditProductBuyActivity" />
+        <activity android:name=".ui.activities.post.ExpiredProductActivity"></activity>
     </application>
 
 </manifest>

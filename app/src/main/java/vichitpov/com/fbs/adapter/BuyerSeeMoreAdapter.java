@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,6 +17,7 @@ import java.util.List;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.callback.OnClickDelete;
+import vichitpov.com.fbs.callback.OnClickEdit;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
@@ -42,6 +42,7 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private int visibleThreshold = 3;
     private boolean loading = false;
     private OnClickDelete onClickDelete;
+    private OnClickEdit onClickEdit;
 
     public BuyerSeeMoreAdapter(Context context, RecyclerView recyclerView, int checkTypeProductView) {
         this.context = context;
@@ -105,6 +106,11 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.notifyItemRangeChanged(position, productList.size());
     }
 
+    public void updatedItem(int position, ProductResponse.Data productResponse) {
+        this.productList.set(position, productResponse);
+        notifyItemChanged(position);
+    }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -162,8 +168,23 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (holder instanceof ProductUserPostedBuyViewHolder) {
             ProductUserPostedBuyViewHolder postedBuyViewHolder = (ProductUserPostedBuyViewHolder) holder;
 
-            String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
-            String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+//            String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
+//            String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+
+            String priceFrom = productResponse.getPrice().get(0).getMin();
+            String priceTo = productResponse.getPrice().get(0).getMax();
+
+            int priceSubFrom = Integer.parseInt(priceFrom.substring(priceFrom.lastIndexOf(".") + 1));
+            int priceSubTo = Integer.parseInt(priceTo.substring(priceTo.lastIndexOf(".") + 1));
+
+            if (priceSubFrom == 0) {
+                priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+            }
+
+            if (priceSubTo == 0) {
+                priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
+
+            }
 
             if (productResponse.getContactaddress() != null) {
                 postedBuyViewHolder.textAddress.setText(productResponse.getContactaddress());
@@ -187,14 +208,19 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return 0;
     }
 
+    //callback click to delete
     public void setOnDeleteClick(OnClickDelete onDeleteClick) {
         this.onClickDelete = onDeleteClick;
+    }
+
+    //callback click to edit
+    public void setOnEditClick(OnClickEdit onEditClick) {
+        this.onClickEdit = onEditClick;
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
-        private ImageView favorite, notification;
 
         ProductViewHolder(View itemView) {
             super(itemView);
@@ -219,6 +245,8 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             textEdit = itemView.findViewById(R.id.textEdit);
             textDelete = itemView.findViewById(R.id.textDelete);
             textStatus = itemView.findViewById(R.id.textStatus);
+
+            textEdit.setOnClickListener(view -> onClickEdit.setOnClickEdit(getAdapterPosition(), productList.get(getAdapterPosition())));
 
 
             textDelete.setOnClickListener(view -> onClickDelete.setOnClick(productList.get(getAdapterPosition()).getId(), getAdapterPosition()));

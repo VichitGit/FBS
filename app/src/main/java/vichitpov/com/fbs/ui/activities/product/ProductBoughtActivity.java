@@ -1,11 +1,11 @@
-package vichitpov.com.fbs.ui.activities.profile;
+package vichitpov.com.fbs.ui.activities.product;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,22 +26,26 @@ import vichitpov.com.fbs.adapter.BuyerSeeMoreAdapter;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.OnClickDelete;
+import vichitpov.com.fbs.callback.OnClickEdit;
 import vichitpov.com.fbs.callback.OnLoadMore;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.ui.activities.EditProductBuyActivity;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.BuyerSeeMoreAdapter.PRODUCT_POSTED_BUY;
 
-public class ProductBoughtActivity extends AppCompatActivity implements View.OnClickListener, OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickDelete {
+public class ProductBoughtActivity extends AppCompatActivity implements View.OnClickListener, OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickDelete, OnClickEdit {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private BuyerSeeMoreAdapter adapter;
     private int totalPage;
     private int page = 1;
+    private int selectPositionProduct;
     private UserInformationManager userInformationManager;
     private NiftyDialogBuilder dialogBuilder;
 
@@ -64,9 +68,20 @@ public class ProductBoughtActivity extends AppCompatActivity implements View.OnC
         imageBack.setOnClickListener(this);
         adapter.onLoadMore(this);
         adapter.setOnDeleteClick(this);
+        adapter.setOnEditClick(this);
         refreshLayout.setOnRefreshListener(this);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AnyConstant.EDIT_PRODUCT_BUY_CODE && resultCode != RESULT_CANCELED) {
+            adapter.updatedItem(selectPositionProduct, (ProductResponse.Data) data.getSerializableExtra(AnyConstant.PRODUCT_LIST));
+
+        }
+    }
+
+    //click view detail
     @Override
     public void setOnClick(int id, int position) {
         if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
@@ -96,11 +111,19 @@ public class ProductBoughtActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    //click edit product
+    @Override
+    public void setOnClickEdit(int position, ProductResponse.Data productResponse) {
+        selectPositionProduct = position;
+        Intent intent = new Intent(this, EditProductBuyActivity.class);
+        intent.putExtra(AnyConstant.PRODUCT_LIST, productResponse);
+        startActivityForResult(intent, AnyConstant.EDIT_PRODUCT_BUY_CODE);
+    }
+
     @Override
     public void onClick(View view) {
         finish();
     }
-
 
     @Override
     public void onRefresh() {
@@ -169,6 +192,5 @@ public class ProductBoughtActivity extends AppCompatActivity implements View.OnC
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
 }
