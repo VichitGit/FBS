@@ -14,11 +14,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar">
+    <style name="SearchView" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textCursorDrawable">@drawable/color_cursor_white</item>
-        <item name="android:textColorHint">@color/colorHint</item>
-        <item name="android:textColor">@color/colorBlack</item>
+
+        <item name="android:textColor">@color/colorWhite</item>
+
     </style>
+
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 

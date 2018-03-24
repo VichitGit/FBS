@@ -2,6 +2,7 @@ package vichitpov.com.fbs.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +21,11 @@ import java.util.List;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.callback.OnLoadMore;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
+import vichitpov.com.fbs.ui.activities.DetailProductActivity;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by VichitPov on 3/7/18.
@@ -179,7 +183,10 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             //more = itemView.findViewById(R.id.imageMore);
 
             itemView.setOnClickListener(view -> {
-                Toast.makeText(context, "Waiting fix api!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, DetailProductActivity.class);
+                intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             });
 
         }

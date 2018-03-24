@@ -1,15 +1,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="94dp">
+    android:layout_height="90dp">
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/ic_category_background" />
 
     <TextView
         android:id="@+id/title"
-        android:text="expanding item category"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:layout_toEndOf="@+id/imageIcon"
         android:gravity="center_vertical|start"
+        android:text="expanding item category"
         android:textColor="@color/colorBlack"
-        android:textSize="22sp" />
+        android:textSize="@dimen/sp_20" />
 
 </RelativeLayout>

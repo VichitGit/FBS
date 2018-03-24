@@ -10,7 +10,6 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
@@ -29,7 +28,7 @@
                 android:id="@+id/image_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/dp_15"
                 android:src="@drawable/ic_back"
                 tools:ignore="RtlSymmetry" />
 

@@ -1,12 +1,10 @@
 package vichitpov.com.fbs.ui.activities.product;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -22,18 +20,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
-import vichitpov.com.fbs.callback.OnClickListener;
 import vichitpov.com.fbs.callback.OnLoadMore;
-import vichitpov.com.fbs.preference.UserInformationManager;
-import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.linearLayoutManager;
 
-public class ProductSellerCategoryActivity extends AppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickListener {
+public class ProductSellerCategoryActivity extends AppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener {
     private String categoryId;
     private TextView textToolbar;
 
@@ -46,17 +40,13 @@ public class ProductSellerCategoryActivity extends AppCompatActivity implements 
     private int page = 1;
     private ApiService apiService;
     private TextView textNotFound;
-    private UserInformationManager userInformationManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_seller_category);
-
         initView();
 
-        userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         apiService = ServiceGenerator.createService(ApiService.class);
 
         categoryId = getIntent().getStringExtra("CATEGORY_ID");
@@ -68,59 +58,13 @@ public class ProductSellerCategoryActivity extends AppCompatActivity implements 
         loadMoreBuyerPagination(page);
 
         adapter.onLoadMore(this);
-        adapter.mySetOnClick(this);
+
         refreshLayout.setOnRefreshListener(this);
         imageBack.setOnClickListener(view -> finish());
 
 
     }
 
-    //click on view
-    @Override
-    public void setOnViewClick(int position, int id, View view) {
-        PopupMenu popup = new PopupMenu(this, view);
-        popup.inflate(R.menu.menu_popup_menu);
-        popup.show();
-        popup.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.popFavorite) {
-                String accessToken = userInformationManager.getUser().getAccessToken();
-                if (accessToken.equals("N/A")) {
-                    startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
-                    finish();
-                } else {
-                    addFavorite(accessToken, id);
-                }
-
-            } else if (item.getItemId() == R.id.popNotification) {
-                Toast.makeText(this, "Send notification to user", Toast.LENGTH_SHORT).show();
-            }
-            return false;
-        });
-
-    }
-
-    private void addFavorite(String accessToken, int id) {
-        Call<FavoriteResponse> call = apiService.addFavorite(accessToken, id);
-        call.enqueue(new Callback<FavoriteResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<FavoriteResponse> call, @NonNull Response<FavoriteResponse> response) {
-                if (response.isSuccessful()) {
-                    Log.e("pppp success", response.body().getData().toString());
-                    Toast.makeText(getApplicationContext(), "Added favorite", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.e("pppp else", response.code() + " = " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<FavoriteResponse> call, @NonNull Throwable t) {
-                t.printStackTrace();
-                Log.e("pppp", "onFailure: " + t.getMessage());
-
-            }
-        });
-
-    }
 
     @Override
     public void onRefresh() {
