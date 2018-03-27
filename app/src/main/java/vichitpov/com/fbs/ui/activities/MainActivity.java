@@ -1,6 +1,7 @@
 package vichitpov.com.fbs.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +27,6 @@ import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     private RecyclerView.LayoutManager layoutManager;
     private ApiService apiService;
     private SwipeRefreshLayout refreshLayout;
-    private TextView textProfile, textSearch, seeMoreSeller, seeMoreBuyer, textUpload, textMoreFavorite;
+    private TextView textProfile, textHome, textSearch, seeMoreSeller, seeMoreBuyer, textUpload, textMoreFavorite;
     private FloatingActionButton floatingScroll;
     private ScrollView scrollView;
     private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer, relativeFavorite, relativeTopSell;
@@ -71,7 +71,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     private FavoriteAdapter favoriteAdapter, adapterTopSell;
     private UserInformationManager userInformationManager;
     private boolean isInformationLoadSuccess;
-    private SpotsDialog dialog;
+    private ProgressDialog dialog;
     private BannerSlider bannerSlider;
     private CategoryHeaderAdapter categoryHeaderAdapter;
 
@@ -84,10 +84,10 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         apiService = ServiceGenerator.createService(ApiService.class);
         adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-        dialog = new SpotsDialog(this, "Updating...");
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.alert_dialog_updating));
 
         Log.e("pppp", userInformationManager.getUser().getAccessToken());
-
         initView();
         setUpSliderHeader();
         setUpCategoryHeader();
@@ -101,14 +101,13 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
             setUpRecentlySeller();
             getInformationUser();
         } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
             isInformationLoadSuccess = false;
             linearInternetUnavailable.setVisibility(View.VISIBLE);
         }
 
         eventListener();
         categoryHeaderAdapter.setOnClickListener(this);
-
 
     }
 
@@ -127,6 +126,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                 @Override
                 public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                     if (response.isSuccessful()) {
+
                         userInformationManager.deleteUserInformation();
                         userInformationManager.saveInformation(response.body());
                         isInformationLoadSuccess = true;
@@ -153,7 +153,6 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                 }
             });
         }
-
     }
 
     //event click listener to category to activity category
@@ -179,6 +178,9 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void eventListener() {
 
+        textHome.setOnClickListener(view -> {
+            scrollView.fullScroll(ScrollView.FOCUS_UP);
+        });
         textProfile.setOnClickListener(view -> {
             if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
                 if (isInformationLoadSuccess) {
@@ -203,29 +205,19 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                 startActivity(new Intent(getApplicationContext(), FavoriteActivity.class));
             }
         });
-//        scrollView.setOnScrollChangeListener((view, i, i1, i2, i3) -> floatingScroll.setVisibility(View.VISIBLE));
-
-        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-//                if (view.getTop() == i1) {
-//                    Log.d("pppp", "MyScrollView: getTop");
-//                }
-
-                int diff = (view.getBottom() - (view.getHeight() + view.getScrollY() + view.getTop()));
-
-                if (diff <= 0) {
-                    Log.d("pppp", "MyScrollView: Bottom has been reached");
-                }else{
-                    Log.d("pppp", "MyScrollView: else");
-                }
-            }
-        });
 
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
         seeMoreBuyer.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), BuyerSeeMoreActivity.class)));
         seeMoreSeller.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SellerSeeMoreActivity.class)));
-        refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
+        refreshLayout.setOnRefreshListener(() -> {
+
+            refreshLayout.setRefreshing(false);
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            finish();
+            overridePendingTransition(0, 0);
+
+        });
     }
 
     private boolean isAccessTokenAvailable() {
@@ -244,13 +236,12 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         recyclerCategoryHeader.setLayoutManager(layoutManager);
 
         List<CategoryHeaderModel> modelList = new ArrayList<>();
-        modelList.add(new CategoryHeaderModel("Setting", R.drawable.ic_setting_background));
-        modelList.add(new CategoryHeaderModel("Favorite", R.drawable.ic_star_background));
-        modelList.add(new CategoryHeaderModel("Categories", R.drawable.ic_category_background));
+        modelList.add(new CategoryHeaderModel(getString(R.string.text_settings), R.drawable.ic_setting_background));
+        modelList.add(new CategoryHeaderModel(getString(R.string.text_favorite), R.drawable.ic_star_background));
+        modelList.add(new CategoryHeaderModel(getString(R.string.text_categories), R.drawable.ic_category_background));
 
         categoryHeaderAdapter = new CategoryHeaderAdapter(getApplicationContext(), modelList);
         recyclerCategoryHeader.setAdapter(categoryHeaderAdapter);
-
 
     }
 
@@ -290,8 +281,6 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
 
             }
         });
-
-
     }
 
     //create data with recently 14 item sell
@@ -354,7 +343,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
             public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 relativeTopSell.setVisibility(View.GONE);
-                Log.e("pppp", "onFailure: " + t.getMessage());
+                //Log.e("pppp", "onFailure: " + t.getMessage());
 
             }
         });
@@ -379,7 +368,11 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                             relativeFavorite.setVisibility(View.VISIBLE);
                             favoriteAdapter.addItem(response.body().getData());
                             recyclerFavorite.setAdapter(favoriteAdapter);
+
                         } else if (response.body().getData().size() == 0) {
+                            relativeFavorite.setVisibility(View.GONE);
+
+                        } else {
                             relativeFavorite.setVisibility(View.GONE);
                         }
                     } else {
@@ -428,7 +421,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
 //    }
 
     //dialog bottom
-    private void dialogBottom() {
+    public void dialogBottom() {
         @SuppressLint("ResourceAsColor") BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
                 .setMode(BottomSheetBuilder.MODE_LIST)
                 .setIconTintColorResource(R.color.colorPrimary)
@@ -462,6 +455,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         seeMoreSeller = findViewById(R.id.textSeeMoreSeller);
         textUpload = findViewById(R.id.textUpload);
         textMoreFavorite = findViewById(R.id.textSeeMoreFavorite);
+        textHome = findViewById(R.id.textHome);
 
         floatingScroll = findViewById(R.id.floatingScroll);
         scrollView = findViewById(R.id.scrollView);

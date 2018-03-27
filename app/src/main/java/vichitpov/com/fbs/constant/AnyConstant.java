@@ -7,8 +7,8 @@ package vichitpov.com.fbs.constant;
 public class AnyConstant {
 
     public static final String BASE_URL = "http://nu-ecommerce.ml/";
-    public static final String HEADER = "access-token";
 
+    public static final int PLACE_PICKER_REQUEST = 1;
     public static final int CHOOSE_CATEGORY = 10;
     public static final int POST_TO_BUY_RESULT_CODE = 20;
     public static final int EDIT_RESULT = 11;

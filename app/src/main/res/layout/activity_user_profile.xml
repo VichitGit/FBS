@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/image_back"
                     android:gravity="center"
-                    android:text="@string/tab_profile"
+                    android:text="@string/text_profile"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/sp_20" />
 
@@ -69,16 +69,6 @@
                     android:src="@drawable/ic_settings"
                     android:tint="@color/colorWhite" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="628dp"
-                    android:gravity="center"
-                    android:text="Here for show map location"
-                    android:textSize="@dimen/sp_20" />
 
             </RelativeLayout>
 
@@ -151,9 +141,9 @@
                             android:layout_below="@id/textName"
                             android:layout_marginTop="@dimen/dp_5"
                             android:gravity="center"
-                            android:text="@string/text_sold"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/sp_15" />
+                            android:textSize="@dimen/sp_15"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textBought"
@@ -164,9 +154,9 @@
                             android:layout_below="@id/textSold"
                             android:layout_marginTop="@dimen/dp_5"
                             android:gravity="center"
-                            android:text="@string/text_bought"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/sp_15" />
+                            android:textSize="@dimen/sp_15"
+                            android:textStyle="bold" />
 
 
                     </RelativeLayout>
@@ -301,7 +291,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/dp_5"
                                     android:gravity="center"
-                                    android:text="Re Post"
+                                    android:text="Expired"
                                     android:textSize="@dimen/sp_15" />
 
 
@@ -341,7 +331,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginTop="@dimen/dp_10"
                         android:padding="@dimen/dp_10"
-                        android:text="@string/text_edit_infor"
+                        android:text="@string/text_edit_information"
                         android:textAllCaps="true"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/sp_12" />
@@ -432,13 +422,26 @@
                     </RelativeLayout>
                     <!---->
 
+
+                    <TextView
+                        android:id="@+id/textLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/layout_information"
+                        android:layout_margin="@dimen/dp_10"
+                        android:text="My location"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_20"
+                        android:textStyle="bold" />
+
                     <!--show map-->
                     <LinearLayout
-                        android:id="@+id/linear_show_map"
+                        android:id="@+id/linearMap"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:layout_below="@+id/layout_information"
-                        android:layout_marginTop="@dimen/dp_15"
+                        android:layout_below="@+id/textLocation"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:background="@color/colorHint"
                         android:orientation="horizontal">
 
@@ -446,9 +449,19 @@
                     </LinearLayout>
                     <!---->
 
+
                 </RelativeLayout>
             </RelativeLayout>
         </ScrollView>
     </LinearLayout>
 
-</FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/sp_20"
+        android:src="@drawable/ic_upload" />
+
+</RelativeLayout>

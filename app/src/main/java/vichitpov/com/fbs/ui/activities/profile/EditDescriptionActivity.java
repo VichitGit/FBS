@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,17 +34,17 @@ public class EditDescriptionActivity extends AppCompatActivity {
         editDescription = findViewById(R.id.editDescription);
         textSave = findViewById(R.id.textSave);
 
-        dialog = new SpotsDialog(this, "Updating...");
+        dialog = new SpotsDialog(this, getString(R.string.alert_dialog_updating));
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
             editDescription.setText(userInformationManager.getUser().getDescription());
         }
 
         textSave.setOnClickListener(view -> {
-            if (!editDescription.getText().toString().isEmpty()){
+            if (!editDescription.getText().toString().isEmpty()) {
                 updateDescription(editDescription.getText().toString());
-            }else{
-                editDescription.setError("Require description!");
+            } else {
+                editDescription.setError(getString(R.string.validation_description));
             }
         });
     }
@@ -62,11 +61,11 @@ public class EditDescriptionActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     setResult(AnyConstant.EDIT_DESCRIPTION_CODE, intent);
                     finish();
-                    Toast.makeText(EditDescriptionActivity.this, "Update Successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditDescriptionActivity.this, R.string.text_update_success, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
                     dialog.dismiss();
-                    Log.e("pppp", "else: " + response.code() + " = " + response.message());
+                    //Log.e("pppp", "else: " + response.code() + " = " + response.message());
                 }
 
             }
@@ -74,7 +73,7 @@ public class EditDescriptionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserInformationResponse> call, Throwable t) {
                 t.printStackTrace();
-                Log.e("pppp", "onFailure: " + t.getMessage());
+                //Log.e("pppp", "onFailure: " + t.getMessage());
                 dialog.dismiss();
             }
         });

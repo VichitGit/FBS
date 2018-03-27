@@ -81,7 +81,8 @@ public interface ApiService {
     @FormUrlEncoded
     Call<UserInformationResponse> updateUser(@Header("access-token") String accessToken, @Field("first_name") String firstName,
                                              @Field("last_name") String lastName, @Field("gender") String gender,
-                                             @Field("address") String address, @Field("city") String city, @Field("description") String description);
+                                             @Field("address") String address, @Field("city") String city, @Field("description") String descriptio,
+                                             @Field("contact_address_map_coordinate") String coordinate);
 
     @PUT("user")
     @FormUrlEncoded

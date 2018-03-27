@@ -78,7 +78,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(this, EditProductSellActivity.class);
         intent.putExtra(AnyConstant.PRODUCT_LIST, productResponse);
         startActivityForResult(intent, AnyConstant.EDIT_RESULT);
-        Log.e("pppp", "setOnClickEdit: " + selectedPositionItem);
+        //Log.e("pppp", "setOnClickEdit: " + selectedPositionItem);
     }
 
     //click on item go to seeMoreAdapter
@@ -90,13 +90,13 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
         } else {
             if (InternetConnection.isNetworkConnected(this)) {
                 dialogBuilder
-                        .withTitle("Delete!")
-                        .withMessage("Do you want to delete this post?")
+                        .withTitle(getString(R.string.text_delete))
+                        .withMessage(R.string.text_question_to_delete)
                         .withTitleColor(Color.WHITE)
                         .withMessageColor(Color.WHITE)
                         .withDialogColor("#8cff3737")
-                        .withButton1Text("YES")
-                        .withButton2Text("NO")
+                        .withButton1Text(getString(R.string.button_yes))
+                        .withButton2Text(getString(R.string.button_no))
                         .isCancelableOnTouchOutside(false)
                         .setButton1Click(view1 -> {
                             Retrofit.deleteUserPost(this, userInformationManager.getUser().getAccessToken(), id);
@@ -106,7 +106,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
                         .setButton2Click(view12 -> dialogBuilder.dismiss())
                         .show();
             } else {
-                Toast.makeText(this, "No internet connection!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -175,7 +175,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AnyConstant.EDIT_RESULT && resultCode != RESULT_CANCELED) {
-            adapter.updatedItem(selectedPositionItem,(ProductResponse.Data) data.getSerializableExtra(AnyConstant.RETURN_RESULT));
+            adapter.updatedItem(selectedPositionItem, (ProductResponse.Data) data.getSerializableExtra(AnyConstant.RETURN_RESULT));
 
         }
     }
@@ -195,12 +195,6 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        if (adapter != null && productList != null) {
 
-//            overridePendingTransition(0, 0);
-//            startActivity(getIntent());
-//            finish();
-
-        }
     }
 }

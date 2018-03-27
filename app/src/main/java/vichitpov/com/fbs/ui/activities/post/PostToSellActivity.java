@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -42,28 +43,28 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.ChooseCategoryActivity;
 
 public class PostToSellActivity extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
-    @NotEmpty(message = "Please select category")
+    @NotEmpty(message = R.string.validation_category + "")
     private TextView textCategory;
-    @NotEmpty(message = "Required title")
+    @NotEmpty(message = R.string.validation_title + "")
     private EditText editTitle;
-    @NotEmpty(message = "Required description")
+    @NotEmpty(message = R.string.validation_description + "")
     private EditText editDescription;
-    @NotEmpty(message = "Required price")
+    @NotEmpty(message = R.string.validation_price + "")
     private EditText editPriceStart;
-    @NotEmpty(message = "Required price")
+    @NotEmpty(message = R.string.validation_price + "")
     private EditText editPriceEnd;
-    @NotEmpty(message = "Required contact name")
+    @NotEmpty(message = R.string.validation_contact_name + "")
     private EditText editContactName;
     private EditText editContactEmail;
-    @NotEmpty(message = "Required address")
+    @NotEmpty(message = R.string.validation_address + "")
     private EditText editContactAddress;
-    @NotEmpty(message = "Required phone")
+    @NotEmpty(message = R.string.validation_contact_phone + "")
     private EditText editContactPhone;
 
     private UserInformationManager userInformationManager;
     private Button remove1, remove2, remove3, remove4, remove5;
     private Button buttonUpload;
-    private ImageView image1, image2, image3, image4, image5;
+    private ImageView image1, image2, image3, image4, image5, imageBack;
     private String path1, path2, path3, path4, path5;
     private String clickBrowse;
     private String selectedCategoryId;
@@ -71,6 +72,7 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
     private Validator validator;
     private ApiService apiService;
     private SpotsDialog dialog;
+    private String coordinate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +81,9 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
 
         validator = new Validator(this);
         validator.setValidationListener(this);
+        SwipeRefreshLayout refreshLayout = findViewById(R.id.swipeRefresh);
 
-        dialog = new SpotsDialog(this, "Uploading...");
+        dialog = new SpotsDialog(this, R.string.alert_dialog_uploading);
         apiService = ServiceGenerator.createService(ApiService.class);
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         accessToken = userInformationManager.getUser().getAccessToken();
@@ -90,8 +93,14 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         onClickBrowseToGallery();
         onClickRemovePhoto();
 
+        imageBack.setOnClickListener(this);
         buttonUpload.setOnClickListener(this);
         textCategory.setOnClickListener(this);
+        refreshLayout.setOnRefreshListener(() -> {
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        });
 
     }
 
@@ -153,8 +162,9 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         if (id == R.id.buttonUpload) {
             validator.validate();
         } else if (id == R.id.textCategory) {
-            startActivityForResult(new Intent(getApplicationContext(),
-                    ChooseCategoryActivity.class), AnyConstant.CHOOSE_CATEGORY);
+            startActivityForResult(new Intent(getApplicationContext(), ChooseCategoryActivity.class), AnyConstant.CHOOSE_CATEGORY);
+        } else if (id == R.id.imageBack) {
+            finish();
         }
     }
 
@@ -187,12 +197,10 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         }
     }
 
-
     //upload product after upload image success
     private void uploadProduct(String title, String description, String name, String email, String phone, String address, int priceFrom, int priceTo, int category, String image) {
-
         accessToken = userInformationManager.getUser().getAccessToken();
-        Call<ProductPostedResponse> call = apiService.postProduct(accessToken, "sell", title, category, description, priceFrom, priceTo, name, phone, email, image, address, "101202033030.2022928387");
+        Call<ProductPostedResponse> call = apiService.postProduct(accessToken, "sell", title, category, description, priceFrom, priceTo, name, phone, email, image, address, coordinate);
         call.enqueue(new Callback<ProductPostedResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductPostedResponse> call, @NonNull Response<ProductPostedResponse> response) {
@@ -200,10 +208,10 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
                     if (response.body() != null) {
                         dialog.dismiss();
                         finish();
-                        Toast.makeText(PostToSellActivity.this, "Uploaded Successfully.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostToSellActivity.this, R.string.text_upload_success, Toast.LENGTH_SHORT).show();
                     } else {
                         dialog.dismiss();
-                        Toast.makeText(PostToSellActivity.this, "Uploaded Failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostToSellActivity.this, R.string.text_upload_failed, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     dialog.dismiss();
@@ -304,12 +312,15 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         }
     }
 
+    //check share preference
     private void checkSharePreference() {
         String firstName = userInformationManager.getUser().getFirstName();
         String lastName = userInformationManager.getUser().getLastName();
         String phone = userInformationManager.getUser().getPhone();
+        String desc = userInformationManager.getUser().getDescription();
         String address = userInformationManager.getUser().getAddress();
         String email = userInformationManager.getUser().getEmail();
+        coordinate = userInformationManager.getUser().getMapCondinate();
 
         if (!firstName.equals("N/A") && !lastName.equals("N/A")) {
             String fullName = firstName + " " + lastName;
@@ -317,6 +328,10 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         }
         if (!phone.equals("N/A")) {
             editContactPhone.setText(phone);
+        }
+
+        if (!desc.equals("N/A")) {
+            editDescription.setText(desc);
         }
 
         if (!address.equals("N/A")) {
@@ -426,6 +441,8 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         image4 = findViewById(R.id.image_thumbnail_four);
         image5 = findViewById(R.id.image_thumbnail_five);
 
+        imageBack = findViewById(R.id.imageBack);
+
         remove1 = findViewById(R.id.buttonRemove1);
         remove2 = findViewById(R.id.buttonRemove2);
         remove3 = findViewById(R.id.buttonRemove3);
@@ -448,5 +465,11 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
         editContactPhone = findViewById(R.id.editPhone);
         textCategory = findViewById(R.id.textCategory);
         buttonUpload = findViewById(R.id.buttonUpload);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

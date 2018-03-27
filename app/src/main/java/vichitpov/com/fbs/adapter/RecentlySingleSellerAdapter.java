@@ -42,6 +42,12 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
         notifyDataSetChanged();
     }
 
+    public void refreshList(){
+        this.productList.clear();
+        notifyDataSetChanged();
+
+    }
+
 
     @NonNull
     @Override

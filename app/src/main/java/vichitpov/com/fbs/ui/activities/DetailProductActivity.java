@@ -1,6 +1,7 @@
 package vichitpov.com.fbs.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +19,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +41,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private ImageView imageBack, imageContact, imageFavorite;
     private BannerSlider bannerSlider;
     private Button buttonCall;
-    private TextView textTitle, textDescription, textPrice, textName, textPhone, textEmail, textAddress;
+    private TextView textTitle, textToolbar, textDescription, textPrice, textName, textPhone, textEmail, textAddress;
     private String getPhone, accessToken;
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
@@ -52,7 +52,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private int productId;
     private boolean isFavorite;
     private List<Integer> favoriteIdList;
-    private SpotsDialog dialogRemove, dialogAdd;
+    private ProgressDialog dialogRemove, dialogAdd;
 
 
     @Override
@@ -61,8 +61,11 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_detail_product);
 
         favoriteIdList = new ArrayList<>();
-        dialogRemove = new SpotsDialog(this, "Removing favorite!");
-        dialogAdd = new SpotsDialog(this, "Adding favorite!");
+        dialogRemove = new ProgressDialog(this);
+        dialogRemove.setMessage(getString(R.string.dialog_remove_favorite));
+        dialogAdd = new ProgressDialog(this);
+        dialogAdd.setMessage(getString(R.string.dialog_add_favorite));
+
         apiService = ServiceGenerator.createService(ApiService.class);
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         accessToken = userInformationManager.getUser().getAccessToken();
@@ -103,7 +106,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                 if (response.isSuccessful()) {
                     isFavorite = true;
                     imageFavorite.setImageResource(R.drawable.ic_favorite_selected);
-                    Toast.makeText(getApplicationContext(), "Added favorite", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.text_added_favorite, Toast.LENGTH_SHORT).show();
                     dialogAdd.dismiss();
 
                 } else {
@@ -137,7 +140,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                     if (response.code() == 204) {
                         isFavorite = false;
                         imageFavorite.setImageResource(R.drawable.ic_favorite_un_select);
-                        Toast.makeText(getApplicationContext(), "Removed favorite", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.text_removed_favorite, Toast.LENGTH_SHORT).show();
                         dialogRemove.dismiss();
                     }
                 } else {
@@ -188,7 +191,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                 @Override
                 public void onFailure(Call<ProductResponse> call, Throwable t) {
                     t.printStackTrace();
-                    Log.e("pppp", "onFailure: " + t.getMessage());
+                    //Log.e("pppp", "onFailure: " + t.getMessage());
                 }
             });
 
@@ -198,15 +201,15 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
 
     private void setUpFavoriteIcon() {
         if (favoriteIdList.size() != 0) {
-            Log.e("pppp", "productId: " + productId);
+            //Log.e("pppp", "productId: " + productId);
             for (int i = 0; i < favoriteIdList.size(); i++) {
                 if (favoriteIdList.get(i) == productId) {
-                    Log.e("pppp", "if productId: " + favoriteIdList.get(i));
+                    //Log.e("pppp", "if productId: " + favoriteIdList.get(i));
                     isFavorite = true;
                     imageFavorite.setImageResource(R.drawable.ic_favorite_selected);
                     return;
                 } else {
-                    Log.e("pppp", "else productId: " + favoriteIdList.get(i));
+                    //Log.e("pppp", "else productId: " + favoriteIdList.get(i));
                     isFavorite = false;
                     imageFavorite.setImageResource(R.drawable.ic_favorite_un_select);
                 }
@@ -231,6 +234,10 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
             countView(productId);
             getPhone = productResponse.getContactphone();
 
+            if (productResponse.getTitle() != null) {
+                textToolbar.setText(productResponse.getTitle());
+            }
+
             if (productResponse.getContactme() != null) {
                 adapter.addItem(productResponse.getContactme().getDatacontact());
             }
@@ -243,8 +250,19 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                 bannerSlider.setBanners(imageSliderList);
             }
 
-            String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
-            String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+            String priceFrom = productResponse.getPrice().get(0).getMin();
+            String priceTo = productResponse.getPrice().get(0).getMax();
+
+            int priceSubFrom = Integer.parseInt(priceFrom.substring(priceFrom.lastIndexOf(".") + 1));
+            int priceSubTo = Integer.parseInt(priceTo.substring(priceTo.lastIndexOf(".") + 1));
+
+            if (priceSubFrom == 0) {
+                priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
+            }
+
+            if (priceSubTo == 0) {
+                priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
+            }
 
             textTitle.setText(productResponse.getTitle());
             textPrice.setText("Price: " + priceFrom + "$ - " + priceTo + "$");
@@ -261,10 +279,13 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
             }
 
             if (productResponse.getContactmapcoordinate() != null) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("LatLng", productResponse.getContactmapcoordinate());
+                //Log.e("pppp", productResponse.getContactmapcoordinate());
+                //Log.e("pppp", productResponse.getContactname());
                 ShowMapFragment showMapFragment = new ShowMapFragment();
-//                showMapFragment.setArguments(bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("LatLng", productResponse.getContactmapcoordinate());
+                bundle.putString("Name", productResponse.getContactname());
+                showMapFragment.setArguments(bundle);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.layoutShowMap, showMapFragment)
@@ -292,11 +313,11 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         textPhone = findViewById(R.id.textPhone);
         textEmail = findViewById(R.id.textEmail);
         textAddress = findViewById(R.id.textAddress);
+        textToolbar = findViewById(R.id.textToolbar);
         bannerSlider = findViewById(R.id.bannerSlider);
         buttonCall = findViewById(R.id.buttonCall);
         recyclerView = findViewById(R.id.recyclerView);
     }
-
 
     @Override
     public void onClick(View view) {

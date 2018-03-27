@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dp_20"
-                android:text="Confirmation Account "
+                android:text="@string/confirmation_account"
                 android:textColor="@color/colorPrimary"
 
                 android:textSize="@dimen/sp_15" />
@@ -322,7 +322,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-                android:text="Ok"
+                android:text="@string/button_ok"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/sp_20" />
         </LinearLayout>

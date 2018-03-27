@@ -3,7 +3,7 @@ package vichitpov.com.fbs.base;
 import android.graphics.Bitmap;
 
 /**
- * Created by Goldenware on 3/4/2018.
+ * Created by VichitPov on 3/4/2018.
  */
 
 public class ConvertBitmap {

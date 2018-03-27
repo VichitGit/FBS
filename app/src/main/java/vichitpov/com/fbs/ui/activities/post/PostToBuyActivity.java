@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,8 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
     private int selectedCategory = 1010;
     private Button buttonUpload;
     private SpotsDialog dialog;
+    private String coordinate;
+    private ImageView imageBack;
 
 
     @Override
@@ -50,7 +53,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
 
         initView();
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-        dialog = new SpotsDialog(this, "Uploading...");
+        dialog = new SpotsDialog(this, getString(R.string.alert_dialog_uploading));
 
         clearValidation();
         displayValidationProduct(false);
@@ -66,7 +69,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("pppp", "onActivityResult");
+        //Log.e("pppp", "onActivityResult");
         if (requestCode == POST_TO_BUY_RESULT_CODE && resultCode != RESULT_CANCELED) {
 
             selectedCategory = Integer.parseInt(data.getStringExtra(AnyConstant.CATEGORY_ID));
@@ -85,12 +88,14 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
             if (InternetConnection.isNetworkConnected(this)) {
                 checkValidation();
             } else {
-                Toast.makeText(this, "No Internet Connection.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
             }
         } else if (id == R.id.textCategory) {
             Intent intent = new Intent(getApplicationContext(), ChooseCategoryActivity.class);
             intent.putExtra(AnyConstant.POST_TO_BUY_TEXT, AnyConstant.POST_TO_BUY_RESULT_CODE);
             startActivityForResult(intent, POST_TO_BUY_RESULT_CODE);
+        } else if (id == R.id.imageBack) {
+            finish();
         }
     }
 
@@ -152,44 +157,44 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         if (title.isEmpty() && selectedCategory == 1010 && priceFrom.isEmpty() && priceTo.isEmpty() && description.isEmpty()) {
             displayValidationProduct(true);
 
-            validationTitle.setText("Required title");
-            validationCategory.setText("Please select category");
-            validationPriceStart.setText("Required price start");
-            validationPriceTo.setText("Required price to");
-            validationDescription.setText("Required description");
+            validationTitle.setText(R.string.validation_title);
+            validationCategory.setText(R.string.validation_category);
+            validationPriceStart.setText(R.string.validation_price);
+            validationPriceTo.setText(R.string.validation_price);
+            validationDescription.setText(R.string.validation_description);
         } else {
             if (title.isEmpty()) {
                 validationTitle.setVisibility(View.VISIBLE);
-                validationTitle.setText("Required title");
+                validationTitle.setText(getString(R.string.validation_title));
 
             } else if (selectedCategory == 1010) {
                 validationCategory.setVisibility(View.VISIBLE);
-                validationCategory.setText("Please select category");
+                validationCategory.setText(getString(R.string.validation_category));
 
             } else if (priceFrom.isEmpty()) {
                 layoutValidationPrice.setVisibility(View.VISIBLE);
-                validationPriceStart.setText("Required price start");
+                validationPriceStart.setText(getString(R.string.validation_price));
 
             } else if (priceTo.isEmpty()) {
                 layoutValidationPrice.setVisibility(View.VISIBLE);
-                validationPriceTo.setText("Required price to");
+                validationPriceTo.setText(getString(R.string.validation_price));
 
             } else if (description.isEmpty()) {
 
                 validationDescription.setVisibility(View.VISIBLE);
-                validationDescription.setText("Required description");
+                validationDescription.setText(getString(R.string.validation_description));
 
             } else if (phone.isEmpty()) {
                 validationPhone.setVisibility(View.VISIBLE);
-                validationPhone.setText("Required contact phone");
+                validationPhone.setText(R.string.validation_contact_phone);
 
             } else if (name.isEmpty()) {
                 validationName.setVisibility(View.VISIBLE);
-                validationName.setText("Required contact name");
+                validationName.setText(R.string.validation_contact_name);
 
             } else if (address.isEmpty()) {
                 validationAddress.setVisibility(View.VISIBLE);
-                validationAddress.setText("Required contact address");
+                validationAddress.setText(R.string.validation_address);
 
             } else if (!VailidationEmail.isEmailValid(email) && !email.isEmpty()) {
                 validationEmail.setVisibility(View.VISIBLE);
@@ -203,11 +208,10 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
                     if (email.isEmpty()) {
                         email = "norton@null.com";
                     }
-                    postToBuy(title, category, description, priceStart, priceEnd, name, phone, email, address, "101202033030.2022928387");
+                    postToBuy(title, category, description, priceStart, priceEnd, name, phone, email, address, coordinate);
 
                 } else {
-
-                    Toast.makeText(this, "No Internet Connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -224,7 +228,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onResponse(@NonNull Call<ProductPostedResponse> call, @NonNull Response<ProductPostedResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(PostToBuyActivity.this, "Upload successfully.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PostToBuyActivity.this, R.string.text_upload_success, Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     finish();
                 } else if (response.code() == 401) {
@@ -257,6 +261,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
         String phone = userInformationManager.getUser().getPhone();
         String address = userInformationManager.getUser().getAddress();
         String email = userInformationManager.getUser().getEmail();
+        coordinate = userInformationManager.getUser().getMapCondinate();
 
         if (!firstName.equals("N/A") && !lastName.equals("N/A")) {
             String fullName = firstName + " " + lastName;
@@ -278,9 +283,12 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
     private void listener() {
         buttonUpload.setOnClickListener(this);
         textCategory.setOnClickListener(this);
+        imageBack.setOnClickListener(this);
     }
 
     private void initView() {
+
+        imageBack = findViewById(R.id.imageBack);
         validationTitle = findViewById(R.id.validationTitle);
         validationCategory = findViewById(R.id.validationCategory);
         validationPriceStart = findViewById(R.id.validationPriceFrom);

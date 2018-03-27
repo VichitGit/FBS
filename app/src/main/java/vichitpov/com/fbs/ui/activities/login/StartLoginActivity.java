@@ -1,5 +1,6 @@
 package vichitpov.com.fbs.ui.activities.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,8 +12,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,10 +49,10 @@ import static android.Manifest.permission.SEND_SMS;
 
 public class StartLoginActivity extends AppCompatActivity {
     public static int APP_REQUEST_CODE = 99;
-    private TextView textLogin, textSignUp;
+    private TextView textLoginPhone, textLoginEmail;
     private ApiService apiService;
     private String accessToken;
-    private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
     private UserInformationManager userInformationManager;
     public static final int RequestPermissionCode = 101;
 
@@ -61,6 +60,10 @@ public class StartLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_login);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(getString(R.string.progress_loading_title));
+        progressDialog.setMessage(getString(R.string.progress_loading_message));
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
@@ -80,7 +83,6 @@ public class StartLoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == APP_REQUEST_CODE) {
-
             // confirm that this response matches your request
             AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
 
@@ -96,36 +98,45 @@ public class StartLoginActivity extends AppCompatActivity {
                   that sent is old user, we no need to provide register screen to user.
                 */
                 if (loginResult.getAccessToken() != null) {
-                    progressBar.setVisibility(View.VISIBLE);
+                    progressDialog.show();
+
                     accessToken = loginResult.getAccessToken().getToken();
                     apiService = ServiceGenerator.createService(ApiService.class);
+
                     Call<UserInformationResponse> call = apiService.getUserInformation(accessToken);
                     call.enqueue(new Callback<UserInformationResponse>() {
                         @Override
                         public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                             if (response.isSuccessful()) {
                                 if (response.body().getData().getStatus().contains("new")) {
+
+                                    progressDialog.dismiss();
                                     Intent intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                                     intent.putExtra(AnyConstant.ACCESS_TOKEN, accessToken);
                                     intent.putExtra(AnyConstant.PHONE, response.body().getData().getPhone());
-                                    progressBar.setVisibility(View.GONE);
                                     startActivity(intent);
+                                    finish();
+
                                 } else if (response.body().getData().getStatus().contains("old")) {
+
                                     userInformationManager.deleteAccessToken();
                                     userInformationManager.saveAccessToken(accessToken);
                                     userInformationManager.saveInformation(response.body());
-                                    progressBar.setVisibility(View.GONE);
+                                    progressDialog.dismiss();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    finish();
+
                                 }
+
                             } else if (response.code() == 401) {
-                                progressBar.setVisibility(View.GONE);
+                                progressDialog.dismiss();
                                 startActivity(getIntent());
                             }
                         }
 
                         @Override
                         public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
-                            progressBar.setVisibility(View.GONE);
+                            progressDialog.dismiss();
                             t.printStackTrace();
                         }
                     });
@@ -134,11 +145,9 @@ public class StartLoginActivity extends AppCompatActivity {
         }
     }
 
-    public void phoneLogin(View view) {
+    public void phoneLogin(LoginType loginType) {
         final Intent intent = new Intent(this, AccountKitActivity.class);
-        AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
-                new AccountKitConfiguration.AccountKitConfigurationBuilder(LoginType.PHONE, AccountKitActivity.ResponseType.TOKEN);
-
+        AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder = new AccountKitConfiguration.AccountKitConfigurationBuilder(loginType, AccountKitActivity.ResponseType.TOKEN);
         intent.putExtra(AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION, configurationBuilder.build());
         startActivityForResult(intent, APP_REQUEST_CODE);
     }
@@ -155,12 +164,20 @@ public class StartLoginActivity extends AppCompatActivity {
 
 
     private void onClickListener() {
-        progressBar.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(() -> progressBar.setVisibility(View.GONE), 1500);
+        progressDialog.show();
+        new Handler().postDelayed(() -> progressDialog.dismiss(), 1500);
 
-        textLogin.setOnClickListener(view -> {
+        textLoginPhone.setOnClickListener(view -> {
             if (checkingPermissionIsEnabledOrNot()) {
-                phoneLogin(view);
+                phoneLogin(LoginType.PHONE);
+            } else {
+                requestMultiplePermission();
+            }
+        });
+
+        textLoginEmail.setOnClickListener(view -> {
+            if (checkingPermissionIsEnabledOrNot()) {
+                phoneLogin(LoginType.EMAIL);
             } else {
                 requestMultiplePermission();
             }
@@ -233,10 +250,9 @@ public class StartLoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        textLogin = findViewById(R.id.textLoginPhone);
-        textSignUp = findViewById(R.id.textLoginEmail);
-        progressBar = findViewById(R.id.progress);
-        progressBar.setVisibility(View.GONE);
+        textLoginPhone = findViewById(R.id.textLoginPhone);
+        textLoginEmail = findViewById(R.id.textLoginEmail);
+
 
     }
 

@@ -25,7 +25,7 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <ImageView
-                android:id="@+id/image_back"
+                android:id="@+id/imageBack"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:padding="@dimen/dp_15"
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Post to sell"
+                android:text="@string/text_post_to_sell"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/sp_20" />
 
@@ -45,9 +45,9 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context="vichitpov.com.fbs.ui.fragments.SellProductFragment">
+        android:layout_height="wrap_content">
 
         <ScrollView
             android:layout_width="match_parent"

@@ -48,9 +48,7 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
         adapter.onLoadMore(this);
         refreshLayout.setOnRefreshListener(this);
         imageBack.setOnClickListener(view -> finish());
-
     }
-
 
     @Override
     public void onRefresh() {

@@ -91,7 +91,6 @@ public class ProductSellerCategoryActivity extends AppCompatActivity implements 
             progressBar.setIndeterminate(false);
         }
 
-
         Call<ProductResponse> call = apiService.getProductByCategory(Integer.parseInt(categoryId), page);
         call.enqueue(new Callback<ProductResponse>() {
             @Override
@@ -147,7 +146,5 @@ public class ProductSellerCategoryActivity extends AppCompatActivity implements 
         recyclerView = findViewById(R.id.recycler);
         progressBar = findViewById(R.id.progressBar);
         refreshLayout = findViewById(R.id.swipeRefresh);
-
     }
-
 }

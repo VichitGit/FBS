@@ -1,12 +1,14 @@
 package vichitpov.com.fbs.ui.activities.profile;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,11 +17,12 @@ import android.widget.TextView;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
+import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
+import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import dmax.dialog.SpotsDialog;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -36,11 +39,13 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.SettingsActivity;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 import vichitpov.com.fbs.ui.activities.post.ExpiredProductActivity;
+import vichitpov.com.fbs.ui.activities.post.PostToBuyActivity;
+import vichitpov.com.fbs.ui.activities.post.PostToSellActivity;
 import vichitpov.com.fbs.ui.activities.product.ProductBoughtActivity;
 import vichitpov.com.fbs.ui.activities.product.ProductSoldActivity;
+import vichitpov.com.fbs.ui.fragment.ShowMapFragment;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
-
     private TextView textName;
     private TextView textCountSell;
     private TextView textCountBuy;
@@ -53,8 +58,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     private UserInformationManager userInformationManager;
     private ImageView imageProfile, imageSetting;
     private String selectedImagePath = "null";
-    private SpotsDialog dialog;
-
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +72,13 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         LinearLayout linearBought = findViewById(R.id.linear_bought);
         LinearLayout linearRePost = findViewById(R.id.linear_reload);
         TextView textEditDesc = findViewById(R.id.textEditDescription);
+        FloatingActionButton floatingUpload = findViewById(R.id.fab);
 
         initView();
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
-        dialog = new SpotsDialog(this, "Changing...");
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.dialog_change));
 
         checkPreference();
 
@@ -85,10 +91,11 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         textEditDesc.setOnClickListener(this);
         imageSetting.setOnClickListener(this);
         textSaveProfile.setOnClickListener(this);
-
+        floatingUpload.setOnClickListener(this);
 
     }
 
+    //check share preference
     @SuppressLint("SetTextI18n")
     private void checkPreference() {
         String pFirstName = userInformationManager.getUser().getFirstName();
@@ -100,6 +107,18 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         String pPhone = userInformationManager.getUser().getPhone();
         String pProfile = userInformationManager.getUser().getProfile();
         String description = userInformationManager.getUser().getDescription();
+        String coordinate = userInformationManager.getUser().getMapCondinate();
+
+        ShowMapFragment fragment = new ShowMapFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("LatLng", coordinate);
+        bundle.putString("Name", pFirstName + " " + pLastName);
+        fragment.setArguments(bundle);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.linearMap, fragment)
+                .commit();
 
         if (!pProfile.equals("N/A")) {
             Picasso.with(this)
@@ -123,16 +142,14 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         if (!pEmail.equals("N/A")) {
             textEmail.setText("Contact email: " + pEmail);
-        } else {
-            textEmail.setText("norton.e@norton.com");
         }
 
         if (!pCountBuy.equals("N/A")) {
-            textCountBuy.setText("Post buy: " + pCountBuy);
+            textCountBuy.setText(getString(R.string.text_post) + pCountBuy);
         }
 
         if (!pCountSell.equals("N/A")) {
-            textCountSell.setText("Post sell: " + pCountSell);
+            textCountSell.setText(getString(R.string.text_sell) + pCountSell);
         }
 
         if (!pPhone.equals("N/A")) {
@@ -179,6 +196,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         } else if (id == R.id.textEditDescription) {
             Intent intent = new Intent(getApplicationContext(), EditDescriptionActivity.class);
             startActivityForResult(intent, AnyConstant.EDIT_DESCRIPTION_CODE);
+        } else if (id == R.id.fab) {
+            dialogBottom();
         }
     }
 
@@ -206,7 +225,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
 
     }
-
 
     //update profile photo
     private void updatePhotoProfile() {
@@ -269,6 +287,26 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 .start(); // start image picker activity with request code
     }
 
+    //dialog bottom
+    public void dialogBottom() {
+        @SuppressLint("ResourceAsColor") BottomSheetMenuDialog dialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog)
+                .setMode(BottomSheetBuilder.MODE_GRID)
+                .setIconTintColorResource(R.color.colorPrimary)
+                .setItemTextColor(R.color.colorPrimary)
+                .setMenu(R.menu.menu_dialog_post)
+                .setItemClickListener(item -> {
+                    if (item.getItemId() == R.id.dialog_bottom_post_to_buy) {
+                        startActivity(new Intent(getApplicationContext(), PostToBuyActivity.class));
+                    } else if (item.getItemId() == R.id.dialog_bottom_post_to_sell) {
+                        startActivity(new Intent(getApplicationContext(), PostToSellActivity.class));
+                    }
+
+                })
+                .createDialog();
+        dialog.show();
+    }
+
+
     private void initView() {
         imageSetting = findViewById(R.id.image_setting);
         imageProfile = findViewById(R.id.imageProfile);
@@ -297,6 +335,11 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 
     @Override

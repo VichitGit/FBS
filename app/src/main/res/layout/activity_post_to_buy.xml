@@ -24,18 +24,18 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <ImageView
-                android:id="@+id/image_back"
+                android:id="@+id/imageBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackground"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/dp_15"
                 android:src="@drawable/ic_back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Post to buy"
+                android:text="@string/text_post_to_buy"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/sp_20" />
 

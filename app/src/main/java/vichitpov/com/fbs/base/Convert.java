@@ -1,14 +1,12 @@
 package vichitpov.com.fbs.base;
 
 
-import android.util.Log;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /**
- * Created by imac on 2/26/18.
+ * Created by VichitPov on 2/26/18.
  */
 
 public class Convert {
@@ -24,22 +22,4 @@ public class Convert {
         }
         return null;
     }
-
-    public static String subStringDate(String date) {
-        return date.substring(0, 10);
-    }
-
-    public static String priceConvert(String priceFrom, String priceTo) {
-
-        String from = String.valueOf(priceFrom.indexOf("."));
-        String to = String.valueOf(priceTo.indexOf("."));
-
-        Log.e("pppp from", priceFrom);
-        Log.e("pppp to", to);
-
-        return from + "$" + " - " + to + "$";
-
-
-    }
-
 }

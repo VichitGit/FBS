@@ -129,6 +129,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyDataSetChanged();
     }
 
+
     public void refreshData(int position) {
         this.productList.remove(position);
         this.notifyItemRemoved(position);

@@ -45,7 +45,7 @@
                     android:theme="@style/SearchView"
                     app:iconifiedByDefault="false"
                     app:queryBackground="@color/colorPrimary"
-                    app:queryHint="Search..." />
+                    app:queryHint="@string/text_search_product" />
 
                 <ImageView
                     android:id="@+id/imageFilter"
@@ -108,7 +108,7 @@
         android:layout_below="@+id/progress"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/dp_10"
-        android:text="Not found"
+        android:text="@string/text_not_found"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/sp_15"
         android:visibility="gone" />

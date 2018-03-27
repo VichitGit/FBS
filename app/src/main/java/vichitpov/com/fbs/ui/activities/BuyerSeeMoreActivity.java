@@ -1,16 +1,13 @@
 package vichitpov.com.fbs.ui.activities;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -70,8 +67,8 @@ public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoa
     }
 
 
+    //loading product by pagination
     private void loadMoreBuyerPagination(int page) {
-
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
         if (page == 1) {
             progressBar.setIndeterminate(true);

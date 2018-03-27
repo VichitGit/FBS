@@ -41,10 +41,12 @@
                     android:src="@drawable/ic_back" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/textToolbar"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
+                    android:maxLines="1"
                     android:text="@string/text_product"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/sp_20" />
@@ -73,7 +75,6 @@
                         android:id="@+id/bannerSlider"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/colorBlue"
                         app:animateIndicators="true"
                         app:defaultIndicators="square"
                         app:interval="2000"
@@ -269,7 +270,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="@dimen/dp_4"
-                        android:text="People who contact this product"
+                        android:text="@string/text_contact_people"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/sp_18"
                         android:textStyle="bold" />
@@ -294,7 +295,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/dp_5"
         android:background="@color/colorRed"
-        android:text="Call"
+        android:text="@string/text_call"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/sp_18" />

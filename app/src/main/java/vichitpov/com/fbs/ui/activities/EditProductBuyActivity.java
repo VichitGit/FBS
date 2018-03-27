@@ -1,5 +1,6 @@
 package vichitpov.com.fbs.ui.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +18,6 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,18 +33,18 @@ import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 public class EditProductBuyActivity extends AppCompatActivity {
 
-    @NotEmpty(message = "Required title")
+    @NotEmpty(messageResId = R.string.validation_title)
     private EditText editTitle;
-    @NotEmpty(message = "Required description")
+    @NotEmpty(messageResId = R.string.validation_description)
     private EditText editDescription;
-    @NotEmpty(message = "Required price")
+    @NotEmpty(messageResId = R.string.validation_price)
     private EditText editPriceStart;
-    @NotEmpty(message = "Required price")
+    @NotEmpty(messageResId = R.string.validation_price)
     private EditText editPriceEnd;
-    @NotEmpty(message = "Required contact name")
+    @NotEmpty(messageResId = R.string.validation_contact_name)
     private EditText editContactName;
     private EditText editContactEmail;
-    @NotEmpty(message = "Required address")
+    @NotEmpty(messageResId = R.string.validation_address)
     private EditText editContactAddress;
     private EditText editContactPhone;
 
@@ -56,7 +56,7 @@ public class EditProductBuyActivity extends AppCompatActivity {
     private ProductPostedResponse.Data updatedProduct;
     private UserInformationManager userInformationManager;
     private ApiService apiService;
-    private SpotsDialog dialog;
+    private ProgressDialog dialog;
     private String productType, selectCategoryId, mapCoordinate, accessToken, email;
     private int productId;
 
@@ -70,14 +70,13 @@ public class EditProductBuyActivity extends AppCompatActivity {
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         apiService = ServiceGenerator.createService(ApiService.class);
         Validator validator = new Validator(this);
-        dialog = new SpotsDialog(this, "Updating...");
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.alert_dialog_updating));
 
         //listener
         buttonUpdate.setOnClickListener(view -> validator.validate());
 
-        imageBack.setOnClickListener(view -> {
-            finish();
-        });
+        imageBack.setOnClickListener(view -> finish());
 
         textChangeCategory.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChooseCategoryActivity.class);
@@ -125,8 +124,8 @@ public class EditProductBuyActivity extends AppCompatActivity {
             textCategory.setText(data.getStringExtra("CategoryName"));
             selectCategoryId = data.getStringExtra("CategoryId");
 
-            Log.e("pppp", "onActivityResult: " + data.getStringExtra("CategoryName"));
-            Log.e("pppp", "onActivityResult: " + selectCategoryId);
+            //Log.e("pppp", "onActivityResult: " + data.getStringExtra("CategoryName"));
+            //Log.e("pppp", "onActivityResult: " + selectCategoryId);
         }
     }
 
@@ -142,7 +141,7 @@ public class EditProductBuyActivity extends AppCompatActivity {
         Double priceEnd = Double.valueOf(editPriceEnd.getText().toString());
         int category = Integer.parseInt(selectCategoryId);
 
-        Log.e("pppp", category + "");
+        //Log.e("pppp", category + "");
 
         if (accessToken.equals("N/A")) {
             startActivity(new Intent(this, StartLoginActivity.class));
@@ -166,7 +165,7 @@ public class EditProductBuyActivity extends AppCompatActivity {
                 public void onFailure(@NonNull Call<ProductPostedResponse> call, @NonNull Throwable t) {
                     dialog.dismiss();
                     t.printStackTrace();
-                    Log.e("pppp", "onFailure: " + t.getMessage());
+                    //Log.e("pppp", "onFailure: " + t.getMessage());
                 }
             });
         }

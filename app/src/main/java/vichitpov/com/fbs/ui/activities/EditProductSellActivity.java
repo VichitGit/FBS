@@ -47,18 +47,18 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
 public class EditProductSellActivity extends AppCompatActivity {
 
-    @NotEmpty(message = "Required title")
+    @NotEmpty(messageResId = R.string.validation_title)
     private EditText editTitle;
-    @NotEmpty(message = "Required description")
+    @NotEmpty(messageResId = R.string.validation_description)
     private EditText editDescription;
-    @NotEmpty(message = "Required price")
+    @NotEmpty(messageResId = R.string.validation_price)
     private EditText editPriceStart;
-    @NotEmpty(message = "Required price")
+    @NotEmpty(messageResId = R.string.validation_price)
     private EditText editPriceEnd;
-    @NotEmpty(message = "Required contact name")
+    @NotEmpty(messageResId = R.string.validation_contact_name)
     private EditText editContactName;
     private EditText editContactEmail;
-    @NotEmpty(message = "Required address")
+    @NotEmpty(messageResId = R.string.validation_address)
     private EditText editContactAddress;
     private EditText editContactPhone;
 
@@ -91,7 +91,7 @@ public class EditProductSellActivity extends AppCompatActivity {
         UserInformationManager userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         apiService = ServiceGenerator.createService(ApiService.class);
         accessToken = userInformationManager.getUser().getAccessToken();
-        dialog = new SpotsDialog(this, "Updating...");
+        dialog = new SpotsDialog(this, getString(R.string.alert_dialog_updating));
 
         setUpRecyclerView();
         checkIntent();
@@ -210,7 +210,7 @@ public class EditProductSellActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<ImagePostResponse> call, Throwable t) {
                     t.printStackTrace();
-                    Log.e("pppp", "onFailure = " + t.getMessage());
+                    //Log.e("pppp", "onFailure = " + t.getMessage());
                     dialog.dismiss();
                 }
             });
@@ -244,7 +244,6 @@ public class EditProductSellActivity extends AppCompatActivity {
         Double priceEnd = Double.valueOf(editPriceEnd.getText().toString());
         int category = Integer.parseInt(selectCategoryId);
 
-
         Call<ProductPostedResponse> call = apiService.updateProduct(productId, accessToken, title, desc, priceStart, priceEnd, postType,
                 category, imageUrl, name, phone, email, address, mapCoordinate);
 
@@ -257,11 +256,11 @@ public class EditProductSellActivity extends AppCompatActivity {
                     //return result after update success
                     updatedProduct = response.body().getData();
                     backResultCodeToRefreshItemUpdated();
-                    Toast.makeText(EditProductSellActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProductSellActivity.this, getString(R.string.text_update_success), Toast.LENGTH_SHORT).show();
 
                 } else {
                     dialog.dismiss();
-                    Toast.makeText(EditProductSellActivity.this, "Update failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProductSellActivity.this, getString(R.string.text_upload_failed), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -284,7 +283,7 @@ public class EditProductSellActivity extends AppCompatActivity {
             }
 
             String urlImage = String.valueOf(pathImage);
-            Log.e("pppp", "imageMustRemove: " + urlImage);
+            //Log.e("pppp", "imageMustRemove: " + urlImage);
 
             Call<String> call = apiService.removeImageAfterUpdate(accessToken, String.valueOf(pathImage));
             call.enqueue(new Callback<String>() {
@@ -302,7 +301,7 @@ public class EditProductSellActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                     t.printStackTrace();
-                    Log.e("pppp", "onFailure: " + t.getMessage());
+                    //Log.e("pppp", "onFailure: " + t.getMessage());
 
                 }
             });

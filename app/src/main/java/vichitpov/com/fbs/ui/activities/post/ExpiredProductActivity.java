@@ -46,8 +46,9 @@ public class ExpiredProductActivity extends AppCompatActivity {
         initRecyclerView();
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Updating...!");
-        progressDialog.setMessage("Re-posting product!");
+        progressDialog.setTitle(getString(R.string.progress_updating));
+        progressDialog.setMessage(getString(R.string.progress_repost));
+
         apiService = ServiceGenerator.createService(ApiService.class);
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         accessToken = userInformationManager.getUser().getAccessToken();
@@ -58,17 +59,17 @@ public class ExpiredProductActivity extends AppCompatActivity {
         adapter.setOnChangeToActive((id, position) -> {
             if (InternetConnection.isNetworkConnected(this)) {
                 AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle("Active product?");
-                alertDialog.setMessage("Do you want to re-post this product?");
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", (dialog, which) -> {
+                alertDialog.setTitle(getString(R.string.alert_dialog_active));
+                alertDialog.setMessage(getString(R.string.alert_dialog_question_repost));
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.button_ok), (dialog, which) -> {
                     activeProduct(id, position);
                     dialog.dismiss();
                 });
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", (dialogInterface, i) -> dialogInterface.dismiss());
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.button_no), (dialogInterface, i) -> dialogInterface.dismiss());
                 alertDialog.show();
 
             } else {
-                Toast.makeText(this, "No internet connection!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
             }
         });
     }

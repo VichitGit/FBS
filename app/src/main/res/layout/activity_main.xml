@@ -2,9 +2,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/background_main_layout"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="#ff9503">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +39,7 @@
                 android:drawableStart="@drawable/ic_search_hint"
                 android:drawableTint="@color/colorBlack"
                 android:gravity="center_vertical"
-                android:hint="Search product..."
+                android:hint="@string/text_search_product"
                 android:paddingStart="@dimen/dp_5"
                 tools:ignore="RtlSymmetry"
                 tools:targetApi="m" />
@@ -61,7 +67,6 @@
                         android:id="@+id/bannerSlider"
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
-                        android:layout_marginBottom="@dimen/dp_10"
                         app:animateIndicators="true"
                         app:defaultIndicators="circle"
                         app:interval="3000"
@@ -131,8 +136,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="YOUR FAVORITE"
-
-                                android:textColor="@color/colorBlack"
+                                android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/sp_18" />
 
                         </LinearLayout>
@@ -142,6 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@id/linearFavorite"
+                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -153,9 +158,10 @@
                             android:layout_alignBottom="@+id/linearFavorite"
                             android:layout_alignParentEnd="true"
                             android:drawableEnd="@drawable/ic_more_hint"
+                            android:drawableTint="@color/colorWhite"
                             android:gravity="center"
                             android:text="MORE"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_12"
                             tools:ignore="RtlSymmetry" />
 
@@ -173,6 +179,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/linearBuyer"
+                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -195,7 +202,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="RECENTLY BUYER"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/sp_18" />
 
 
@@ -209,9 +216,10 @@
                             android:layout_alignParentEnd="true"
                             android:drawableEnd="@drawable/ic_more_hint"
                             android:drawablePadding="@dimen/dp_5"
+                            android:drawableTint="@color/colorWhite"
                             android:gravity="center"
                             android:text="MORE"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_12"
                             tools:ignore="RtlSymmetry" />
 
@@ -230,6 +238,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/linearTopSell"
+                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -252,7 +261,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="TOP SELLER"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/sp_18" />
 
 
@@ -272,6 +281,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/linearTextRecentlySeller"
+                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -294,7 +304,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="RECENTLY SELLER"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/sp_18" />
 
                         </LinearLayout>
@@ -308,9 +318,10 @@
                             android:layout_alignParentEnd="true"
                             android:drawableEnd="@drawable/ic_more_hint"
                             android:drawablePadding="@dimen/dp_5"
+                            android:drawableTint="@color/colorWhite"
                             android:gravity="center"
                             android:text="MORE"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_12"
                             tools:ignore="RtlSymmetry" />
 
@@ -353,7 +364,7 @@
                 android:layout_weight="2"
                 android:drawableTint="@color/colorWhite"
                 android:drawableTop="@drawable/ic_home"
-                android:text="Home"
+                android:text="@string/text_home"
                 android:textColor="@color/colorWhite"
                 tools:targetApi="m" />
 
@@ -365,7 +376,7 @@
                 android:layout_weight="2"
                 android:drawableTint="@color/colorWhite"
                 android:drawableTop="@drawable/ic_upload"
-                android:text="Upload"
+                android:text="@string/text_upload"
                 android:textColor="@color/colorWhite"
                 tools:targetApi="m" />
 
@@ -377,7 +388,7 @@
                 android:layout_weight="2"
                 android:drawableTint="@color/colorWhite"
                 android:drawableTop="@drawable/ic_notification"
-                android:text="Notification"
+                android:text="@string/text_notification"
                 android:textColor="@color/colorWhite"
                 tools:targetApi="m" />
 
@@ -389,7 +400,7 @@
                 android:layout_weight="2"
                 android:drawableTint="@color/colorWhite"
                 android:drawableTop="@drawable/ic_edit_profile"
-                android:text="Profile"
+                android:text="@string/text_profile"
                 android:textColor="@color/colorWhite"
                 tools:targetApi="m" />
 

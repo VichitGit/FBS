@@ -37,7 +37,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
     private UserInformationManager userInformationManager;
     private String userAccessToken, selectedGender = "null";
     private LinearLayout layoutValidationName, layoutValidationAddress1, layoutValidationAddress2;
-    private TextView validationFirstName, validationLastName, validationGender, validationPhone, validationEmail, validationStress, validationCommune, validationDistricts, validationCity;
+    private TextView validationFirstName, validationLastName, validationGender, validationStress, validationCommune, validationDistricts, validationCity;
 
 
     @Override
@@ -96,55 +96,55 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
                 hideLayout(true);
 
-                validationFirstName.setText("Required first name");
-                validationLastName.setText("Required last name");
-                validationGender.setText("Please select gender");
-                validationStress.setText("Required address(Street or...)");
-                validationDistricts.setText("Required address(Districts or...)");
-                validationCommune.setText("Required address(Commune or...)");
-                validationCity.setText("Required your city");
+                validationFirstName.setText(R.string.validation_first_name);
+                validationLastName.setText(R.string.validation_last_name);
+                validationGender.setText(R.string.validation_gender);
+                validationStress.setText(R.string.validation_street);
+                validationDistricts.setText(R.string.validation_districts);
+                validationCommune.setText(R.string.validation_commune);
+                validationCity.setText(R.string.validation_city);
 
             } else {
                 if (mFirstName.isEmpty()) {
                     layoutValidationName.setVisibility(View.VISIBLE);
-                    validationFirstName.setText("Required first name");
+                    validationFirstName.setText(R.string.validation_first_name);
                     editFirstName.setFocusable(true);
 
                 } else if (mLastName.isEmpty()) {
                     layoutValidationName.setVisibility(View.VISIBLE);
-                    validationLastName.setText("Required last name");
+                    validationLastName.setText(R.string.validation_last_name);
                     editLastName.setFocusable(true);
 
                 } else if (mGender.equals("null")) {
                     validationGender.setVisibility(View.VISIBLE);
-                    validationGender.setText("Please select gender");
+                    validationGender.setText(R.string.validation_gender);
                     validationGender.setFocusable(true);
 
                 } else if (addressStreet.isEmpty()) {
                     layoutValidationAddress1.setVisibility(View.VISIBLE);
-                    validationStress.setText("Required address(Street or...)");
+                    validationStress.setText(R.string.validation_street);
                     editAddressStress.setFocusable(true);
 
                 } else if (addressCommune.isEmpty()) {
                     layoutValidationAddress1.setVisibility(View.VISIBLE);
-                    validationCommune.setText("Required commune(commune or...)");
+                    validationCommune.setText(R.string.validation_districts);
                     editAddressCommune.setFocusable(true);
 
                 } else if (addressDistricts.isEmpty()) {
                     layoutValidationAddress2.setVisibility(View.VISIBLE);
-                    validationCommune.setText("Required address(Commune or...)");
+                    validationCommune.setText(R.string.validation_commune);
                     editAddressDistricts.setFocusable(true);
 
                 } else if (addressCity.isEmpty()) {
                     layoutValidationAddress2.setVisibility(View.VISIBLE);
-                    validationCity.setText("Required city");
+                    validationCity.setText(R.string.validation_city);
                     editAddressCity.setFocusable(true);
                 } else {
                     String mergeAddress = addressStreet + ", " + addressCommune + ", " + addressDistricts;
                     if (InternetConnection.isNetworkConnected(getApplicationContext())) {
                         uploadInformation(userAccessToken, mFirstName, mLastName, mGender, mergeAddress, addressCity);
                     } else {
-                        Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -153,21 +153,23 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
     private void uploadInformation(String accessToken, String firstName, String lastName, String gender, String address, String city) {
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
-        Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, address, city,"Introduction yourself");
+        Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, address, city, "Introduction yourself", "11.562108, 104.888535");
         call.enqueue(new Callback<UserInformationResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                 if (response.isSuccessful()) {
+
                     userInformationManager.saveInformation(response.body());
                     userInformationManager.saveAccessToken(accessToken);
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
 
                 } else if (response.code() == 401) {
-                    Toast.makeText(RegisterUserActivity.this, "Account is unavailable please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterUserActivity.this, R.string.account_unavailable, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
 
                 } else {
-                    Toast.makeText(RegisterUserActivity.this, "Server problem", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterUserActivity.this, R.string.server_problem, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -176,13 +178,12 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
             public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 Log.e("pppp", t.getMessage());
-                Toast.makeText(RegisterUserActivity.this, "Failed Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterUserActivity.this, R.string.failed_connection, Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
-
 
     private void setUpSpinnerGender() {
 

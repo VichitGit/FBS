@@ -121,7 +121,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<CategoriesResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                Log.e("pppp", t.getMessage());
+                //Log.e("pppp", t.getMessage());
             }
         });
 
