@@ -135,7 +135,7 @@
                                 android:id="@+id/textYourFavorite"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="YOUR FAVORITE"
+                                android:text="@string/text_your_favorite"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/sp_18" />
 
@@ -146,7 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@id/linearFavorite"
-                            android:background="@color/colorWhite"
+
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -157,10 +157,10 @@
                             android:layout_above="@+id/recyclerFavorite"
                             android:layout_alignBottom="@+id/linearFavorite"
                             android:layout_alignParentEnd="true"
-                            android:drawableEnd="@drawable/ic_more_hint"
+                            android:drawableEnd="@drawable/ic_more"
                             android:drawableTint="@color/colorWhite"
                             android:gravity="center"
-                            android:text="MORE"
+                            android:text="@string/text_more"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_12"
                             tools:ignore="RtlSymmetry" />
@@ -179,7 +179,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/linearBuyer"
-                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -201,7 +200,7 @@
                                 android:id="@+id/textRecentlyBuyer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="RECENTLY BUYER"
+                                android:text="@string/text_recently_buyer_big"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/sp_18" />
 
@@ -214,11 +213,11 @@
                             android:layout_height="wrap_content"
                             android:layout_above="@+id/recyclerRecentlyBuyer"
                             android:layout_alignParentEnd="true"
-                            android:drawableEnd="@drawable/ic_more_hint"
+                            android:drawableEnd="@drawable/ic_more"
                             android:drawablePadding="@dimen/dp_5"
                             android:drawableTint="@color/colorWhite"
                             android:gravity="center"
-                            android:text="MORE"
+                            android:text="@string/text_more"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_12"
                             tools:ignore="RtlSymmetry" />
@@ -238,7 +237,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/linearTopSell"
-                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -260,7 +258,7 @@
                                 android:id="@+id/textTopSell"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="TOP SELLER"
+                                android:text="@string/text_top_seller"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/sp_18" />
 
@@ -281,7 +279,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/linearTextRecentlySeller"
-                            android:background="@color/colorWhite"
                             android:nestedScrollingEnabled="false"
                             tools:targetApi="lollipop" />
 
@@ -303,7 +300,7 @@
                                 android:id="@+id/textRecentlySeller"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="RECENTLY SELLER"
+                                android:text="@string/recently_seller_big"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/sp_18" />
 
@@ -316,11 +313,11 @@
                             android:layout_height="wrap_content"
                             android:layout_above="@+id/recyclerRecentlySeller"
                             android:layout_alignParentEnd="true"
-                            android:drawableEnd="@drawable/ic_more_hint"
+                            android:drawableEnd="@drawable/ic_more"
                             android:drawablePadding="@dimen/dp_5"
                             android:drawableTint="@color/colorWhite"
                             android:gravity="center"
-                            android:text="MORE"
+                            android:text="@string/text_more"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_12"
                             tools:ignore="RtlSymmetry" />
@@ -387,7 +384,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:drawableTint="@color/colorWhite"
-                android:drawableTop="@drawable/ic_notification"
+                android:drawableTop="@drawable/ic_notification_selected"
                 android:text="@string/text_notification"
                 android:textColor="@color/colorWhite"
                 tools:targetApi="m" />

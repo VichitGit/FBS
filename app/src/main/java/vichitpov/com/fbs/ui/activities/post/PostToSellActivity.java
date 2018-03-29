@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.ConvertBitmap;
 import vichitpov.com.fbs.base.VailidationEmail;
 import vichitpov.com.fbs.constant.AnyConstant;
@@ -42,7 +42,7 @@ import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.ChooseCategoryActivity;
 
-public class PostToSellActivity extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
+public class PostToSellActivity extends BaseAppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
     @NotEmpty(message = R.string.validation_category + "")
     private TextView textCategory;
     @NotEmpty(message = R.string.validation_title + "")
@@ -75,7 +75,7 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
     private String coordinate;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_to_sell);
 
@@ -469,7 +469,7 @@ public class PostToSellActivity extends AppCompatActivity implements Validator.V
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 }

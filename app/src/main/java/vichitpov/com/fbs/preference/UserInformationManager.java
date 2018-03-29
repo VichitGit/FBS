@@ -94,7 +94,6 @@ public class UserInformationManager {
     }
 
     public void deleteUserInformation() {
-
         editor.remove(TYPE).commit();
         editor.remove(ID).commit();
         editor.remove(FIRST_NAME).commit();
@@ -111,6 +110,7 @@ public class UserInformationManager {
         editor.remove(TOTAL_POST_BUY).commit();
         editor.remove(TOTAL_POST_SELL).commit();
         editor.remove(SIGN_UP_DATE).commit();
+        editor.clear();
     }
 
     public UserInFormationModel getUser() {

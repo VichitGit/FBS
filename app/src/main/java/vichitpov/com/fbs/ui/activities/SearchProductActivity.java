@@ -3,7 +3,6 @@ package vichitpov.com.fbs.ui.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -23,12 +22,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.SearchAdapter;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
-public class SearchProductActivity extends AppCompatActivity implements View.OnClickListener {
+public class SearchProductActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private TextView textNotFound, textCountResult;
     private LinearLayout linearResult;
     private ProgressBar progressBar;
@@ -42,7 +42,7 @@ public class SearchProductActivity extends AppCompatActivity implements View.OnC
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_product);
 

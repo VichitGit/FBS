@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.StatusProductAdapter;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
@@ -26,7 +26,7 @@ import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
-public class ExpiredProductActivity extends AppCompatActivity {
+public class ExpiredProductActivity extends BaseAppCompatActivity {
     private ImageView imageBack;
     private TextView textNotFound;
     private ProgressBar progressBar;
@@ -39,7 +39,7 @@ public class ExpiredProductActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expired_product);
         initView();
@@ -166,7 +166,7 @@ public class ExpiredProductActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 

@@ -76,6 +76,8 @@ public interface ApiService {
     @GET("user/post/expire")
     Call<ProductResponse> getAllExpiredProduct(@Header("access-token") String accessToken);
 
+    @GET("/api/contactme/{id}")
+    Call<JSONObject> addContact(@Header("access-token") String accessToken, @Path("id") int id);
 
     @PUT("user")
     @FormUrlEncoded

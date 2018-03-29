@@ -36,7 +36,7 @@ public class BuyerSeeMoreActivity extends BaseAppCompatActivity implements OnLoa
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_see_more);
 

@@ -92,6 +92,9 @@ dependencies {
     //onesignal
     compile 'com.onesignal:OneSignal:3.7.1'
 
+    //local
+    implementation 'com.akexorcist:localizationactivity:1.2.2'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

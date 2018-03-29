@@ -77,7 +77,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -127,7 +127,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                 public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                     if (response.isSuccessful()) {
 
-                        userInformationManager.deleteUserInformation();
+                        //userInformationManager.deleteUserInformation();
                         userInformationManager.saveInformation(response.body());
                         isInformationLoadSuccess = true;
 
@@ -481,7 +481,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 

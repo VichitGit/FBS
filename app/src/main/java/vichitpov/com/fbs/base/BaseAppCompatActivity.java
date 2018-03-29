@@ -3,7 +3,8 @@ package vichitpov.com.fbs.base;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 
 
 /**
@@ -11,16 +12,16 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 @SuppressLint("Registered")
-public class BaseAppCompatActivity extends AppCompatActivity {
+public class BaseAppCompatActivity extends LocalizationActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 

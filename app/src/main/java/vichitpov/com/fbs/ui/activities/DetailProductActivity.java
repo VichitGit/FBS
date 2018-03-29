@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import ss.com.bannerslider.banners.RemoteBanner;
 import ss.com.bannerslider.views.BannerSlider;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.ContactAdapter;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
@@ -36,7 +38,7 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 import vichitpov.com.fbs.ui.fragment.ShowMapFragment;
 
-public class DetailProductActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetailProductActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     private ImageView imageBack, imageContact, imageFavorite;
     private BannerSlider bannerSlider;
@@ -51,20 +53,25 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private int totalPage;
     private int productId;
     private boolean isFavorite;
+    private boolean isContact;
     private List<Integer> favoriteIdList;
-    private ProgressDialog dialogRemove, dialogAdd;
+    private ProgressDialog dialogRemove, dialogAdd, dialogNotification;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product);
 
         favoriteIdList = new ArrayList<>();
         dialogRemove = new ProgressDialog(this);
         dialogRemove.setMessage(getString(R.string.dialog_remove_favorite));
+
         dialogAdd = new ProgressDialog(this);
         dialogAdd.setMessage(getString(R.string.dialog_add_favorite));
+
+        dialogNotification = new ProgressDialog(this);
+        dialogNotification.setMessage(getString(R.string.dialog_check));
 
         apiService = ServiceGenerator.createService(ApiService.class);
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
@@ -74,7 +81,6 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         setUpRecycler();
         getIntentFromAnotherActivity();
         checkExistUserFavorite();
-
 
         imageBack.setOnClickListener(this);
         buttonCall.setOnClickListener(view -> {
@@ -92,6 +98,14 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                 }
             } else {
                 startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
+            }
+        });
+        imageContact.setOnClickListener(view -> {
+            Log.e("pppp", "isContact: " + isContact);
+            if (isContact) {
+                checkExistUserContact();
+            } else {
+                Toast.makeText(this, "This product you already sent the notification!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -163,6 +177,48 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         });
     }
 
+    //check exist contact
+    private void checkExistUserContact() {
+        if (!accessToken.equals("N/A")) {
+            Call<JSONObject> call = apiService.addContact(accessToken, productId);
+            call.enqueue(new Callback<JSONObject>() {
+                @Override
+                public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                    if (response.isSuccessful()) {
+                        //Log.e("pppp", "if: " + response.code() + " = " + response.message());
+                        isContact = false;
+                        imageContact.setImageResource(R.drawable.ic_notification_selected);
+                        Toast.makeText(DetailProductActivity.this, "You sent the notification.", Toast.LENGTH_LONG).show();
+
+                    } else if (response.code() == 400) {
+                        // 400 = Bad Request = id already contact
+                        //Log.e("pppp", "else if: " + response.code() + " = " + response.message());
+
+                        isContact = false;
+                        Toast.makeText(DetailProductActivity.this, "This product you already sent the notification!", Toast.LENGTH_LONG).show();
+                        imageContact.setImageResource(R.drawable.ic_notification_selected);
+
+                    } else {
+                        isContact = true;
+                        //Log.e("pppp", "else: " + response.code() + " = " + response.message());
+                        imageContact.setImageResource(R.drawable.ic_notification_un_select);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JSONObject> call, Throwable t) {
+                    t.printStackTrace();
+                    Log.e("pppp", "onFailure: " + t.getMessage());
+
+                    isContact = true;
+                    imageContact.setImageResource(R.drawable.ic_notification_un_select);
+                }
+            });
+        } else {
+            startActivity(new Intent(this, StartLoginActivity.class));
+        }
+    }
+
     //check exist user favorite
     private void checkExistUserFavorite() {
         if (!accessToken.equals("N/A")) {
@@ -221,7 +277,6 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         adapter = new ContactAdapter(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
 
 
     }
@@ -234,12 +289,46 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
             countView(productId);
             getPhone = productResponse.getContactphone();
 
+            //check product already sent notification
+            if (!accessToken.equals("N/A")) {
+                if (productResponse.getContactme().getDatacontact().size() > 0) {
+                    String userId = userInformationManager.getUser().getId();
+                    for (int i = 0; i < productResponse.getContactme().getDatacontact().size(); i++) {
+                        String userContactedId = String.valueOf(productResponse.getContactme().getDatacontact().get(i).getId());
+
+                        //Log.e("pppp", userId + " = " + userContactedId);
+                        if (userId.equals(userContactedId)) {
+                            isContact = false;
+                            imageContact.setImageResource(R.drawable.ic_notification_selected);
+                            //Log.e("pppp", "userId == userContactedId");
+                            break;
+                        } else {
+                            //Log.e("pppp", "userId != userContactedId");
+                            isContact = true;
+                            imageContact.setImageResource(R.drawable.ic_notification_un_select);
+                        }
+                    }
+                } else {
+                    //Log.e("pppp", "else null");
+                    isContact = true;
+                    imageContact.setImageResource(R.drawable.ic_notification_un_select);
+                }
+
+            } else {
+                //Log.e("pppp", "N/A");
+                isContact = true;
+                imageContact.setImageResource(R.drawable.ic_notification_un_select);
+            }
+
+
             if (productResponse.getTitle() != null) {
                 textToolbar.setText(productResponse.getTitle());
             }
 
-            if (productResponse.getContactme() != null) {
+            if (productResponse.getContactme().getDatacontact().size() > 0) {
+                Log.e("pppp", "contactMe: " + productResponse.getContactme().getDatacontact().size());
                 adapter.addItem(productResponse.getContactme().getDatacontact());
+                recyclerView.setAdapter(adapter);
             }
 
             List<Banner> imageSliderList = new ArrayList<>();
@@ -325,7 +414,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 

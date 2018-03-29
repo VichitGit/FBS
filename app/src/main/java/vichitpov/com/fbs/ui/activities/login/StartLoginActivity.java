@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +31,7 @@ import ss.com.bannerslider.banners.Banner;
 import ss.com.bannerslider.banners.DrawableBanner;
 import ss.com.bannerslider.views.BannerSlider;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
@@ -47,7 +47,7 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECEIVE_SMS;
 import static android.Manifest.permission.SEND_SMS;
 
-public class StartLoginActivity extends AppCompatActivity {
+public class StartLoginActivity extends BaseAppCompatActivity {
     public static int APP_REQUEST_CODE = 99;
     private TextView textLoginPhone, textLoginEmail;
     private ApiService apiService;
@@ -57,7 +57,7 @@ public class StartLoginActivity extends AppCompatActivity {
     public static final int RequestPermissionCode = 101;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_login);
 
@@ -155,9 +155,11 @@ public class StartLoginActivity extends AppCompatActivity {
     private void setUpSlider() {
         BannerSlider bannerSlider = findViewById(R.id.banner_slider);
         List<Banner> banners = new ArrayList<>();
-        banners.add(new DrawableBanner(R.drawable.image_silde));
-        banners.add(new DrawableBanner(R.drawable.image_silde));
-        banners.add(new DrawableBanner(R.drawable.image_silde));
+        banners.add(new DrawableBanner(R.color.colorBlue));
+        banners.add(new DrawableBanner(R.color.colorAccent));
+        banners.add(new DrawableBanner(R.color.colorHintIcon));
+        banners.add(new DrawableBanner(R.color.colorBackgroundLayout));
+        banners.add(new DrawableBanner(R.color.colorBlack));
         bannerSlider.setBanners(banners);
 
     }
@@ -262,7 +264,7 @@ public class StartLoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 }

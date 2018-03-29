@@ -3,7 +3,6 @@ package vichitpov.com.fbs.ui.activities.product;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -27,7 +27,7 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.linearLayoutManager;
 
-public class ProductSellerCategoryActivity extends AppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener {
+public class ProductSellerCategoryActivity extends BaseAppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener {
     private String categoryId;
     private TextView textToolbar;
 
@@ -42,7 +42,7 @@ public class ProductSellerCategoryActivity extends AppCompatActivity implements 
     private TextView textNotFound;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_seller_category);
         initView();

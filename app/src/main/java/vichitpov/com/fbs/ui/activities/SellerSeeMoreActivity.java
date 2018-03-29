@@ -3,7 +3,6 @@ package vichitpov.com.fbs.ui.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.callback.OnLoadMore;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -24,7 +24,7 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.linearLayoutManager;
 
-public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener {
+public class SellerSeeMoreActivity extends BaseAppCompatActivity implements OnLoadMore, SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -35,7 +35,7 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
     private ApiService apiService;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_see_more);
 
@@ -127,7 +127,7 @@ public class SellerSeeMoreActivity extends AppCompatActivity implements OnLoadMo
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
     }

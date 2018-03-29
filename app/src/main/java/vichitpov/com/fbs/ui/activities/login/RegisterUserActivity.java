@@ -2,9 +2,8 @@ package vichitpov.com.fbs.ui.activities.login;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
@@ -29,7 +29,7 @@ import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.MainActivity;
 
 
-public class RegisterUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class RegisterUserActivity extends BaseAppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private EditText editFirstName, editLastName, editAddressStress, editAddressCommune, editAddressDistricts, editAddressCity;
     private MaterialSpinner spinnerGender;
@@ -41,7 +41,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
@@ -259,6 +259,4 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
 
     }
-
-
 }

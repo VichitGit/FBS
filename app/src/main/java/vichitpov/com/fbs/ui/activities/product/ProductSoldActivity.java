@@ -2,10 +2,9 @@ package vichitpov.com.fbs.ui.activities.product;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.SellerSeeMoreAdapter;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.callback.OnClickDelete;
@@ -39,7 +39,7 @@ import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.adapter.SellerSeeMoreAdapter.gridLayoutManager;
 
-public class ProductSoldActivity extends AppCompatActivity implements View.OnClickListener, OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickDelete, OnClickEdit {
+public class ProductSoldActivity extends BaseAppCompatActivity implements View.OnClickListener, OnLoadMore, SwipeRefreshLayout.OnRefreshListener, OnClickDelete, OnClickEdit {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -53,7 +53,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
     private int selectedPositionItem;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_sold);
 
@@ -193,7 +193,7 @@ public class ProductSoldActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
     }

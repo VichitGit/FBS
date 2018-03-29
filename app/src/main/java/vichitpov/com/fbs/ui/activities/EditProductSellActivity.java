@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,6 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.ImageListAdapter;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.VailidationEmail;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.model.ImageModel;
@@ -45,7 +45,7 @@ import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 
-public class EditProductSellActivity extends AppCompatActivity {
+public class EditProductSellActivity extends BaseAppCompatActivity {
 
     @NotEmpty(messageResId = R.string.validation_title)
     private EditText editTitle;
@@ -82,7 +82,7 @@ public class EditProductSellActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_product_sell);
         initView();
@@ -457,7 +457,7 @@ public class EditProductSellActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 

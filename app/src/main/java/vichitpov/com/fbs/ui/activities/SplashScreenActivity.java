@@ -3,14 +3,15 @@ package vichitpov.com.fbs.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends BaseAppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        setDefaultLanguage("en");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 

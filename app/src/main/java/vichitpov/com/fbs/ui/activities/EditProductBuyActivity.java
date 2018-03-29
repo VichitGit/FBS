@@ -22,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.VailidationEmail;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
@@ -31,7 +32,7 @@ import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
-public class EditProductBuyActivity extends AppCompatActivity {
+public class EditProductBuyActivity extends BaseAppCompatActivity {
 
     @NotEmpty(messageResId = R.string.validation_title)
     private EditText editTitle;
@@ -61,7 +62,7 @@ public class EditProductBuyActivity extends AppCompatActivity {
     private int productId;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_product_buy);
 
@@ -251,7 +252,7 @@ public class EditProductBuyActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 

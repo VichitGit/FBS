@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.InternetConnection;
 import vichitpov.com.fbs.base.VailidationEmail;
 import vichitpov.com.fbs.constant.AnyConstant;
@@ -32,7 +32,7 @@ import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 
 import static vichitpov.com.fbs.constant.AnyConstant.POST_TO_BUY_RESULT_CODE;
 
-public class PostToBuyActivity extends AppCompatActivity implements View.OnClickListener {
+public class PostToBuyActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     private UserInformationManager userInformationManager;
     private EditText editName, editEmail, editAddress, editPhone, editTitle, editPriceFrom, editPriceTo, editDescription;
@@ -47,7 +47,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_to_buy);
 
@@ -324,7 +324,7 @@ public class PostToBuyActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 

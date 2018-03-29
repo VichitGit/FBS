@@ -107,7 +107,7 @@
                     android:layout_gravity="end"
                     android:layout_weight="1"
                     android:padding="@dimen/dp_5"
-                    android:src="@drawable/ic_notification" />
+                    android:src="@drawable/ic_notification_selected" />
 
 
             </LinearLayout>

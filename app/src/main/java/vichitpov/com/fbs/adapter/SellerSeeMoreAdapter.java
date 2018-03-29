@@ -28,8 +28,6 @@ import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
 /**
  * Created by VichitPov on 2/27/18.
  */
@@ -269,7 +267,7 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
-        private ImageView  thumbnail;
+        private ImageView thumbnail;
 
         ProductViewHolder(View itemView) {
             super(itemView);
@@ -308,15 +306,11 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, DetailProductActivity.class);
                 intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             });
 
-            textEdit.setOnClickListener(view -> {
-
-                onClickEdit.setOnClickEdit(getAdapterPosition(), productList.get(getAdapterPosition()));
-
-            });
+            textEdit.setOnClickListener(view -> onClickEdit.setOnClickEdit(getAdapterPosition(), productList.get(getAdapterPosition())));
 
             textDelete.setOnClickListener(view ->
                     onClickDelete.setOnClick(productList.get(getAdapterPosition()).getId(), getAdapterPosition()));

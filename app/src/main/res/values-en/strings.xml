@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="progress_loading_title">Loading!</string>
+    <string name="progress_loading_message">Please wait…!</string>
+    <string name="progress_updating">Updating…!</string>
+    <string name="progress_repost">Re-posting product!</string>
+
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="account_unavailable">Account is unavailable please try again</string>
+    <string name="server_problem">Server problem</string>
+    <string name="failed_connection">Failed Connection</string>
+    <string name="confirmation_account">Confirmation Account</string>
+
+    <string name="alert_dialog_active">Active product?</string>
+    <string name="alert_dialog_uploading">Uploading…</string>
+    <string name="alert_dialog_question_repost">Do you want to re-post this product?</string>
+
+    <string name="button_no">NO</string>
+    <string name="button_ok">OK</string>
+
+    <string name="text_expired_product">Expired Product</string>
+    <string name="text_not_found">Not Found</string>
+    <string name="text_post_to_buy">Post to buy</string>
+    <string name="text_upload_success">Upload successfully.</string>
+    <string name="text_update_success">Updated successfully.</string>
+    <string name="text_upload_failed">Uploaded Failed.</string>
+    <string name="text_post_to_sell">Post to sell</string>
+    <string name="text_product_sold">Product Sold</string>
+    <string name="text_login_as">LOGIN AS:</string>
+    <string name="text_phone">Phone</string>
+    <string name="text_email">Email</string>
+    <string name="text_product_bought">Product Bought</string>
+    <string name="text_settings">Settings</string>
+    <string name="text_categories">Categories</string>
+    <string name="text_favorite">Favorite</string>
+    <string name="text_home">Home</string>
+    <string name="text_product">Product</string>
+    <string name="text_edit_information">Edit</string>
+    <string name="text_notification">Notification</string>
+    <string name="text_change_language">Change Language</string>
+    <string name="text_version">Version</string>
+    <string name="text_clear_cache">Clear Cache</string>
+    <string name="text_change_password">Change Password</string>
+    <string name="text_account_information">Account Information</string>
+    <string name="text_logout">Logout</string>
+    <string name="text_edit_profile">Edit Profile</string>
+
+    <string name="validation_title">Required title</string>
+    <string name="validation_category">Please select category</string>
+    <string name="validation_price">Required price to</string>
+    <string name="validation_description">Required description</string>
+    <string name="validation_contact_phone">Required contact phone</string>
+    <string name="validation_contact_name">Required contact name</string>
+    <string name="validation_address">Required contact address</string>
+    <string name="validation_first_name">Required first name</string>
+    <string name="validation_last_name">Required last name</string>
+    <string name="validation_gender">Please select gender</string>
+    <string name="validation_street">Required address(Street or…)</string>
+    <string name="validation_districts">Required address(Districts or…)</string>
+    <string name="validation_commune">Required address(Commune or…)</string>
+    <string name="validation_city">Required your city</string>
+    <string name="text_delete">Delete!</string>
+    <string name="text_question_to_delete">Do you want to delete this post?</string>
+    <string name="button_yes">YES</string>
+    <string name="text_edit_description">Edit Description</string>
+    <string name="text_save">SAVE</string>
+    <string name="text_edit_your_description">Edit your description</string>
+    <string name="alert_dialog_updating">Updating…</string>
+    <string name="text_change">Change</string>
+    <string name="text_location">Location</string>
+    <string name="text_profile">Profile</string>
+    <string name="text_recently_buyer">Recently Buyer</string>
+    <string name="text_choose_category">Choose category</string>
+    <string name="text_contact_people">People who contact this product</string>
+    <string name="text_call">Call</string>
+    <string name="dialog_remove_favorite">Remove favorite!</string>
+    <string name="dialog_add_favorite">Adding favorite!</string>
+    <string name="text_added_favorite">Added favorite</string>
+    <string name="text_removed_favorite">Removed favorite</string>
+    <string name="text_search_product">Search product…</string>
+    <string name="text_upload">Upload</string>
+    <string name="text_seller">Seller</string>
+    <string name="dialog_change">Changing…</string>
+    <string name="text_post">Post buy: </string>
+    <string name="text_sell">Post sell: </string>
+
+    <string name="text_your_favorite">YOUR FAVORITE</string>
+    <string name="text_recently_buyer_big">RECENTLY BUYER</string>
+    <string name="recently_seller_big">RECENTLY SELLER</string>
+    <string name="text_top_seller">TOP SELLER</string>
+    <string name="text_more">MORE</string>
+    <string name="dialog_check">Checking…</string>
+
+</resources>

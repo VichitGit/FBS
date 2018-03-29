@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,6 @@ import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
-
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by VichitPov on 2/26/18.
@@ -42,7 +41,7 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
         notifyDataSetChanged();
     }
 
-    public void refreshList(){
+    public void refreshList() {
         this.productList.clear();
         notifyDataSetChanged();
 
@@ -105,9 +104,10 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
 
             itemView.setOnClickListener(view -> {
+                Log.e("pppp", productList.get(getAdapterPosition()).getId() + "");
                 Intent intent = new Intent(context, DetailProductActivity.class);
                 intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             });
         }
