@@ -57,8 +57,8 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
         holder.title.setText(productResponse.getTitle());
         holder.price.setText(priceFrom + "$" + " - " + priceTo + "$");
         Picasso.with(context)
-                .load(R.mipmap.ic_launcher)
-                .resize(200, 200)
+                .load(R.drawable.ic_diffaut_null)
+                .resize(100, 100)
                 .centerCrop()
                 .error(R.drawable.ic_unavailable)
                 .into(holder.thumbnail);

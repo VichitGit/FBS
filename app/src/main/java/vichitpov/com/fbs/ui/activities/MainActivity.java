@@ -198,7 +198,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         textNotification.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+            //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         });
 
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));

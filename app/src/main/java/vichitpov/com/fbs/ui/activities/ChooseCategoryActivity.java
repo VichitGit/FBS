@@ -93,14 +93,9 @@ public class ChooseCategoryActivity extends BaseAppCompatActivity {
                         //Random rnd = new Random();
                         //int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
                         String url = null;
-                        if (i == 2) {
-                            url = "https://www.shareicon.net/download/2017/01/06/868320_people_512x512.png";
 
-                        } else if (i == 4) {
-                            url = "https://www.shareicon.net/download/2017/02/15/878677_community_512x512.png";
-                        } else {
-                            url = "https://icon-icons.com/icons2/582/PNG/512/gentleman_icon-icons.com_55044.png";
-                        }
+                        url = "https://www.shareicon.net/download/2017/02/07/878536_list_512x512.png";
+
                         for (int c = 0; c < categoriesResponses.get(i).getCategorychildren().size(); c++) {
                             int idCategory = categoriesResponses.get(i).getCategorychildren().get(c).getId();
                             String categoryName = categoriesResponses.get(i).getCategorychildren().get(c).getCategoryName();
