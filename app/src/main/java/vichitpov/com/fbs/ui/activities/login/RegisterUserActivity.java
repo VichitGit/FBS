@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.onesignal.OneSignal;
+
 import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -144,13 +146,14 @@ public class RegisterUserActivity extends BaseAppCompatActivity implements Adapt
                     if (InternetConnection.isNetworkConnected(getApplicationContext())) {
                         uploadInformation(userAccessToken, mFirstName, mLastName, mGender, mergeAddress, addressCity);
                     } else {
-                        Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         }
     }
 
+    //upload information user
     private void uploadInformation(String accessToken, String firstName, String lastName, String gender, String address, String city) {
         ApiService apiService = ServiceGenerator.createService(ApiService.class);
         Call<UserInformationResponse> call = apiService.updateUser(accessToken, firstName, lastName, gender, address, city, "Introduction yourself", "11.562108, 104.888535");
@@ -162,6 +165,8 @@ public class RegisterUserActivity extends BaseAppCompatActivity implements Adapt
                     userInformationManager.saveInformation(response.body());
                     userInformationManager.saveAccessToken(accessToken);
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    //send tag to onesignal
+                    OneSignal.sendTag(AnyConstant.USER_ID, response.body().getData().getId() + "");
                     finish();
 
                 } else if (response.code() == 401) {
@@ -177,7 +182,7 @@ public class RegisterUserActivity extends BaseAppCompatActivity implements Adapt
             @Override
             public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                Log.e("pppp", t.getMessage());
+                //Log.e("pppp", t.getMessage());
                 Toast.makeText(RegisterUserActivity.this, R.string.failed_connection, Toast.LENGTH_SHORT).show();
             }
         });
@@ -256,7 +261,6 @@ public class RegisterUserActivity extends BaseAppCompatActivity implements Adapt
 
         hideLayout(false);
         clearTextValidation();
-
 
     }
 }

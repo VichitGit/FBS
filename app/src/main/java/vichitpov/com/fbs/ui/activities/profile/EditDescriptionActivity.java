@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,18 +28,23 @@ public class EditDescriptionActivity extends AppCompatActivity {
     private UserInformationManager userInformationManager;
     private SpotsDialog dialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_description);
+        ImageView imageBack = findViewById(R.id.image_back);
+
         editDescription = findViewById(R.id.editDescription);
         textSave = findViewById(R.id.textSave);
 
         dialog = new SpotsDialog(this, getString(R.string.alert_dialog_updating));
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-            editDescription.setText(userInformationManager.getUser().getDescription());
+            if (!userInformationManager.getUser().getDescription().equals("N/A")) {
+                editDescription.setText(userInformationManager.getUser().getDescription());
+            } else {
+                editDescription.findFocus();
+            }
         }
 
         textSave.setOnClickListener(view -> {
@@ -47,6 +54,7 @@ public class EditDescriptionActivity extends AppCompatActivity {
                 editDescription.setError(getString(R.string.validation_description));
             }
         });
+        imageBack.setOnClickListener(view -> finish());
     }
 
     private void updateDescription(String desc) {

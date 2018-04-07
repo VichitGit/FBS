@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -224,6 +225,8 @@ public class SellerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (priceSubTo == 0) {
                 priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
 
+            }else if ( priceFrom.equals("null")){
+                Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
             }
 
             productGridViewHolder.textTitle.setText(productResponse.getTitle());

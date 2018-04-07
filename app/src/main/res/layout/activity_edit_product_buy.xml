@@ -144,7 +144,7 @@
                         android:layout_marginTop="@dimen/dp_5"
                         android:background="@color/colorWhite"
                         android:hint="Price from"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/colorBlack"
                         tools:ignore="RtlSymmetry" />
 
@@ -173,7 +173,7 @@
                         android:layout_marginTop="@dimen/dp_5"
                         android:background="@color/colorWhite"
                         android:hint="Price to"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/colorBlack"
                         tools:ignore="RtlSymmetry" />
 

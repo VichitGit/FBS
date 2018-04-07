@@ -440,8 +440,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_below="@+id/textLocation"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_marginRight="@dimen/dp_10"
                         android:background="@color/colorHint"
                         android:orientation="horizontal">
 

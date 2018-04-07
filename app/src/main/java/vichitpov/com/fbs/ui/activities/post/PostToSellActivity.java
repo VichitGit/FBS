@@ -68,11 +68,11 @@ public class PostToSellActivity extends BaseAppCompatActivity implements Validat
     private String path1, path2, path3, path4, path5;
     private String clickBrowse;
     private String selectedCategoryId;
+    private String coordinate;
     private String accessToken;
     private Validator validator;
     private ApiService apiService;
     private SpotsDialog dialog;
-    private String coordinate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +81,8 @@ public class PostToSellActivity extends BaseAppCompatActivity implements Validat
 
         validator = new Validator(this);
         validator.setValidationListener(this);
-        SwipeRefreshLayout refreshLayout = findViewById(R.id.swipeRefresh);
 
-        dialog = new SpotsDialog(this, R.string.alert_dialog_uploading);
+        dialog = new SpotsDialog(this, getString(R.string.alert_dialog_uploading));
         apiService = ServiceGenerator.createService(ApiService.class);
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         accessToken = userInformationManager.getUser().getAccessToken();
@@ -96,11 +95,6 @@ public class PostToSellActivity extends BaseAppCompatActivity implements Validat
         imageBack.setOnClickListener(this);
         buttonUpload.setOnClickListener(this);
         textCategory.setOnClickListener(this);
-        refreshLayout.setOnRefreshListener(() -> {
-            overridePendingTransition(0, 0);
-            startActivity(getIntent());
-            overridePendingTransition(0, 0);
-        });
 
     }
 
@@ -111,7 +105,6 @@ public class PostToSellActivity extends BaseAppCompatActivity implements Validat
             String selectedCategoryName = data.getStringExtra(AnyConstant.CATEGORY_NAME);
             selectedCategoryId = data.getStringExtra(AnyConstant.CATEGORY_ID);
             textCategory.setText(selectedCategoryName);
-
         }
 
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {

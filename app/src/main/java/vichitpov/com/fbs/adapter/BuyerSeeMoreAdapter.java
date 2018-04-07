@@ -19,6 +19,7 @@ import vichitpov.com.fbs.base.Convert;
 import vichitpov.com.fbs.callback.OnClickDelete;
 import vichitpov.com.fbs.callback.OnClickEdit;
 import vichitpov.com.fbs.callback.OnLoadMore;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
 
@@ -152,7 +153,7 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             String priceFrom = productResponse.getPrice().get(0).getMin().substring(0, productResponse.getPrice().get(0).getMin().indexOf("."));
             String priceTo = productResponse.getPrice().get(0).getMax().substring(0, productResponse.getPrice().get(0).getMax().indexOf("."));
 
-            productViewHolder.price.setText(priceFrom + "$" + " - " + priceTo + "$");
+            productViewHolder.price.setText("Price: " + priceFrom + "$" + " - " + priceTo + "$");
 
             if (productResponse.getCreateddate() != null) {
                 String subDate = productResponse.getCreateddate().getDate().substring(0, 10);
@@ -161,7 +162,7 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
             if (productResponse.getContactaddress() != null) {
-                productViewHolder.address.setText(productResponse.getContactaddress());
+                productViewHolder.address.setText("Address: " + productResponse.getContactaddress());
             }
 
 
@@ -187,10 +188,10 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
             if (productResponse.getContactaddress() != null) {
-                postedBuyViewHolder.textAddress.setText(productResponse.getContactaddress());
+                postedBuyViewHolder.textAddress.setText("Address: " + productResponse.getContactaddress());
             }
             postedBuyViewHolder.textTitle.setText(productResponse.getTitle());
-            postedBuyViewHolder.textPrice.setText(priceFrom + "$" + " - " + priceTo + "$");
+            postedBuyViewHolder.textPrice.setText("Price: " + priceFrom + "$" + " - " + priceTo + "$");
             postedBuyViewHolder.textStatus.setText(productResponse.getStatus());
 
         } else if (holder instanceof ProgressPagination) {
@@ -229,6 +230,13 @@ public class BuyerSeeMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             address = itemView.findViewById(R.id.textAddress);
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
+
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailProductActivity.class);
+                intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            });
 
         }
     }

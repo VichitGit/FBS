@@ -20,6 +20,7 @@ import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
+import com.onesignal.OneSignal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,7 @@ public class StartLoginActivity extends BaseAppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(getString(R.string.progress_loading_title));
         progressDialog.setMessage(getString(R.string.progress_loading_message));
+        progressDialog.setCancelable(false);
 
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
@@ -109,7 +111,6 @@ public class StartLoginActivity extends BaseAppCompatActivity {
                         public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                             if (response.isSuccessful()) {
                                 if (response.body().getData().getStatus().contains("new")) {
-
                                     progressDialog.dismiss();
                                     Intent intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
                                     intent.putExtra(AnyConstant.ACCESS_TOKEN, accessToken);
@@ -118,6 +119,7 @@ public class StartLoginActivity extends BaseAppCompatActivity {
                                     finish();
 
                                 } else if (response.body().getData().getStatus().contains("old")) {
+                                    OneSignal.sendTag(AnyConstant.USER_ID, response.body().getData().getId() + "");
 
                                     userInformationManager.deleteAccessToken();
                                     userInformationManager.saveAccessToken(accessToken);
@@ -153,14 +155,10 @@ public class StartLoginActivity extends BaseAppCompatActivity {
     }
 
     private void setUpSlider() {
-        BannerSlider bannerSlider = findViewById(R.id.banner_slider);
-        List<Banner> banners = new ArrayList<>();
-        banners.add(new DrawableBanner(R.color.colorBlue));
-        banners.add(new DrawableBanner(R.color.colorAccent));
-        banners.add(new DrawableBanner(R.color.colorHintIcon));
-        banners.add(new DrawableBanner(R.color.colorBackgroundLayout));
-        banners.add(new DrawableBanner(R.color.colorBlack));
-        bannerSlider.setBanners(banners);
+//        BannerSlider bannerSlider = findViewById(R.id.banner_slider);
+//        List<Banner> banners = new ArrayList<>();
+////        banners.add(new DrawableBanner(R.drawable.image_my_test));
+//        bannerSlider.setBanners(banners);
 
     }
 

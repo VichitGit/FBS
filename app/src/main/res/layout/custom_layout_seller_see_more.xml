@@ -27,8 +27,7 @@
                 android:layout_height="150dp"
                 android:layout_weight="2"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_test" />
+                android:scaleType="centerCrop" />
 
 
             <LinearLayout

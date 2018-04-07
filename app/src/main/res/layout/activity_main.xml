@@ -68,8 +68,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         app:animateIndicators="true"
-                        app:defaultIndicators="circle"
-                        app:interval="3000"
+                        app:defaultIndicators="square"
+                        app:interval="4000"
                         app:loopSlides="true" />
 
 
@@ -324,7 +324,6 @@
 
                     </RelativeLayout>
 
-
                 </LinearLayout>
 
             </ScrollView>
@@ -349,7 +348,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0088ff"
+            android:background="@color/colorPrimaryDark"
             android:padding="@dimen/dp_5"
             android:weightSum="8">
 

@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.ui.activities.DetailProductActivity;
 
@@ -56,7 +57,7 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
         holder.title.setText(productResponse.getTitle());
         holder.price.setText(priceFrom + "$" + " - " + priceTo + "$");
         Picasso.with(context)
-                .load(R.drawable.ic_test)
+                .load(R.mipmap.ic_launcher)
                 .resize(200, 200)
                 .centerCrop()
                 .error(R.drawable.ic_unavailable)
@@ -90,7 +91,7 @@ public class RecentlySingleBuyerAdapter extends RecyclerView.Adapter<RecentlySin
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, DetailProductActivity.class);
-            intent.putExtra("productList", productList.get(getAdapterPosition()));
+            intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 

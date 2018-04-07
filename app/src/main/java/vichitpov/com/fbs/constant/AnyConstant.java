@@ -26,6 +26,7 @@ public class AnyConstant {
     public static final String PHONE = "PHONE";
     public static final String SEND_FROM_MAIN_ACTIVITY = "SEND_FROM_MAIN_ACTIVITY";
     public static final String POST_TO_BUY_TEXT = "POST_TO_BUY_RESULT_CODE";
+    public static final String USER_ID = "user_id";
 
 
 }

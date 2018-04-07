@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="?selectableItemBackground"
+        android:padding="@dimen/dp_5">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorWhite"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorHint" />
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_5"
+                android:layout_toRightOf="@+id/imageProfile"
+                android:ellipsize="end"
+                android:textColor="@color/colorBlack"
+                android:maxLines="2"
+                android:text="Roth Chantha want to contact your product and want to buy your product."
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dp_5"
+                android:layout_toRightOf="@+id/imageProfile"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="10 minute ago"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorHint"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"/>
+
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+</RelativeLayout>

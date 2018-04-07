@@ -27,7 +27,7 @@
     <string name="text_upload_failed">Uploaded Failed.</string>
     <string name="text_post_to_sell">Post to sell</string>
     <string name="text_product_sold">Product Sold</string>
-    <string name="text_login_as">LOGIN AS:</string>
+    <string name="text_login_as">Login as:</string>
     <string name="text_phone">Phone</string>
     <string name="text_email">Email</string>
     <string name="text_product_bought">Product Bought</string>

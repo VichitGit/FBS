@@ -30,6 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
+import vichitpov.com.fbs.base.BitmapTransform;
 import vichitpov.com.fbs.base.ConvertBitmap;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.preference.UserInformationManager;
@@ -123,6 +124,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         if (!pProfile.equals("N/A")) {
             Picasso.with(this)
                     .load(pProfile)
+                    .transform(new BitmapTransform(BitmapTransform.MAX_WIDTH, BitmapTransform.MAX_HEIGHT))
+                    .resize(BitmapTransform.size, BitmapTransform.size)
                     .placeholder(R.drawable.ic_user_holder)
                     .error(R.drawable.ic_user_holder)
                     .into(imageProfile);
@@ -325,6 +328,10 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
+        if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            startActivity(new Intent(this, StartLoginActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -342,10 +349,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         super.onRestart();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 }
 
 

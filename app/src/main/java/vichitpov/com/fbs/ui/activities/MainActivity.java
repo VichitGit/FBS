@@ -3,6 +3,7 @@ package vichitpov.com.fbs.ui.activities;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -60,7 +61,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     private RecyclerView.LayoutManager layoutManager;
     private ApiService apiService;
     private SwipeRefreshLayout refreshLayout;
-    private TextView textProfile, textHome, textSearch, seeMoreSeller, seeMoreBuyer, textUpload, textMoreFavorite;
+    private TextView textProfile, textHome, textSearch, seeMoreSeller, seeMoreBuyer, textUpload, textMoreFavorite, textNotification;
     private FloatingActionButton floatingScroll;
     private ScrollView scrollView;
     private RelativeLayout relativeRecentlySeller, relativeRecentlyBuyer, relativeFavorite, relativeTopSell;
@@ -70,10 +71,11 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     private RecentlySingleSellerAdapter adapterSeller;
     private FavoriteAdapter favoriteAdapter, adapterTopSell;
     private UserInformationManager userInformationManager;
-    private boolean isInformationLoadSuccess;
     private ProgressDialog dialog;
     private BannerSlider bannerSlider;
     private CategoryHeaderAdapter categoryHeaderAdapter;
+    private String accessToken;
+    private RequestUserInformationBackground requestUserInformationBackground;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -84,25 +86,31 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         apiService = ServiceGenerator.createService(ApiService.class);
         adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
+        accessToken = userInformationManager.getUser().getAccessToken();
+
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.alert_dialog_updating));
 
         Log.e("pppp", userInformationManager.getUser().getAccessToken());
+
         initView();
         setUpSliderHeader();
         setUpCategoryHeader();
 
         if (InternetConnection.isNetworkConnected(this)) {
-            isInformationLoadSuccess = true;
             linearInternetUnavailable.setVisibility(View.GONE);
             setFavorite();
             setUpRecentlyBuyer();
             setUpTopSeller();
             setUpRecentlySeller();
-            getInformationUser();
+
+            if (!accessToken.equals("N/A")) {
+                requestUserInformationBackground = new RequestUserInformationBackground();
+                requestUserInformationBackground.execute();
+            }
+
         } else {
             Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
-            isInformationLoadSuccess = false;
             linearInternetUnavailable.setVisibility(View.VISIBLE);
         }
 
@@ -116,40 +124,21 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     //so if we cannot upload share preference cannot upload too. so when we go to user profile, it's will
     //show old information. so we need to update share preference to get new information in local mobile:D
     private void getInformationUser() {
-        if (!isInformationLoadSuccess) {
-            dialog.show();
-        }
-        String accessToken = userInformationManager.getUser().getAccessToken();
-        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+        if (!accessToken.equals("N/A")) {
             Call<UserInformationResponse> call = apiService.getUserInformation(accessToken);
             call.enqueue(new Callback<UserInformationResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<UserInformationResponse> call, @NonNull Response<UserInformationResponse> response) {
                     if (response.isSuccessful()) {
-
                         //userInformationManager.deleteUserInformation();
+                        Log.e("pppp", "success");
                         userInformationManager.saveInformation(response.body());
-                        isInformationLoadSuccess = true;
-
-                    } else if (response.code() == 401) {
-                        isInformationLoadSuccess = false;
-
-                    } else {
-                        isInformationLoadSuccess = false;
-                    }
-
-                    if (!isInformationLoadSuccess) {
-                        dialog.dismiss();
                     }
                 }
-
                 @Override
                 public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
                     t.printStackTrace();
-                    if (!isInformationLoadSuccess) {
-                        dialog.dismiss();
-                    }
-                    isInformationLoadSuccess = false;
+                    dialog.dismiss();
                 }
             });
         }
@@ -182,12 +171,13 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
             scrollView.fullScroll(ScrollView.FOCUS_UP);
         });
         textProfile.setOnClickListener(view -> {
-            if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
-                if (isInformationLoadSuccess) {
-                    startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
-                } else {
-                    getInformationUser();
-                }
+            if (!accessToken.equals("N/A")) {
+                //request user information user background thread
+                requestUserInformationBackground = new RequestUserInformationBackground();
+                requestUserInformationBackground.execute();
+
+                startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
+
             } else {
                 startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
             }
@@ -199,11 +189,16 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
             }
         });
         textMoreFavorite.setOnClickListener(view -> {
-            if (userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            if (accessToken.equals("N/A")) {
                 startActivity(new Intent(getApplicationContext(), StartLoginActivity.class));
             } else {
                 startActivity(new Intent(getApplicationContext(), FavoriteActivity.class));
             }
+        });
+        textNotification.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         });
 
         floatingScroll.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
@@ -221,7 +216,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     }
 
     private boolean isAccessTokenAvailable() {
-        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+        if (!accessToken.equals("N/A")) {
             return true;
         } else {
             Intent intent = new Intent(this, StartLoginActivity.class);
@@ -335,7 +330,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                     relativeTopSell.setVisibility(View.VISIBLE);
                 } else {
                     relativeTopSell.setVisibility(View.GONE);
-                    Log.e("pppp", "top: " + response.code() + " = " + response.message());
+                    //Log.e("pppp", "top: " + response.code() + " = " + response.message());
                 }
             }
 
@@ -353,25 +348,29 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
 
     //create user favorite, if user logged
     private void setFavorite() {
-        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+        if (!accessToken.equals("N/A")) {
             GridLayoutManager layoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
 
             recyclerFavorite.setLayoutManager(layoutManager);
             favoriteAdapter = new FavoriteAdapter(this);
 
-            Call<ProductResponse> call = apiService.getAllUserFavorite(userInformationManager.getUser().getAccessToken(), 1);
+            Call<ProductResponse> call = apiService.getAllUserFavorite(accessToken, 1);
             call.enqueue(new Callback<ProductResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
-                            relativeFavorite.setVisibility(View.VISIBLE);
-                            favoriteAdapter.addItem(response.body().getData());
-                            recyclerFavorite.setAdapter(favoriteAdapter);
+                            if (response.body().getData().size() > 0) {
+                                relativeFavorite.setVisibility(View.VISIBLE);
+                                favoriteAdapter.addItem(response.body().getData());
+                                recyclerFavorite.setAdapter(favoriteAdapter);
 
-                        } else if (response.body().getData().size() == 0) {
-                            relativeFavorite.setVisibility(View.GONE);
+                            } else if (response.body().getData().size() == 0) {
+                                relativeFavorite.setVisibility(View.GONE);
 
+                            } else {
+                                relativeFavorite.setVisibility(View.GONE);
+                            }
                         } else {
                             relativeFavorite.setVisibility(View.GONE);
                         }
@@ -390,35 +389,6 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
             relativeFavorite.setVisibility(View.GONE);
         }
     }
-
-//    private void getAllCategories() {
-//        ApiService apiService = ServiceGenerator.createService(ApiService.class);
-//        Call<CategoriesResponse> call = apiService.getAllCategories();
-//        call.enqueue(new Callback<CategoriesResponse>() {
-//            @SuppressLint("UseSparseArrays")
-//            @Override
-//            public void onResponse(@NonNull Call<CategoriesResponse> call, @NonNull Response<CategoriesResponse> response) {
-//                if (response.isSuccessful()) {
-//                    if (response.body() != null) {
-//                        categoriesResponse = response.body();
-//
-//
-//                    }
-//                } else {
-//                    Log.e("pppp", response.code() + " = " + response.message());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<CategoriesResponse> call, @NonNull Throwable t) {
-//                t.printStackTrace();
-//                Log.e("pppp", t.getMessage());
-//            }
-//        });
-//
-//
-//    }
 
     //dialog bottom
     public void dialogBottom() {
@@ -456,6 +426,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         textUpload = findViewById(R.id.textUpload);
         textMoreFavorite = findViewById(R.id.textSeeMoreFavorite);
         textHome = findViewById(R.id.textHome);
+        textNotification = findViewById(R.id.textNotification);
 
         floatingScroll = findViewById(R.id.floatingScroll);
         scrollView = findViewById(R.id.scrollView);
@@ -470,6 +441,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         progressBar.setVisibility(View.GONE);
         relativeRecentlySeller.setVisibility(View.GONE);
         relativeRecentlyBuyer.setVisibility(View.GONE);
+        relativeTopSell.setVisibility(View.GONE);
         relativeFavorite.setVisibility(View.GONE);
         floatingScroll.setVisibility(View.GONE);
         linearInternetUnavailable.setVisibility(View.GONE);
@@ -494,6 +466,31 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     protected void onStart() {
         super.onStart();
     }
+
+    @SuppressLint("StaticFieldLeak")
+    class RequestUserInformationBackground extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("pppp", "onPreExecute");
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            getInformationUser();
+            Log.e("pppp", "doInBackground");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            //super.onPostExecute(aVoid);
+            Log.e("pppp", "onPostExecute");
+        }
+    }
+
+
 }
 
 

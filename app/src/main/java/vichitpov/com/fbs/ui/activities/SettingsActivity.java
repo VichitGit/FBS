@@ -67,6 +67,7 @@ public class SettingsActivity extends BaseAppCompatActivity implements View.OnCl
 
         builder.setPositiveButton("Logout", (dialogInterface, i) -> {
             userInformationManager.deleteUserInformation();
+            userInformationManager.deleteAccessToken();
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
