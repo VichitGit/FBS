@@ -77,7 +77,7 @@ public class ExpiredProductActivity extends BaseAppCompatActivity {
     //re-post product that expired
     private void activeProduct(int id, int position) {
         progressDialog.show();
-        Call<ProductPostedResponse> call = apiService.activeProductExpried(accessToken, id);
+        Call<ProductPostedResponse> call = apiService.activeProductExpired(accessToken, id);
         call.enqueue(new Callback<ProductPostedResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductPostedResponse> call, @NonNull Response<ProductPostedResponse> response) {

@@ -80,6 +80,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.dialog_change));
+        dialog.setCancelable(false);
 
         checkPreference();
 

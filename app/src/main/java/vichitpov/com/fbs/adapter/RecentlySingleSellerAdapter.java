@@ -104,7 +104,7 @@ public class RecentlySingleSellerAdapter extends RecyclerView.Adapter<RecentlySi
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
 
             itemView.setOnClickListener(view -> {
-                Log.e("pppp", productList.get(getAdapterPosition()).getId() + "");
+                //Log.e("pppp", productList.get(getAdapterPosition()).getId() + "");
                 Intent intent = new Intent(context, DetailProductActivity.class);
                 intent.putExtra(AnyConstant.PRODUCT_LIST, productList.get(getAdapterPosition()));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

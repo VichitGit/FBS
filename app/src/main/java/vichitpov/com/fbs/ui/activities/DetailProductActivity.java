@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import vichitpov.com.fbs.base.BaseAppCompatActivity;
 import vichitpov.com.fbs.base.Retrofit;
 import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
+import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
@@ -48,6 +50,7 @@ public class DetailProductActivity extends BaseAppCompatActivity implements View
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
     private ApiService apiService;
+    private LinearLayout linearContact;
     private UserInformationManager userInformationManager;
     private int page = 1;
     private int totalPage;
@@ -284,6 +287,8 @@ public class DetailProductActivity extends BaseAppCompatActivity implements View
     @SuppressLint("SetTextI18n")
     private void getIntentFromAnotherActivity() {
         ProductResponse.Data productResponse = (ProductResponse.Data) getIntent().getSerializableExtra("productList");
+        ProductPostedResponse.Data notificationList = (ProductPostedResponse.Data) getIntent().getSerializableExtra("NotificationList");
+
         if (productResponse != null) {
             productId = productResponse.getId();
             countView(productId);
@@ -326,9 +331,13 @@ public class DetailProductActivity extends BaseAppCompatActivity implements View
             }
 
             if (productResponse.getContactme().getDatacontact().size() > 0) {
-                Log.e("pppp", "contactMe: " + productResponse.getContactme().getDatacontact().size());
-                adapter.addItem(productResponse.getContactme().getDatacontact());
-                recyclerView.setAdapter(adapter);
+                //Log.e("pppp", "contactMe: " + productResponse.getContactme().getDatacontact().size());
+                if (productResponse.getContactme().getDatacontact().size() == 0) {
+                    linearContact.setVisibility(View.GONE);
+                } else {
+                    adapter.addItem(productResponse.getContactme().getDatacontact());
+                    recyclerView.setAdapter(adapter);
+                }
             }
 
             List<Banner> imageSliderList = new ArrayList<>();
@@ -381,6 +390,98 @@ public class DetailProductActivity extends BaseAppCompatActivity implements View
                         .commit();
             }
 
+        } else if (notificationList != null) {
+            linearContact.setVisibility(View.GONE);
+            productId = notificationList.getId();
+            countView(productId);
+            getPhone = notificationList.getContactphone();
+
+            //check product already sent notification
+            if (!accessToken.equals("N/A")) {
+                if (notificationList.getContactme().getData().size() > 0) {
+                    String userId = userInformationManager.getUser().getId();
+                    for (int i = 0; i < notificationList.getContactme().getData().size(); i++) {
+                        String userContactedId = String.valueOf(notificationList.getContactme().getData().get(i).getId());
+
+                        //Log.e("pppp", userId + " = " + userContactedId);
+                        if (userId.equals(userContactedId)) {
+                            isContact = false;
+                            imageContact.setImageResource(R.drawable.ic_notification_selected);
+                            //Log.e("pppp", "userId == userContactedId");
+                            break;
+                        } else {
+                            //Log.e("pppp", "userId != userContactedId");
+                            isContact = true;
+                            imageContact.setImageResource(R.drawable.ic_notification_un_select);
+                        }
+                    }
+                } else {
+                    //Log.e("pppp", "else null");
+                    isContact = true;
+                    imageContact.setImageResource(R.drawable.ic_notification_un_select);
+                }
+
+            } else {
+                isContact = true;
+                imageContact.setImageResource(R.drawable.ic_notification_un_select);
+            }
+
+
+            if (notificationList.getTitle() != null) {
+                textToolbar.setText(notificationList.getTitle());
+            }
+
+
+            List<Banner> imageSliderList = new ArrayList<>();
+            if (notificationList.getProductimages().size() != 0) {
+                for (int i = 0; i < notificationList.getProductimages().size(); i++) {
+                    imageSliderList.add(new RemoteBanner(notificationList.getProductimages().get(i)));
+                }
+                bannerSlider.setBanners(imageSliderList);
+            }
+
+            String priceFrom = notificationList.getPrice().get(0).getMin();
+            String priceTo = notificationList.getPrice().get(0).getMax();
+
+            int priceSubFrom = Integer.parseInt(priceFrom.substring(priceFrom.lastIndexOf(".") + 1));
+            int priceSubTo = Integer.parseInt(priceTo.substring(priceTo.lastIndexOf(".") + 1));
+
+            if (priceSubFrom == 0) {
+                priceFrom = notificationList.getPrice().get(0).getMin().substring(0, notificationList.getPrice().get(0).getMax().indexOf("."));
+            }
+
+            if (priceSubTo == 0) {
+                priceTo = notificationList.getPrice().get(0).getMax().substring(0, notificationList.getPrice().get(0).getMin().indexOf("."));
+            }
+
+            textTitle.setText(notificationList.getTitle());
+            textPrice.setText("Price: " + priceFrom + "$ - " + priceTo + "$");
+            textDescription.setText(notificationList.getDescription());
+            textAddress.setText("Contact Address: " + notificationList.getContactaddress());
+            textName.setText("Contact Name: " + notificationList.getContactname());
+            textPhone.setText("Contact Phone: " + notificationList.getContactphone());
+
+            if (notificationList.getContactemail().equals("norton@null.com") || notificationList.getContactemail() == null) {
+                textEmail.setVisibility(View.GONE);
+            } else {
+                textEmail.setVisibility(View.VISIBLE);
+                textEmail.setText("Contact Email: " + notificationList.getContactemail());
+            }
+
+            if (notificationList.getContactmapcoordinate() != null) {
+                //Log.e("pppp", notificationList.getContactmapcoordinate());
+                //Log.e("pppp", notificationList.getContactname());
+                ShowMapFragment showMapFragment = new ShowMapFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("LatLng", notificationList.getContactmapcoordinate());
+                bundle.putString("Name", notificationList.getContactname());
+                showMapFragment.setArguments(bundle);
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layoutShowMap, showMapFragment)
+                        .commit();
+            }
+
         }
     }
 
@@ -406,6 +507,8 @@ public class DetailProductActivity extends BaseAppCompatActivity implements View
         bannerSlider = findViewById(R.id.bannerSlider);
         buttonCall = findViewById(R.id.buttonCall);
         recyclerView = findViewById(R.id.recyclerView);
+        linearContact = findViewById(R.id.linearContact);
+
     }
 
     @Override

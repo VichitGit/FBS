@@ -136,26 +136,24 @@
                             android:id="@+id/textSold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@+id/textName"
                             android:layout_alignStart="@+id/textName"
                             android:layout_below="@id/textName"
                             android:layout_marginTop="@dimen/dp_5"
                             android:gravity="center"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_12"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textBought"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@+id/textName"
                             android:layout_alignStart="@+id/textName"
                             android:layout_below="@id/textSold"
                             android:layout_marginTop="@dimen/dp_5"
                             android:gravity="center"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_12"
                             android:textStyle="bold" />
 
 

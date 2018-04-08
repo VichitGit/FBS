@@ -45,10 +45,12 @@ import vichitpov.com.fbs.callback.OnClickSingle;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
 import vichitpov.com.fbs.preference.UserInformationManager;
+import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
+import vichitpov.com.fbs.sqlite.NotificationHelper;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 import vichitpov.com.fbs.ui.activities.post.PostToBuyActivity;
 import vichitpov.com.fbs.ui.activities.post.PostToSellActivity;
@@ -82,6 +84,8 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getIntentNotification();
 
         apiService = ServiceGenerator.createService(ApiService.class);
         adapterSeller = new RecentlySingleSellerAdapter(getApplicationContext());
@@ -135,6 +139,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                         userInformationManager.saveInformation(response.body());
                     }
                 }
+
                 @Override
                 public void onFailure(@NonNull Call<UserInformationResponse> call, @NonNull Throwable t) {
                     t.printStackTrace();
@@ -342,7 +347,15 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
 
             }
         });
+    }
 
+    private void getIntentNotification() {
+        ProductPostedResponse.Data productPostedResponse = (ProductPostedResponse.Data) getIntent().getSerializableExtra("NotificationList");
+        if (productPostedResponse != null) {
+            Intent intent = new Intent(getApplicationContext(), DetailProductActivity.class);
+            intent.putExtra("NotificationList", productPostedResponse);
+            startActivity(intent);
+        }
 
     }
 

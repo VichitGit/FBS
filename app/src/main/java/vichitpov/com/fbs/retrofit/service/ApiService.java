@@ -71,13 +71,16 @@ public interface ApiService {
     Call<ProductResponse> topSellList(@Path("type") String type);
 
     @GET("user/post/active/{id}")
-    Call<ProductPostedResponse> activeProductExpried(@Header("access-token") String accessToken, @Path("id") int id);
+    Call<ProductPostedResponse> activeProductExpired(@Header("access-token") String accessToken, @Path("id") int id);
 
     @GET("user/post/expire")
     Call<ProductResponse> getAllExpiredProduct(@Header("access-token") String accessToken);
 
-    @GET("/api/contactme/{id}")
+    @GET("contactme/{id}")
     Call<JSONObject> addContact(@Header("access-token") String accessToken, @Path("id") int id);
+
+    @GET("posts/{id}")
+    Call<ProductPostedResponse> getProductById(@Path("id") int id);
 
     @PUT("user")
     @FormUrlEncoded

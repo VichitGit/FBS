@@ -3,6 +3,16 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
+
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
+        }
+
+        dexOptions {
+            jumboMode true
+        }
+
         applicationId "vichitpov.com.fbs"
         minSdkVersion 18
         targetSdkVersion 27

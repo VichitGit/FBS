@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/dp_5"
+    android:paddingStart="@dimen/dp_5"
+    android:paddingTop="@dimen/dp_5"
+    tools:ignore="RtlSymmetry">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="?selectableItemBackground"
-        android:padding="@dimen/dp_5">
+        android:background="?selectableItemBackground">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:background="@color/colorWhite"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite">
 
             <ImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:background="@color/colorHint" />
 
             <TextView
@@ -27,10 +31,10 @@
                 android:layout_margin="@dimen/dp_5"
                 android:layout_toRightOf="@+id/imageProfile"
                 android:ellipsize="end"
-                android:textColor="@color/colorBlack"
                 android:maxLines="2"
                 android:text="Roth Chantha want to contact your product and want to buy your product."
-                android:textSize="@dimen/sp_12" />
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/sp_15" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,14 +48,13 @@
                 android:textSize="@dimen/sp_12" />
 
             <View
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorHint"
                 android:layout_width="match_parent"
-                android:layout_height="1.5dp"/>
+                android:layout_height="1.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorHint" />
 
 
         </RelativeLayout>
-
 
     </FrameLayout>
 
