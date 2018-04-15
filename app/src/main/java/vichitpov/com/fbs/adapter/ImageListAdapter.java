@@ -97,12 +97,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Imag
 
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
             remove = itemView.findViewById(R.id.imageRemove);
-            remove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onClickDelete.setOnClick(getAdapterPosition(), getAdapterPosition());
-                }
-            });
+            remove.setOnClickListener(view -> onClickDelete.setOnClick(getAdapterPosition(), getAdapterPosition()));
 
         }
     }

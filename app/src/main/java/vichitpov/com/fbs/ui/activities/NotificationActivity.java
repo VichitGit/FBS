@@ -8,12 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.adapter.NotificationAdapter;
-import vichitpov.com.fbs.model.NotificationModel;
+import vichitpov.com.fbs.preference.UserInformationManager;
 import vichitpov.com.fbs.sqlite.NotificationHelper;
 
 public class NotificationActivity extends AppCompatActivity {
@@ -22,12 +19,14 @@ public class NotificationActivity extends AppCompatActivity {
     private ImageView imageBack;
     private NotificationAdapter adapter;
     private LinearLayout linearNotification;
+    private UserInformationManager userInformationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
+        userInformationManager = UserInformationManager.getInstance(getSharedPreferences(UserInformationManager.PREFERENCES_USER_INFORMATION, MODE_PRIVATE));
         notificationHelper = new NotificationHelper(this);
 
         initView();
@@ -35,19 +34,18 @@ public class NotificationActivity extends AppCompatActivity {
         setUpNotification();
 
         imageBack.setOnClickListener(view -> finish());
-
-
     }
 
     private void setUpNotification() {
-        if (notificationHelper.getNotificationList().size() == 0) {
-            linearNotification.setVisibility(View.VISIBLE);
-        } else {
-            linearNotification.setVisibility(View.GONE);
-            adapter.addItem(notificationHelper.getNotificationList());
+        if (!userInformationManager.getUser().getAccessToken().equals("N/A")) {
+            if (notificationHelper.getNotificationList().size() == 0) {
+                linearNotification.setVisibility(View.VISIBLE);
+            } else {
+                linearNotification.setVisibility(View.GONE);
+                adapter.addItem(notificationHelper.getNotificationList());
+            }
         }
     }
-
 
     private void setUpRecyclerView() {
         adapter = new NotificationAdapter(this);

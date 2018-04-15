@@ -11,8 +11,8 @@ import com.squareup.picasso.Transformation;
 
 public class BitmapTransform implements Transformation {
 
-    public static final int MAX_WIDTH = 1024;
-    public static final int MAX_HEIGHT = 768;
+    public static final int MAX_WIDTH = 1080;
+    public static final int MAX_HEIGHT = 720;
 
     public static int size = (int) Math.ceil(Math.sqrt(MAX_WIDTH * MAX_HEIGHT));
 

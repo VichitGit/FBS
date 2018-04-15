@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,58 +8,58 @@
     android:orientation="vertical"
     tools:context=".ui.activities.login.StartLoginActivity">
 
-    <!--<ss.com.bannerslider.views.BannerSlider-->
-    <!--android:id="@+id/banner_slider"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_above="@+id/loginAs"-->
-    <!--android:layout_centerInParent="true"-->
-    <!--android:layout_marginBottom="@dimen/dp_10"-->
-    <!--app:animateIndicators="true"-->
-    <!--app:defaultIndicators="round_square"-->
-    <!--app:loopSlides="false" />-->
-
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="Norton E-Commerce"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/sp_25" />
-
-    <TextView
-        android:id="@+id/textDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_10"
-        android:gravity="center"
-        android:text="The best service and bussiness in cambodia. Help alot of people to find product, sell product, buy product and some service that you want."
-        android:textColor="@color/colorHint"
-        android:textSize="15sp" />
-
-
-    <TextView
-        android:id="@+id/loginAs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textDescription"
+    <ss.com.bannerslider.views.BannerSlider
+        android:id="@+id/banner_slider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f9690e"
+        android:layout_above="@+id/relative"
         android:layout_centerInParent="true"
-        android:layout_marginTop="40dp"
-        android:text="@string/text_login_as"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/sp_25" />
+        android:layout_marginBottom="@dimen/dp_10"
+        app:animateIndicators="true"
+        app:defaultIndicators="round_square"
+        app:loopSlides="false" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/textTitle"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="25dp"-->
+    <!--android:text="Norton E-Commerce"-->
+    <!--android:textColor="@color/colorBlack"-->
+    <!--android:textSize="@dimen/sp_25" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/textDescription"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/textTitle"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginLeft="@dimen/dp_20"-->
+    <!--android:layout_marginRight="@dimen/dp_20"-->
+    <!--android:layout_marginTop="@dimen/dp_10"-->
+    <!--android:gravity="center"-->
+    <!--android:text="The best service and bussiness in cambodia. Help alot of people to find product, sell product, buy product and some service that you want."-->
+    <!--android:textColor="@color/colorHint"-->
+    <!--android:textSize="15sp" />-->
+
+
+    <!--<TextView-->
+    <!--android:id="@+id/loginAs"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/textDescription"-->
+    <!--android:layout_marginTop="40dp"-->
+    <!--android:text="@string/text_login_as"-->
+    <!--android:textColor="@color/colorPrimaryDark"-->
+    <!--android:textSize="@dimen/sp_25" />-->
 
     <RelativeLayout
         android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginAs">
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:id="@+id/textLoginPhone"
@@ -78,7 +79,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textLoginPhone"
-            android:layout_margin="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:paddingBottom="@dimen/dp_15"
@@ -86,61 +89,6 @@
             android:text="@string/text_email"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/sp_25" />
-
-
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0.5dp"-->
-        <!--android:background="@color/colorHint" />-->
-
-        <!--<LinearLayout-->
-        <!--android:id="@+id/linear"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:weightSum="2">-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/textLoginPhone"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="?selectableItemBackground"-->
-        <!--android:gravity="center"-->
-        <!--android:paddingBottom="@dimen/dp_15"-->
-        <!--android:paddingTop="@dimen/dp_15"-->
-        <!--android:text="@string/text_phone"-->
-        <!--android:textColor="@color/colorBlack"-->
-        <!--android:textSize="@dimen/sp_25" />-->
-
-
-        <!--<View-->
-        <!--android:layout_width="0.5dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@color/colorHint" />-->
-
-
-        <!--<TextView-->
-        <!--android:id="@+id/textLoginEmail"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="?selectableItemBackground"-->
-        <!--android:gravity="center"-->
-        <!--android:paddingBottom="@dimen/dp_15"-->
-        <!--android:paddingTop="@dimen/dp_15"-->
-        <!--android:text="@string/text_email"-->
-        <!--android:textColor="@color/colorBlack"-->
-        <!--android:textSize="@dimen/sp_25" />-->
-        <!--</LinearLayout>-->
-
-
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0.5dp"-->
-        <!--android:layout_below="@+id/linear"-->
-        <!--android:background="@color/colorHint" />-->
-
 
     </RelativeLayout>
 

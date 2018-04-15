@@ -127,7 +127,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                     .load(pProfile)
                     .transform(new BitmapTransform(BitmapTransform.MAX_WIDTH, BitmapTransform.MAX_HEIGHT))
                     .resize(BitmapTransform.size, BitmapTransform.size)
-                    .placeholder(R.drawable.ic_user_holder)
                     .error(R.drawable.ic_user_holder)
                     .into(imageProfile);
         }

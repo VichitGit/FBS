@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/dp_5"
+    android:background="?selectableItemBackground"
     android:paddingStart="@dimen/dp_5"
     android:paddingTop="@dimen/dp_5"
     tools:ignore="RtlSymmetry">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="?selectableItemBackground">
+        android:layout_height="70dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,30 +22,35 @@
                 android:id="@+id/imageProfile"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@color/colorHint" />
+                android:src="@mipmap/ic_launcher" />
 
-            <TextView
-                android:id="@+id/textTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_5"
-                android:layout_toRightOf="@+id/imageProfile"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="Roth Chantha want to contact your product and want to buy your product."
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_15" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/imageProfile"
+                android:weightSum="5">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/dp_5"
-                android:layout_toRightOf="@+id/imageProfile"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="10 minute ago"
-                android:textSize="@dimen/sp_12" />
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:text="Roth Chantha want to contact your product and want to buy your product."
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_15" />
+
+                <ImageView
+                    android:id="@+id/imageCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_15"
+                    android:src="@drawable/ic_contact"
+                    android:tint="@color/colorPrimaryDark" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

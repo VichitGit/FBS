@@ -3,7 +3,16 @@ package vichitpov.com.fbs.model;
 public class NotificationModel {
     private String id;
     private String title;
+    private String phone;
     private String notificationType;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getId() {
         return id;

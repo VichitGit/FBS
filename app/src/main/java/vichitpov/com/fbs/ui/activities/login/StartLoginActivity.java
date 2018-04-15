@@ -51,11 +51,11 @@ import static android.Manifest.permission.SEND_SMS;
 public class StartLoginActivity extends BaseAppCompatActivity {
     public static int APP_REQUEST_CODE = 99;
     private TextView textLoginPhone, textLoginEmail;
-    private ApiService apiService;
     private String accessToken;
     private ProgressDialog progressDialog;
     private UserInformationManager userInformationManager;
     public static final int RequestPermissionCode = 101;
+    private BannerSlider bannerSlider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,8 +76,17 @@ public class StartLoginActivity extends BaseAppCompatActivity {
         }
 
         initView();
-        onClickListener();
         setUpSlider();
+        onClickListener();
+
+    }
+
+    private void setUpSlider() {
+        List<Banner> imageSliderList = new ArrayList<>();
+        imageSliderList.add(new DrawableBanner(R.drawable.ic_welcome1));
+        imageSliderList.add(new DrawableBanner(R.drawable.ic_welcome2));
+        imageSliderList.add(new DrawableBanner(R.drawable.ic_welcome3));
+        bannerSlider.setBanners(imageSliderList);
     }
 
 
@@ -103,7 +112,7 @@ public class StartLoginActivity extends BaseAppCompatActivity {
                     progressDialog.show();
 
                     accessToken = loginResult.getAccessToken().getToken();
-                    apiService = ServiceGenerator.createService(ApiService.class);
+                    ApiService apiService = ServiceGenerator.createService(ApiService.class);
 
                     Call<UserInformationResponse> call = apiService.getUserInformation(accessToken);
                     call.enqueue(new Callback<UserInformationResponse>() {
@@ -153,15 +162,6 @@ public class StartLoginActivity extends BaseAppCompatActivity {
         intent.putExtra(AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION, configurationBuilder.build());
         startActivityForResult(intent, APP_REQUEST_CODE);
     }
-
-    private void setUpSlider() {
-//        BannerSlider bannerSlider = findViewById(R.id.banner_slider);
-//        List<Banner> banners = new ArrayList<>();
-////        banners.add(new DrawableBanner(R.drawable.image_my_test));
-//        bannerSlider.setBanners(banners);
-
-    }
-
 
     private void onClickListener() {
         progressDialog.show();
@@ -252,8 +252,7 @@ public class StartLoginActivity extends BaseAppCompatActivity {
     private void initView() {
         textLoginPhone = findViewById(R.id.textLoginPhone);
         textLoginEmail = findViewById(R.id.textLoginEmail);
-
-
+        bannerSlider = findViewById(R.id.banner_slider);
     }
 
     @Override

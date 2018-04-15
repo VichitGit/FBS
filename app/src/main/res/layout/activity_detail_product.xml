@@ -91,19 +91,19 @@
                             android:id="@+id/image_favorite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/dp_10"
+                            android:layout_marginEnd="@dimen/dp_10"
                             android:padding="@dimen/dp_10"
-                            android:src="@drawable/ic_favorite_un_select"
-                            android:tint="@color/colorWhite" />
+                            android:src="@drawable/ic_favorite_un_select" />
 
                         <ImageView
                             android:id="@+id/image_contact"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_10"
-                            android:src="@drawable/ic_notification_un_select"
-                            android:tint="@color/colorWhite" />
+                            android:src="@drawable/ic_notification_un_select" />
+
                     </LinearLayout>
+
                 </RelativeLayout>
 
                 <TextView
@@ -114,7 +114,7 @@
                     android:lineSpacingExtra="@dimen/dp_4"
                     android:text="ត្រូវការលក់ទូរស័ព្ទ Galaxy Note 8 មួយទឹក មានកាស មាសឆ្នាំងសាក។ "
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/sp_20"
+                    android:textSize="@dimen/sp_25"
                     android:textStyle="bold" />
 
                 <View
@@ -281,6 +281,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_8" />
                 </LinearLayout>
+
             </LinearLayout>
 
 

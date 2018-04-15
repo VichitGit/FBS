@@ -23,7 +23,9 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity android:name=".ui.activities.login.StartLoginActivity" />
         <activity android:name=".ui.activities.post.PostToSellActivity" />
         <activity android:name=".ui.activities.profile.UserProfileActivity" />
@@ -74,8 +76,6 @@
         <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
 
         <!--  -->
-
-
         <!-- disable default activity notification when click on notification -->
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"
@@ -91,11 +91,10 @@
         <activity android:name=".ui.activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.NotificationActivity"></activity>
+        <activity android:name=".ui.activities.NotificationActivity"/>
     </application>
 
 </manifest>

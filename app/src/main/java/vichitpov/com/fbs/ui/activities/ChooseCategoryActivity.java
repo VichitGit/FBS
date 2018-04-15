@@ -22,6 +22,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vichitpov.com.fbs.R;
 import vichitpov.com.fbs.base.BaseAppCompatActivity;
+import vichitpov.com.fbs.base.BitmapTransform;
+import vichitpov.com.fbs.base.ConvertBitmap;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
@@ -42,14 +44,11 @@ public class ChooseCategoryActivity extends BaseAppCompatActivity {
         ImageView imageBack = findViewById(R.id.imageBack);
         mExpandingList = findViewById(R.id.expanding_list_main);
 
-
         checkIntentMainActivity();
         checkIntentPostToBuy();
         getAllCategories();
 
         imageBack.setOnClickListener(view -> finish());
-
-
     }
 
     private boolean checkIntentMainActivity() {
@@ -92,9 +91,7 @@ public class ChooseCategoryActivity extends BaseAppCompatActivity {
                         List<String> subItems = new ArrayList<>();
                         //Random rnd = new Random();
                         //int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                        String url = null;
-
-                        url = "https://www.shareicon.net/download/2017/02/07/878536_list_512x512.png";
+                        String url = categoriesResponses.get(i).getCategoryimage();
 
                         for (int c = 0; c < categoriesResponses.get(i).getCategorychildren().size(); c++) {
                             int idCategory = categoriesResponses.get(i).getCategorychildren().get(c).getId();
@@ -119,10 +116,7 @@ public class ChooseCategoryActivity extends BaseAppCompatActivity {
                 //Log.e("pppp", t.getMessage());
             }
         });
-
-
     }
-
 
     private void addItem(String title, List<String> subItem, String url) {
         ExpandingItem item = mExpandingList.createNewItem(R.layout.expanding_layout_category);
@@ -131,8 +125,6 @@ public class ChooseCategoryActivity extends BaseAppCompatActivity {
             ImageView icon = item.findViewById(R.id.imageIcon);
             Picasso.with(this)
                     .load(url)
-                    .resize(200, 200)
-                    .centerCrop()
                     .error(R.drawable.ic_unavailable)
                     .into(icon);
 

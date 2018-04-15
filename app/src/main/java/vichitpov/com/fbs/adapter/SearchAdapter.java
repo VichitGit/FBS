@@ -170,7 +170,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, address, price, date;
-        private ImageView thumbnail, more;
+        private ImageView thumbnail;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -180,7 +180,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             price = itemView.findViewById(R.id.textPrice);
             date = itemView.findViewById(R.id.textDate);
             thumbnail = itemView.findViewById(R.id.imageThumbnail);
-            //more = itemView.findViewById(R.id.imageMore);
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, DetailProductActivity.class);

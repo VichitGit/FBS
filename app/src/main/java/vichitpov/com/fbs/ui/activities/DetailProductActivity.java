@@ -191,14 +191,14 @@ public class DetailProductActivity extends BaseAppCompatActivity implements View
                         //Log.e("pppp", "if: " + response.code() + " = " + response.message());
                         isContact = false;
                         imageContact.setImageResource(R.drawable.ic_notification_selected);
-                        Toast.makeText(DetailProductActivity.this, "You sent the notification.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DetailProductActivity.this, "You have alerted the owner of this item!", Toast.LENGTH_LONG).show();
 
                     } else if (response.code() == 400) {
                         // 400 = Bad Request = id already contact
                         //Log.e("pppp", "else if: " + response.code() + " = " + response.message());
 
                         isContact = false;
-                        Toast.makeText(DetailProductActivity.this, "This product you already sent the notification!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DetailProductActivity.this, "Alert has already sent!", Toast.LENGTH_LONG).show();
                         imageContact.setImageResource(R.drawable.ic_notification_selected);
 
                     } else {
@@ -426,16 +426,17 @@ public class DetailProductActivity extends BaseAppCompatActivity implements View
                 imageContact.setImageResource(R.drawable.ic_notification_un_select);
             }
 
-
             if (notificationList.getTitle() != null) {
                 textToolbar.setText(notificationList.getTitle());
             }
 
-
             List<Banner> imageSliderList = new ArrayList<>();
             if (notificationList.getProductimages().size() != 0) {
                 for (int i = 0; i < notificationList.getProductimages().size(); i++) {
-                    imageSliderList.add(new RemoteBanner(notificationList.getProductimages().get(i)));
+                    imageSliderList.add(new RemoteBanner(notificationList.getProductimages().get(i))
+                            .setPlaceHolder(getResources().getDrawable(R.drawable.ic_placeholder_banner))
+                            .setErrorDrawable(getResources().getDrawable(R.drawable.ic_error_banner))
+                    );
                 }
                 bannerSlider.setBanners(imageSliderList);
             }

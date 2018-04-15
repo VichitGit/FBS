@@ -15,6 +15,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import vichitpov.com.fbs.retrofit.response.BannerResponse;
 import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
 import vichitpov.com.fbs.retrofit.response.FavoriteResponse;
 import vichitpov.com.fbs.retrofit.response.ImagePostResponse;
@@ -81,6 +82,9 @@ public interface ApiService {
 
     @GET("posts/{id}")
     Call<ProductPostedResponse> getProductById(@Path("id") int id);
+
+    @GET("banner")
+    Call<BannerResponse> getBanner();
 
     @PUT("user")
     @FormUrlEncoded

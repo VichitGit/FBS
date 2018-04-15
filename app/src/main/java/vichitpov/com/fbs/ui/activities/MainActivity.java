@@ -45,12 +45,13 @@ import vichitpov.com.fbs.callback.OnClickSingle;
 import vichitpov.com.fbs.constant.AnyConstant;
 import vichitpov.com.fbs.model.CategoryHeaderModel;
 import vichitpov.com.fbs.preference.UserInformationManager;
+import vichitpov.com.fbs.retrofit.response.BannerResponse;
+import vichitpov.com.fbs.retrofit.response.CategoriesResponse;
 import vichitpov.com.fbs.retrofit.response.ProductPostedResponse;
 import vichitpov.com.fbs.retrofit.response.ProductResponse;
 import vichitpov.com.fbs.retrofit.response.UserInformationResponse;
 import vichitpov.com.fbs.retrofit.service.ApiService;
 import vichitpov.com.fbs.retrofit.service.ServiceGenerator;
-import vichitpov.com.fbs.sqlite.NotificationHelper;
 import vichitpov.com.fbs.ui.activities.login.StartLoginActivity;
 import vichitpov.com.fbs.ui.activities.post.PostToBuyActivity;
 import vichitpov.com.fbs.ui.activities.post.PostToSellActivity;
@@ -79,7 +80,6 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     private String accessToken;
     private RequestUserInformationBackground requestUserInformationBackground;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +119,7 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         }
 
         eventListener();
+
         categoryHeaderAdapter.setOnClickListener(this);
 
     }
@@ -159,22 +160,13 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
     }
 
     private void setUpSliderHeader() {
-        List<Banner> bannersList = new ArrayList<>();
-        bannersList.add(new RemoteBanner("https://s3.envato.com/files/228473424/590x300.jpg"));
-        bannersList.add(new RemoteBanner("https://kalidas365itsolutions.files.wordpress.com/2014/06/every-sale.jpg"));
-        bannersList.add(new RemoteBanner("https://kalidas365itsolutions.files.wordpress.com/2014/06/seller-verification.jpg"));
-        bannersList.add(new RemoteBanner("https://microlancer.lancerassets.com/v2/services/3f/c593d0437011e6ac7853977e2e0bdc/large__original_1.jpg"));
-        bannersList.add(new RemoteBanner("http://alphatec.in/images/slider/ecommerce-website-development.jpg"));
-        bannersList.add(new RemoteBanner("http://www.gogits.com/images/slider3.jpg"));
-        bannerSlider.setBanners(bannersList);
+        RequestBannerBackgroundThread bannerBackgroundThread = new RequestBannerBackgroundThread();
+        bannerBackgroundThread.execute();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void eventListener() {
 
-        textHome.setOnClickListener(view -> {
-            scrollView.fullScroll(ScrollView.FOCUS_UP);
-        });
+        textHome.setOnClickListener(view -> scrollView.fullScroll(ScrollView.FOCUS_UP));
         textProfile.setOnClickListener(view -> {
             if (!accessToken.equals("N/A")) {
                 //request user information user background thread
@@ -344,7 +336,6 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
                 t.printStackTrace();
                 relativeTopSell.setVisibility(View.GONE);
                 //Log.e("pppp", "onFailure: " + t.getMessage());
-
             }
         });
     }
@@ -422,6 +413,42 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         dialog.show();
     }
 
+    private void requestBanner() {
+        List<Banner> bannersList = new ArrayList<>();
+        bannersList.add(new RemoteBanner("http://nu-ecommerce.ml/images/banners/Banner_0.jpg"));
+        bannersList.add(new RemoteBanner("http://nu-ecommerce.ml/images/banners/banner_1.jpg"));
+        bannersList.add(new RemoteBanner("http://nu-ecommerce.ml/images/banners/Banner_2.jpg"));
+        bannersList.add(new RemoteBanner("http://nu-ecommerce.ml/images/banners/Banner_3.jpg"));
+        bannerSlider.setBanners(bannersList);
+
+//        Call<BannerResponse> call = apiService.getBanner();
+//
+//        call.enqueue(new Callback<BannerResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<BannerResponse> call, @NonNull Response<BannerResponse> response) {
+//                if (response.isSuccessful()) {
+//                    for (int i = 0; i < response.body().getData().size(); i++) {
+//                        bannersList.add(new RemoteBanner(response.body().getData().get(i).getBannerimage())
+//                                .setPlaceHolder(getResources().getDrawable(R.drawable.ic_placeholder_banner))
+//                                .setErrorDrawable(getResources().getDrawable(R.drawable.ic_error_banner)));
+//                    }
+//                } else {
+//                    bannersList.add(new RemoteBanner("http://norton-u.com/public_file/images/about/new%20campus.jpg"));
+//                }
+//                bannerSlider.setBanners(bannersList);
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<BannerResponse> call, @NonNull Throwable t) {
+//                t.printStackTrace();
+//                bannersList.add(new RemoteBanner("http://norton-u.com/public_file/images/about/new%20campus.jpg"));
+//                bannerSlider.setBanners(bannersList);
+//
+//            }
+//        });
+
+    }
+
     private void initView() {
 
         recyclerCategoryHeader = findViewById(R.id.recyclerCategories);
@@ -480,26 +507,44 @@ public class MainActivity extends BaseAppCompatActivity implements OnClickSingle
         super.onStart();
     }
 
+
     @SuppressLint("StaticFieldLeak")
     class RequestUserInformationBackground extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("pppp", "onPreExecute");
         }
 
         @Override
         protected Void doInBackground(String... strings) {
             getInformationUser();
-            Log.e("pppp", "doInBackground");
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             //super.onPostExecute(aVoid);
-            Log.e("pppp", "onPostExecute");
+            //Log.e("pppp", "onPostExecute");
+        }
+    }
+
+    class RequestBannerBackgroundThread extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            requestBanner();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
         }
     }
 

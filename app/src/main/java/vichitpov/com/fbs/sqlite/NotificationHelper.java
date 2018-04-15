@@ -22,11 +22,13 @@ public class NotificationHelper extends SQLiteOpenHelper {
     private static final String TABLE_NOTIFICATION = "tbl_notification";
     private static final String ID = "id";
     private static final String TITLE = "title";
+    private static final String PHONE = "phone";
     private static final String NOTIFICATION_TYPE = "notification_type";
 
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NOTIFICATION + "(" +
             "" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             "" + TITLE + " TEXT," +
+            "" + PHONE + " TEXT," +
             "" + NOTIFICATION_TYPE + " TEXT);";
 
 
@@ -45,10 +47,11 @@ public class NotificationHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE " + TABLE_NOTIFICATION);
     }
 
-    public void insertNotification(String id, String title, String notificationType) {
+    public void insertNotification(String id, String title, String notificationType, String phone) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID, id);
         contentValues.put(TITLE, title);
+        contentValues.put(PHONE, phone);
         contentValues.put(NOTIFICATION_TYPE, notificationType);
 
         sqLiteDatabase = this.getWritableDatabase();
@@ -66,7 +69,8 @@ public class NotificationHelper extends SQLiteOpenHelper {
                 NotificationModel fm = new NotificationModel();
                 fm.setId(String.valueOf(cursor.getInt(0)));
                 fm.setTitle(cursor.getString(1));
-                fm.setNotificationType(cursor.getString(2));
+                fm.setPhone(cursor.getString(2));
+                fm.setNotificationType(cursor.getString(3));
 
                 list.add(fm);
             } while (cursor.moveToNext());

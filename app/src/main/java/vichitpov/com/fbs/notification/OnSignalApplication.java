@@ -59,15 +59,13 @@ public class OnSignalApplication extends Application {
             JSONObject data = notification.payload.additionalData;
 
             if (data != null) {
-                //Log.e("pppp", "OneSignalNotification title: " + notification.payload.body);
-                //Log.e("pppp", "OneSignalNotificationReceivedHandler: " + data.toString());
                 String id = data.optString("postId", null);
-                Log.e("pppp", "id: "+ id);
-                String title = notification.payload.body;
+                String title = notification.payload.body; //get title of notification
+                String phone = data.optString("contactPhone", null);
                 String notificationType = data.optString("notificationType", null);
 
                 NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                notificationHelper.insertNotification(id, title, notificationType);
+                notificationHelper.insertNotification(id, title, notificationType, phone);
             }
         }
     }
